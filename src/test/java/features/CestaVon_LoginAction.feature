@@ -1,30 +1,29 @@
-@LoginTest
-Feature: Omama - Login Action
+@LoginTestAdmin
+Feature: CestaVon - Login Action
 
   @Positive
-  Scenario Outline: Omama - Login with valid credentials - positive - Demo
+  Scenario Outline: CestaVon - Login with valid credentials - positive
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    Then    Verify page title "<TITLE>" is visible
+    Then    Verify odhlasit button is visible
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | TITLE    |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | Products |
-
+      | BROWSER | PAGE     | USERNAME | PASSWORD      |
+      | Chrome  | Cestavon | admin    | Testcestavon1 |
 
   @Negative
-  Scenario Outline: SAUCEDEMO - Login with lock-outed user - negative
-    Given Open browser "<BROWSER>"
+  Scenario Outline: CestaVon - Login with lock-outed user - negative
+    Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
-    And    Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    Then    Verify page title is not visible
-    And    Verify error message is visible
+    And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
+    Then    Verify odhlasit button is not visible
+    And     Verify error message is visible
 
     Examples:
 
-      | BROWSER | PAGE      | BROWSERVERSION | OS | OSVERSION | DEVICE | APPIUMVERSION | RESOLUTION | USERNAME        | PASSWORD     |
-      | Chrome  | Saucedemo | -              | -  | -         | -      | -             | -          | locked_out_user | secret_sauce |
+      | BROWSER | PAGE     | USERNAME        | PASSWORD        |
+      | Chrome  | Cestavon | locked_out_user | locked_out_user |
       	

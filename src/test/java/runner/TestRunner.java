@@ -17,7 +17,7 @@ import utility.Log;
 @RunWith(Cucumber.class)
 //Options used in test run
 @CucumberOptions(features   =  "src/test/java/features/",
-                 tags       = {"@LoginTest"},
+                 tags       = {"@LoginTestAdmin"},
                  glue       = {"steps"},
                  plugin     = {"pretty"},
                  monochrome = true)

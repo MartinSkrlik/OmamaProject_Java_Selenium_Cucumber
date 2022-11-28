@@ -10,16 +10,18 @@ public class CestaVon_LoginPage {
 
     public enum loginPageItems {
 
-    	UsernameElement (By.xpath("//input[@id='user-name']"),
+    	UsernameElement (By.xpath("//input[@name='username']"),
                      	"USERNAME Input"),
-    	PasswordElement (By.xpath("//input[@id='password']"),
+    	PasswordElement (By.xpath("//input[@name='password']"),
     					"PASSWORD Input"),
-    	LoginButton 	(By.xpath("//input[@id='login-button']"),
+    	LoginButton 	(By.xpath("//button[contains(@class,'loginButton')]"),
     					"LOGIN Button"),
     	PageTitle 		(By.xpath("//span[@class='title']"),
     					"PAGE TITLE"),
     	ErrorMessage 	(null,
     					"ERROR Message"),
+        OdhlasitButton  (By.xpath("//li[@id='sign_out_button']"),
+                        "ODHLASIT BUTTON")
         ;
 
     	private String description;
@@ -47,12 +49,10 @@ public class CestaVon_LoginPage {
         this.driver = driver;
     }
     
-    public WebElement getErrorMessageElement(String value) {
-        return driver.findElement(getErrorMessageLocator(value));
-    } 
-    
-    public By getErrorMessageLocator(String value) {
-    	//the following line is an example of how to create a dynamic xpath
-        return By.xpath("//h3[@data-test='" + value + "']");
-    }
+    public WebElement getErrorMessageElement(String value) {return driver.findElement(getErrorMessageLocator(value));}
+    public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
+
+
+
+
 }
