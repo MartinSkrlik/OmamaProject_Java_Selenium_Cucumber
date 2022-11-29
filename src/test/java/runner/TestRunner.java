@@ -1,23 +1,20 @@
 package runner;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-import utility.AddRunToDatabase;
-import utility.ConfigFileReader;
-import utility.ReportExtender;
-import utility.ReportNameCreator;
-import utility.Log;
+import utility.*;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(Cucumber.class)
 //Options used in test run
 @CucumberOptions(features   =  "src/test/java/features/",
-                 tags       = {"@Positive or @Negative"},
+                 tags       = {"@LoginTest"},
                  glue       = {"steps"},
                  plugin     = {"pretty"},
                  monochrome = true)
