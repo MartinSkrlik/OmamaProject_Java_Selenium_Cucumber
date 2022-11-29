@@ -1,5 +1,6 @@
 package steps;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,9 @@ import utility.Log;
 import utility.ReportExtender;
 import utility.SAUCEDEMO_PageMapper;
 import utility.Validation;
+
 import java.util.HashMap;
+
 import static page.CestaVon_LoginPage.loginPageItems.*;
 
 public class CestaVon_LoginSteps extends TestStepActions {
@@ -27,20 +30,22 @@ public class CestaVon_LoginSteps extends TestStepActions {
     	clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
     }
     
-    @Then("Verify odhlasit button is visible")
-	public void verify_odhlasit_button_is_visible(){
+    @Then("Verify odhlasit button is visible and click odhlasit")
+	public void verify_odhlasit_button_is_visible_and_click_odhlasit(){
 		waitForElementVisible(driver,OdhlasitButton.getLocator(),OdhlasitButton.getDescription(),15);
+		ReportExtender.logScreen(driver);
+		clickElement(OdhlasitButton.getElement(driver),OdhlasitButton.getDescription());
 	}
 
 	@Then("^Verify odhlasit button is not visible$")
-    public void verify_page_title_is_not_visible() throws Throwable {
+    public void verify_odhlasit_button_is_not_visible() throws Throwable {
     	if(driver.findElements(OdhlasitButton.getLocator()).size() > 0) {
     		Log.info(SAUCEDEMO_PageMapper.FAIL_MESSAGE);
-            ReportExtender.logPass("Validating " + PageTitle.getDescription() + ": </br>" + ReportExtender.addMarkup("FAIL") + SAUCEDEMO_PageMapper.FAIL_MESSAGE);
+            ReportExtender.logPass("Validating " + OdhlasitButton.getDescription() + ": </br>" + ReportExtender.addMarkup("FAIL") + SAUCEDEMO_PageMapper.FAIL_MESSAGE_ODHLASIT_BUTTON);
     	}
     	else{
     		Log.info(SAUCEDEMO_PageMapper.SUCCESS_MESSAGE);
-            ReportExtender.logPass("Validating " + PageTitle.getDescription() + ": </br>" + ReportExtender.addMarkup("PASS") + SAUCEDEMO_PageMapper.SUCCESS_MESSAGE);
+            ReportExtender.logPass("Validating " + OdhlasitButton.getDescription() + ": </br>" + ReportExtender.addMarkup("PASS") + SAUCEDEMO_PageMapper.SUCCESS_MESSAGE_ODHLSIT_BUTTON);
     	}
     }
 
@@ -48,8 +53,16 @@ public class CestaVon_LoginSteps extends TestStepActions {
     public void verify_error_message_is_visible() throws Throwable {
 		CestaVon_LoginPage page = new CestaVon_LoginPage(driver);
 		waitForElementVisible(driver, page.getErrorMessageLocator("Nesprávne heslo"), ErrorMessage.getDescription(), 60);
-    	new Validation("ERROR MESSAGE", getDisplayedText(page.getErrorMessageElement("Nesprávne heslo"), ErrorMessage.getDescription()), SAUCEDEMO_PageMapper.ERROR_MESSAGE).stringEquals();
-//    	Thread.sleep(1000);
+    	new Validation("ERROR MESSAGE", getDisplayedText(page.getErrorMessageElement("Nesprávne heslo"), ErrorMessage.getDescription()), SAUCEDEMO_PageMapper.ERROR_MESSAGE).contains();
+    	Thread.sleep(1000);
     	ReportExtender.logScreen(driver);
     }
-}
+
+	@And("Input pin code {string} and click zaregistrovat zariadenie")
+	public void ifPinCodeAppealIsVisibleThenInputAndClickZaregistrovatZariadenie(String Pincode)  {
+		waitForElementVisible(driver,PincodeElement.getLocator(),PincodeElement.getDescription(),15);
+		setElementSecureText(PincodeElement.getElement(driver),Pincode,PincodeElement.getDescription());
+		waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
+		ReportExtender.logScreen(driver);
+		clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
+	}}

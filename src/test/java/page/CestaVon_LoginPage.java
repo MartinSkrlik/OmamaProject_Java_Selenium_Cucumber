@@ -21,7 +21,9 @@ public class CestaVon_LoginPage {
     	ErrorMessage 	(null,
     					"ERROR Message"),
         OdhlasitButton  (By.xpath("//li[@id='sign_out_button']"),
-                        "ODHLASIT BUTTON")
+                        "ODHLASIT BUTTON"),
+        PincodeElement  (By.xpath("//input[contains(@placeholder,'pin')]"),
+                        "PINCODE Input")
         ;
 
     	private String description;
