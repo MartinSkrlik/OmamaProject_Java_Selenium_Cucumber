@@ -30,8 +30,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
     	clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
     }
     
-    @Then("Verify odhlasit button is visible and click odhlasit")
-	public void verify_odhlasit_button_is_visible_and_click_odhlasit(){
+    @Then("Click on odhlasit button")
+	public void clickonodhlasitButton(){
 		waitForElementVisible(driver,OdhlasitButton.getLocator(),OdhlasitButton.getDescription(),15);
 		ReportExtender.logScreen(driver);
 		clickElement(OdhlasitButton.getElement(driver),OdhlasitButton.getDescription());
@@ -58,10 +58,14 @@ public class CestaVon_LoginSteps extends TestStepActions {
     	ReportExtender.logScreen(driver);
     }
 
-	@And("Input pin code {string} and click zaregistrovat zariadenie")
-	public void ifPinCodeAppealIsVisibleThenInputAndClickZaregistrovatZariadenie(String Pincode)  {
+	@And("Input pin code {string}")
+	public void inputpincode (String Pincode)  {
 		waitForElementVisible(driver,PincodeElement.getLocator(),PincodeElement.getDescription(),15);
 		setElementSecureText(PincodeElement.getElement(driver),Pincode,PincodeElement.getDescription());
+	}
+
+	@And("Click on zaregistrovat zariadenie button")
+	public void clickOnZaregistrovatZariadenieButton() {
 		waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
 		ReportExtender.logScreen(driver);
 		clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
@@ -73,10 +77,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(MenuButton.getElement(driver),MenuButton.getDescription());
 	}
 
-	@Then("Verify odhlasit button in menu is visible and click odhlasit")
-	public void verifyOdhlasitButtonInMenuIsVisibleAndClickOdhlasit() {
+	@Then("Click on odhlasit button in menu")
+	public void clickOnOdhlasitButtonInmenu() {
 		waitForElementVisible(driver,OdhlasitButtonInMenu.getLocator(),OdhlasitButtonInMenu.getDescription(),15);
 		ReportExtender.logScreen(driver);
 		clickElement(OdhlasitButtonInMenu.getElement(driver),OdhlasitButtonInMenu.getDescription());
 	}
+
+
 }
