@@ -50,7 +50,8 @@ Feature: CestaVon - Login Action
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>" and click zaregistrovat zariadenie
-    Then    Verify odhlasit button is visible and click odhlasit
+    And     Click on menu button
+    Then    Verify odhlasit button in menu is visible and click odhlasit
 
     Examples:
 

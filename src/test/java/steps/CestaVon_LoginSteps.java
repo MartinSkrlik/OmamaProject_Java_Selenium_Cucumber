@@ -65,4 +65,18 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
 		ReportExtender.logScreen(driver);
 		clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
-	}}
+	}
+
+	@And("Click on menu button")
+	public void clickOnMenuButton() {
+		waitForElementVisible(driver,MenuButton.getLocator(),MenuButton.getDescription(),15);
+		clickElement(MenuButton.getElement(driver),MenuButton.getDescription());
+	}
+
+	@Then("Verify odhlasit button in menu is visible and click odhlasit")
+	public void verifyOdhlasitButtonInMenuIsVisibleAndClickOdhlasit() {
+		waitForElementVisible(driver,OdhlasitButtonInMenu.getLocator(),OdhlasitButtonInMenu.getDescription(),15);
+		ReportExtender.logScreen(driver);
+		clickElement(OdhlasitButtonInMenu.getElement(driver),OdhlasitButtonInMenu.getDescription());
+	}
+}

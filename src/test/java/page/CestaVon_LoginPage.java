@@ -15,15 +15,17 @@ public class CestaVon_LoginPage {
     	PasswordElement (By.xpath("//input[@name='password']"),
     					"PASSWORD Input"),
     	LoginButton 	(By.xpath("//button[contains(@class,'loginButton')]"),
-    					"LOGIN Button"),
-    	PageTitle 		(By.xpath("//span[@class='title']"),
-    					"PAGE TITLE"),
-    	ErrorMessage 	(null,
+    					"Click on LOGIN Button"),
+        ErrorMessage 	(null,
     					"ERROR Message"),
         OdhlasitButton  (By.xpath("//li[@id='sign_out_button']"),
                         "ODHLASIT BUTTON"),
         PincodeElement  (By.xpath("//input[contains(@placeholder,'pin')]"),
-                        "PINCODE Input")
+                        "PINCODE Input"),
+        MenuButton      (By.xpath("//div[@class='menu']"),
+                        "Click on menu Button"),
+        OdhlasitButtonInMenu  (By.xpath("//p[@class='logoff']"),
+                        "Odhlasit BUTTON from menu")
         ;
 
     	private String description;
