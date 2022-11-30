@@ -1,77 +1,27 @@
-@LoginTest
-Feature: CestaVon - Login Action
+@CreateAdminUser
+Feature: CestaVon - Create New Admin User
 
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - admin - positive
+
+  Scenario Outline: CestaVon - Login with valid credentials and create new admin user
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    Then    Click on odhlasit button
+    And     Click on button "Zaregistrovať zariadenie"
+    And     Select from menu tab "Používatelia"
+    And     Click on button "Pridať"
+    And     Registry new "Admin" user and save details
+    And     Confirm Registration
+    And     Verify "Používatelia" tab is active
+    And     Click on button "Obnoviť"
+
+
 
     Examples:
 
       | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
       | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
 
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - supervisor - positive
 
-    Given   Open browser "<BROWSER>"
-    When    Go to page "<PAGE>"
-    And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    Then    Click on odhlasit button
-
-    Examples:
-
-      | BROWSER | PAGE     | USERNAME        | PASSWORD       | PINCODE |
-      | Chrome  | Cestavon | supervizor_test | Supervizor1234 | 1111    |
-
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - mentor - positive
-
-    Given   Open browser "<BROWSER>"
-    When    Go to page "<PAGE>"
-    And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    Then    Click on odhlasit button
-
-    Examples:
-
-      | BROWSER | PAGE     | USERNAME    | PASSWORD   | PINCODE |
-      | Chrome  | Cestavon | mentor_test | Mentor1234 | 1111    |
-
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - omama - positive
-
-    Given   Open browser "<BROWSER>"
-    When    Go to page "<PAGE>"
-    And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    And     Click on menu button
-    Then    Click on odhlasit button in menu
-
-    Examples:
-
-      | BROWSER | PAGE     | USERNAME   | PASSWORD  | PINCODE |
-      | Chrome  | Cestavon | omama_test | Omama1234 | 1111    |
-
-  @Negative
-  Scenario Outline: CestaVon - Login with lock-outed user - negative
-    Given   Open browser "<BROWSER>"
-    When    Go to page "<PAGE>"
-    And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    Then    Verify odhlasit button is not visible
-    Then    Verify error message is visible
-
-    Examples:
-
-      | BROWSER | PAGE     | USERNAME        | PASSWORD        |
-      | Chrome  | Cestavon | locked_out_user | locked_out_user |
 

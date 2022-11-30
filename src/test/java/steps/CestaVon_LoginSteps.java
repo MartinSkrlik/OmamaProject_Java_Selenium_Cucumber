@@ -13,6 +13,8 @@ import utility.Validation;
 
 import java.util.HashMap;
 
+import static page.CestaVon_LoginPage.MainPage.*;
+import static page.CestaVon_LoginPage.UserRegistrationPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
 
 public class CestaVon_LoginSteps extends TestStepActions {
@@ -20,6 +22,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	static TestRunner TestRunner = new TestRunner();
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver)globalParametersMap.get("driver");
+	CestaVon_LoginPage page = new CestaVon_LoginPage(driver);
+	String	Username,Email,PhoneNumber,ActiveTab;
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
     public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -28,13 +32,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
     	ReportExtender.logScreen(driver);    
         waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
     	clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
-    }
-    
-    @Then("Click on odhlasit button")
-	public void clickonodhlasitButton(){
-		waitForElementVisible(driver,OdhlasitButton.getLocator(),OdhlasitButton.getDescription(),15);
-		ReportExtender.logScreen(driver);
-		clickElement(OdhlasitButton.getElement(driver),OdhlasitButton.getDescription());
 	}
 
 	@Then("^Verify odhlasit button is not visible$")
@@ -64,25 +61,59 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		setElementSecureText(PincodeElement.getElement(driver),Pincode,PincodeElement.getDescription());
 	}
 
-	@And("Click on zaregistrovat zariadenie button")
-	public void clickOnZaregistrovatZariadenieButton() {
-		waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
-		ReportExtender.logScreen(driver);
-		clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
-	}
-
 	@And("Click on menu button")
 	public void clickOnMenuButton() {
 		waitForElementVisible(driver,MenuButton.getLocator(),MenuButton.getDescription(),15);
 		clickElement(MenuButton.getElement(driver),MenuButton.getDescription());
 	}
 
-	@Then("Click on odhlasit button in menu")
-	public void clickOnOdhlasitButtonInmenu() {
-		waitForElementVisible(driver,OdhlasitButtonInMenu.getLocator(),OdhlasitButtonInMenu.getDescription(),15);
+	@And("Select from menu tab {string}")
+	public void selectFromTabMenu(String value) {
+		waitForElementClickable(driver,page.getTabLocator(value),"Wait for specific tab is visible",10);
 		ReportExtender.logScreen(driver);
-		clickElement(OdhlasitButtonInMenu.getElement(driver),OdhlasitButtonInMenu.getDescription());
+		clickElement(page.getTabElement(value),"Click on specific tab");
 	}
 
+	@And("Click on button {string}")
+	public void clickOnButton(String value) {
+		waitForElementClickable(driver,page.getButtonLocator(value),"Wait for specific button is visible",10);
+		ReportExtender.logScreen(driver);
+		clickElement(page.getButtonElement(value),"Click on specific button");
+	}
 
+	@And("Registry new {string} user and save details")
+	public void registryNewUserAndSaveDetails(String value) {
+		waitForElementVisible(driver,NameSurnameInput.getLocator(),NameSurnameInput.getDescription(),10);
+		setElementText(NameSurnameInput.getElement(driver),"Martin Tester",NameSurnameInput.getDescription());
+		setElementText(EmailInput.getElement(driver),"Martintester@gmail.com",EmailInput.getDescription());
+		setElementText(RegionInput.getElement(driver),"test",RegionInput.getDescription());
+		setElementText(TownInput.getElement(driver),"Bratislava - Devín",TownInput.getDescription());
+		waitForElementClickable(driver,ConfirmTownInput.getLocator(),ConfirmTownInput.getDescription(), 10);
+		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
+		setElementText(UsernameInput.getElement(driver),"Martin_TEST",UsernameInput.getDescription());
+		setElementText(StreetInput.getElement(driver),"Testerska 38",StreetInput.getDescription());
+		setElementText(PasswordInput.getElement(driver),"Martintester123.",PasswordInput.getDescription());
+		setElementText(AgainHesloInput.getElement(driver),"Martintester123.",AgainHesloInput.getDescription());
+		setElementText(PhoneNumberInput.getElement(driver),"0915123456",PhoneNumberInput.getDescription());
+		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
+		waitForElementClickable(driver,page.getTabLocator(value),"Wait for dropdown visible",10);
+		clickElement(page.getTabElement(value),"Select specific role from dropdown");
+		Username = getAttributeValue(NameSurnameInput.getElement(driver),NameSurnameInput.getDescription());
+		Email = getAttributeValue(EmailInput.getElement(driver),EmailInput.getDescription());
+		PhoneNumber = getAttributeValue(PhoneNumberInput.getElement(driver),PhoneNumberInput.getDescription());
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Confirm Registration")
+	public void confirmRegistration() {
+		waitForElementClickable(driver,RegistrovatButton.getLocator(), RegistrovatButton.getDescription(),10);
+		clickElementUsingJavascript(driver, RegistrovatButton.getElement(driver),RegistrovatButton.getDescription());
+	}
+
+	@And("Verify {string} tab is active")
+	public void verifyTabIsActive(String value) {
+		waitForElementVisible(driver,SelectedTab.getLocator(),SelectedTab.getDescription(),10);
+		new Validation("Verify Tab is active", getElementText(SelectedTab.getElement(driver), SelectedTab.getDescription()), value).stringEquals();
+	}
 }
+

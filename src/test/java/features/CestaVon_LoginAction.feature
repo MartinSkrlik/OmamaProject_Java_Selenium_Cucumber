@@ -8,8 +8,8 @@ Feature: CestaVon - Login Action
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    Then    Click on odhlasit button
+    And     Click on button "Zaregistrovať zariadenie"
+    Then    Select from menu tab "Odhlásiť"
 
     Examples:
 
@@ -23,8 +23,8 @@ Feature: CestaVon - Login Action
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    Then    Click on odhlasit button
+    And     Click on button "Zaregistrovať zariadenie"
+    Then    Select from menu tab "Odhlásiť"
 
     Examples:
 
@@ -38,8 +38,8 @@ Feature: CestaVon - Login Action
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
-    Then    Click on odhlasit button
+    And     Click on button "Zaregistrovať zariadenie"
+    Then    Select from menu tab "Odhlásiť"
 
     Examples:
 
@@ -53,9 +53,9 @@ Feature: CestaVon - Login Action
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
-    And     Click on zaregistrovat zariadenie button
+    And     Click on button "Zaregistrovať zariadenie"
     And     Click on menu button
-    Then    Click on odhlasit button in menu
+    Then    Select from menu tab "Odhlásiť"
 
     Examples:
 
