@@ -16,7 +16,7 @@ Feature: CestaVon - Create New Admin User
     And     Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-    And     Input new created username into meno search bar and select
+    And     Input new created username into "Meno" search bar and select
     Then    Verify details new created user
     And     Click on button "Odstrániť používateľa"
     Then    Click on button "Odstrániť"

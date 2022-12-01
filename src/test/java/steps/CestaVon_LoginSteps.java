@@ -4,25 +4,26 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
-import page.CestaVon_LoginPage;
+import page.CestaVon_CommonPage;
 import runner.TestRunner;
 import utility.Log;
 import utility.ReportExtender;
 import utility.SAUCEDEMO_PageMapper;
 import utility.Validation;
+
 import java.util.HashMap;
 
-import static page.CestaVon_MainPage.MainPage.*;
-import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
+import static page.CestaVon_CommonPage.MainPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
 import static page.CestaVon_UserProfilPage.UserProfilPage.*;
+import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
 
 public class CestaVon_LoginSteps extends TestStepActions {
 	
 	static TestRunner TestRunner = new TestRunner();
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver)globalParametersMap.get("driver");
-	CestaVon_LoginPage page = new CestaVon_LoginPage(driver);
+	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
 	String	Username,Email,PhoneNumber;
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
@@ -48,7 +49,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
     @Then("^Verify error message is visible$")
     public void verify_error_message_is_visible() throws Throwable {
-		CestaVon_LoginPage page = new CestaVon_LoginPage(driver);
+		CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
 		waitForElementVisible(driver, page.getErrorMessageLocator("Nesprávne heslo"), ErrorMessage.getDescription(), 60);
     	new Validation("ERROR MESSAGE", getDisplayedText(page.getErrorMessageElement("Nesprávne heslo"), ErrorMessage.getDescription()), SAUCEDEMO_PageMapper.ERROR_MESSAGE).contains();
     	Thread.sleep(1000);
@@ -114,10 +115,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Input new created username into meno search bar and select")
-	public void inputNewCreatedUsernameIntoMenoSearchBarAndSelect() {
-		waitForElementVisible(driver,MenoSearchBar.getLocator(),MenoSearchBar.getDescription(),10);
-		setElementText(MenoSearchBar.getElement(driver),Username,MenoSearchBar.getDescription());
+	@And("Input new created username into {string} search bar and select")
+	public void inputNewCreatedUsernameIntoSearchBarAndSelect(String value) {
+		waitForElementVisible(driver,page.getInputLocator(value),"Wait for input is visible",10);
+		setElementText(page.getInputElement(value),Username,"Set value into input");
 		waitForElementVisible(driver,SelectNewCreatedUser.getLocator(),SelectNewCreatedUser.getDescription(),10);
 		ReportExtender.logScreen(driver);
 		clickElement(SelectNewCreatedUser.getElement(driver), SelectNewCreatedUser.getDescription());

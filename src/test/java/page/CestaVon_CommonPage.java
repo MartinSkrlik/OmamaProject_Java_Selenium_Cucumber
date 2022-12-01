@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class CestaVon_MainPage {
+public class CestaVon_CommonPage {
 
 	private WebDriver driver;
 
@@ -16,8 +16,6 @@ public class CestaVon_MainPage {
                 "ODHLASIT BUTTON"),
         SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
-        MenoSearchBar   (By.xpath("//input[contains(@class,'input')]"),
-                "Search bar MENO"),
         SelectNewCreatedUser    (By.xpath("//tr[@data-row-key='Martin_TEST']"),
                 "Click on new created USER after searching in MENO search bar")
         ;
@@ -42,5 +40,18 @@ public class CestaVon_MainPage {
             return driver.findElement(getLocator());
         }
     }
-        public CestaVon_MainPage(WebDriver driver) { this.driver = driver; }
+        public CestaVon_CommonPage(WebDriver driver) { this.driver = driver; }
+
+    public WebElement getErrorMessageElement(String value) {return driver.findElement(getErrorMessageLocator(value));}
+    public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
+
+    public WebElement getButtonElement(String value) {return driver.findElement(getButtonLocator(value));}
+    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}
+
+    public WebElement getTabElement(String value) {return driver.findElement(getTabLocator(value));}
+    public By getTabLocator(String value) {return By.xpath("//li[text()='" + value + "']");}
+
+    public WebElement getInputElement(String value) {return driver.findElement(getInputLocator(value));}
+    public By getInputLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
+
 }
