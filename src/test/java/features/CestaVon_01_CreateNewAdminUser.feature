@@ -5,6 +5,7 @@ Feature: CestaVon - Create New Admin User
   Scenario Outline: CestaVon - Login with valid credentials and create new admin user
 
     Given   Open browser "<BROWSER>"
+    When    Maximalize window
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
@@ -12,7 +13,7 @@ Feature: CestaVon - Create New Admin User
     And     Select from menu tab "Používatelia"
     And     Click on button "Pridať"
     And     Registry new "Admin" user and save details
-    Then    Confirm Registration
+    And     Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Input new created username into meno search bar and select

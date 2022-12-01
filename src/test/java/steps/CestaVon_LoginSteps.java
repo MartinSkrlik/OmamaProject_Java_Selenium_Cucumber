@@ -76,9 +76,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Click on button {string}")
 	public void clickOnButton(String value) {
-		waitForElementClickable(driver,page.getButtonLocator(value),"Wait for specific button is visible",10);
+		scrollElementIntoView(driver,page.getButtonElement(value));
+		waitForElementClickable(driver,page.getButtonLocator(value),"Wait for specific button is clickable",10);
 		ReportExtender.logScreen(driver);
-		clickElement(page.getButtonElement(value),"Click on specific button");
+		clickElementUsingJavascript(driver, page.getButtonElement(value),"Click on specific button");
 	}
 
 	@And("Registry new {string} user and save details")
@@ -95,6 +96,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		setElementText(PasswordInput.getElement(driver),"Martintester123.",PasswordInput.getDescription());
 		setElementText(AgainHesloInput.getElement(driver),"Martintester123.",AgainHesloInput.getDescription());
 		setElementText(PhoneNumberInput.getElement(driver),"0915123456",PhoneNumberInput.getDescription());
+		scrollElementIntoView(driver, DropDownRole.getElement(driver));
+		waitForElementClickable(driver,DropDownRole.getLocator(), DropDownRole.getDescription(), 10);
 		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
 		waitForElementClickable(driver,page.getTabLocator(value),"Wait for dropdown visible",10);
 		clickElement(page.getTabElement(value),"Select specific role from dropdown");
@@ -102,14 +105,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		Email = getAttributeValue(EmailInput.getElement(driver),EmailInput.getDescription());
 		PhoneNumber = getAttributeValue(PhoneNumberInput.getElement(driver),PhoneNumberInput.getDescription());
 		ReportExtender.logScreen(driver);
-	}
-
-	@And("Confirm Registration")
-	public void confirmRegistration() {
-		sleep(5000);
-		scrollElementIntoView(driver, RegistrovatButton.getElement(driver));
-		waitForElementVisible(driver,RegistrovatButton.getLocator(), RegistrovatButton.getDescription(),10);
-		clickElement(RegistrovatButton.getElement(driver), RegistrovatButton.getDescription());
 	}
 
 	@And("Verify {string} tab is active")
@@ -135,5 +130,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Verify EMAIL", getElementText(GetUserEmail.getElement(driver), GetUserEmail.getDescription()), Email).stringEquals();
 		new Validation("Verify PHONE NUMBER", getElementText(GetUserPhone.getElement(driver), GetUserPhone.getDescription()), PhoneNumber).stringEquals();
 		ReportExtender.logScreen(driver);
+	}
+
+	@When("Maximalize window")
+	public void maximalizeWindow() {
+		driver.manage().window().maximize();
 	}
 }
