@@ -124,17 +124,27 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(SelectNewCreatedUser.getElement(driver), SelectNewCreatedUser.getDescription());
 	}
 
-	@Then("Verify details new created user")
-	public void verifyDetailsNewCreatedUser() {
-		waitForElementVisible(driver,GetUserEmail.getLocator(), GetUserName.getDescription(),10);
+	@Then("Verify details new created Admin user")
+	public void verifyDetailsNewCreatedAdminUser() {
+		waitForElementVisible(driver,GetUserName.getLocator(), GetUserName.getDescription(),10);
 		new Validation("Verify USERNAME", getElementText(GetUserName.getElement(driver), GetUserName.getDescription()), Username).stringEquals();
-		new Validation("Verify EMAIL", getElementText(GetUserEmail.getElement(driver), GetUserEmail.getDescription()), Email).stringEquals();
-		new Validation("Verify PHONE NUMBER", getElementText(GetUserPhone.getElement(driver), GetUserPhone.getDescription()), PhoneNumber).stringEquals();
+		new Validation("Verify EMAIL", getElementText(GetUserEmailAdmin.getElement(driver), GetUserEmailAdmin.getDescription()), Email).stringEquals();
+		new Validation("Verify PHONE NUMBER", getElementText(GetUserPhoneAdmin.getElement(driver), GetUserPhoneAdmin.getDescription()), PhoneNumber).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
 	@When("Maximalize window")
 	public void maximalizeWindow() {
 		driver.manage().window().maximize();
+	}
+
+	@Then("Verify details new created user")
+	public void verifyDetailsNewCreatedUser() {
+		waitForElementVisible(driver,GetUserName.getLocator(), GetUserName.getDescription(),10);
+		new Validation("Verify USERNAME", getElementText(GetUserName.getElement(driver), GetUserName.getDescription()), Username).stringEquals();
+//		new Validation("Verify EMAIL", getElementText(GetUserEmail.getElement(driver), GetUserEmail.getDescription()), Email).stringEquals();
+//		new Validation("Verify PHONE NUMBER", getElementText(GetUserPhone.getElement(driver), GetUserPhone.getDescription()), PhoneNumber).stringEquals();
+		ReportExtender.logScreen(driver);
+
 	}
 }

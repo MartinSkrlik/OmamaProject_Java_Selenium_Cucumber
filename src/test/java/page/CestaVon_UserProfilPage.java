@@ -10,12 +10,16 @@ public class CestaVon_UserProfilPage {
 
 	public enum UserProfilPage {
 
-        GetUserName    (By.xpath("//b[contains(@class,'name')]"),
+        GetUserName          (By.xpath("//b[contains(@class,'name')]"),
                 "Get new created USERNAME for verfication"),
-        GetUserPhone   (By.xpath("//*[text()='Telefón:']/following-sibling::td"),
+        GetUserPhoneAdmin    (By.xpath("//*[text()='Telefón:']/following-sibling::td"),
                 "Get PHONE NUMBER for verification"),
-        GetUserEmail    (By.xpath("//*[text()='Email:']/following-sibling::td"),
-                "Get EMAIL for verification")
+        GetUserEmailAdmin    (By.xpath("//*[text()='Email:']/following-sibling::td"),
+                "Get EMAIL for verification"),
+//        GetUserPhone   (By.xpath("/html/body/div/div/div/div[2]/div/div/div/div[1]/div[1]/div[5]/div[1]/b"),
+//                "Get PHONE NUMBER for verification"),
+//        GetUserEmail   (By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div/div/div[1]/div[1]/div[5]/div[2]/b"),
+//                "Get EMAIL for verification")
         ;
         private String description;
         private By findBy;
