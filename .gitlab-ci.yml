@@ -1,0 +1,14 @@
+image: markhobson/maven-chrome
+
+variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+    
+stages:
+  - build
+     
+build:
+  stage: build
+  script:
+    - mvn clean compile
+  only:
+    - pushes
