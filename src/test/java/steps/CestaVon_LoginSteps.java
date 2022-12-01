@@ -10,12 +10,12 @@ import utility.Log;
 import utility.ReportExtender;
 import utility.SAUCEDEMO_PageMapper;
 import utility.Validation;
-
 import java.util.HashMap;
 
-import static page.CestaVon_LoginPage.MainPage.*;
-import static page.CestaVon_LoginPage.UserRegistrationPage.*;
+import static page.CestaVon_MainPage.MainPage.*;
+import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
+import static page.CestaVon_UserProfilPage.UserProfilPage.*;
 
 public class CestaVon_LoginSteps extends TestStepActions {
 	
@@ -23,7 +23,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver)globalParametersMap.get("driver");
 	CestaVon_LoginPage page = new CestaVon_LoginPage(driver);
-	String	Username,Email,PhoneNumber,ActiveTab;
+	String	Username,Email,PhoneNumber;
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
     public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -106,14 +106,34 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Confirm Registration")
 	public void confirmRegistration() {
-		waitForElementClickable(driver,RegistrovatButton.getLocator(), RegistrovatButton.getDescription(),10);
-		clickElementUsingJavascript(driver, RegistrovatButton.getElement(driver),RegistrovatButton.getDescription());
+		sleep(5000);
+		scrollElementIntoView(driver, RegistrovatButton.getElement(driver));
+		waitForElementVisible(driver,RegistrovatButton.getLocator(), RegistrovatButton.getDescription(),10);
+		clickElement(RegistrovatButton.getElement(driver), RegistrovatButton.getDescription());
 	}
 
 	@And("Verify {string} tab is active")
 	public void verifyTabIsActive(String value) {
 		waitForElementVisible(driver,SelectedTab.getLocator(),SelectedTab.getDescription(),10);
 		new Validation("Verify Tab is active", getElementText(SelectedTab.getElement(driver), SelectedTab.getDescription()), value).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Input new created username into meno search bar and select")
+	public void inputNewCreatedUsernameIntoMenoSearchBarAndSelect() {
+		waitForElementVisible(driver,MenoSearchBar.getLocator(),MenoSearchBar.getDescription(),10);
+		setElementText(MenoSearchBar.getElement(driver),Username,MenoSearchBar.getDescription());
+		waitForElementVisible(driver,SelectNewCreatedUser.getLocator(),SelectNewCreatedUser.getDescription(),10);
+		ReportExtender.logScreen(driver);
+		clickElement(SelectNewCreatedUser.getElement(driver), SelectNewCreatedUser.getDescription());
+	}
+
+	@Then("Verify details new created user")
+	public void verifyDetailsNewCreatedUser() {
+		waitForElementVisible(driver,GetUserEmail.getLocator(), GetUserName.getDescription(),10);
+		new Validation("Verify USERNAME", getElementText(GetUserName.getElement(driver), GetUserName.getDescription()), Username).stringEquals();
+		new Validation("Verify EMAIL", getElementText(GetUserEmail.getElement(driver), GetUserEmail.getDescription()), Email).stringEquals();
+		new Validation("Verify PHONE NUMBER", getElementText(GetUserPhone.getElement(driver), GetUserPhone.getDescription()), PhoneNumber).stringEquals();
+		ReportExtender.logScreen(driver);
 	}
 }
-

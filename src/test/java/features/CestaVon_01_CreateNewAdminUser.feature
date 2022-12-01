@@ -12,11 +12,13 @@ Feature: CestaVon - Create New Admin User
     And     Select from menu tab "Používatelia"
     And     Click on button "Pridať"
     And     Registry new "Admin" user and save details
-    And     Confirm Registration
+    Then    Confirm Registration
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-
-
+    And     Input new created username into meno search bar and select
+    Then    Verify details new created user
+    And     Click on button "Odstrániť používateľa"
+    Then    Click on button "Odstrániť"
 
     Examples:
 
