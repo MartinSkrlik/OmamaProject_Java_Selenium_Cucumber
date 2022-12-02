@@ -17,7 +17,9 @@ public class CestaVon_CommonPage {
         SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
         SelectNewCreatedUser    (By.xpath("//tr[@data-row-key='Martin_TEST']"),
-                "Click on new created USER after searching in MENO search bar")
+                "Click on new created USER after searching in MENO search bar"),
+        NextPageButton  (By.xpath("//li[contains(@title,'Nasledujúca')]"),
+                "Click on NEXT page")
         ;
 
         private String description;
@@ -55,5 +57,8 @@ public class CestaVon_CommonPage {
     public By getInputLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
 
     public WebElement getDropdownElement(String value) {return driver.findElement(getDropdownLocator(value));}
-    public By getDropdownLocator(String value) {return By.xpath("//div[contains(text(),'" + value + "')]");}
+    public By getDropdownLocator(String value) {return By.xpath("//div[text()='" + value + "']");}
+
+    public WebElement getUserElement(String value) {return driver.findElement(getUserLocator(value));}
+    public By getUserLocator(String value)  {return By.xpath("//div[text()='" + value + "']/ancestor::tr");}
 }

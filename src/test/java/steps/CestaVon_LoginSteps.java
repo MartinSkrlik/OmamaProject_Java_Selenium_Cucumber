@@ -24,7 +24,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver)globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
-	String	Username,Email,PhoneNumber;
+	String	Username,Email,PhoneNumber,Town,Status = "";
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
     public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -166,4 +166,59 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementClickable(driver,SelectCurrentDate.getLocator(),SelectCurrentDate.getDescription(),10);
 		clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver),"Select current day from date menu");
 	}
+
+	@And("Find user {string}")
+	public void findUser(String value) {
+		waitForFullPageLoad(driver,10);
+		while (driver.findElements(page.getUserLocator(value)).size() == 0) {
+			waitForElementClickable(driver,NextPageButton.getLocator(),NextPageButton.getDescription(),10);
+			clickElementUsingJavascript(driver,NextPageButton.getElement(driver), NextPageButton.getDescription());
+			waitForFullPageLoad(driver,10);
+		}
+		clickElementUsingJavascript(driver,page.getUserElement(value),"Click on desired user");
+	}
+
+	@And("Change user details")
+	public void changeUserDetails() {
+		waitForElementVisible(driver,NameSurnameInput.getLocator(),NameSurnameInput.getDescription(),10);
+		setElementText(NameSurnameInput.getElement(driver),"Martin Tester Change",NameSurnameInput.getDescription());
+		setElementText(TownInput.getElement(driver),"Bratislava - Devínska Nová Ves",TownInput.getDescription());
+		waitForElementClickable(driver,ConfirmTownInput.getLocator(),ConfirmTownInput.getDescription(), 10);
+		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Set user status {string}")
+	public void setUserStatus(String value) {
+		waitForElementClickable(driver,page.getDropdownLocator(value),"Wait for user status",10);
+		clickElementUsingJavascript(driver,page.getDropdownElement(value),"Change user status");
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Save user details")
+	public void saveUserDetails() {
+		Username = getAttributeValue(NameSurnameInput.getElement(driver),NameSurnameInput.getDescription());
+		Town = getAttributeValue(TownInput.getElement(driver), TownInput.getDescription());
+		Status = getElementText(GetUserStatus.getElement(driver), GetUserStatus.getDescription());
+	}
+
+	@And("Verify user details were changed")
+	public void verifyUserDetailsWereChanged() {
+		sleep(3000);
+		new Validation("Verify USERNAME",getElementText(GetUserName.getElement(driver),GetUserName.getDescription()),Username).stringEquals();
+		new Validation("Verify user TOWN",getElementText(GetUserTown.getElement(driver),GetUserTown.getDescription()),Town).stringEquals();
+		new Validation("Verify user STATUS",getElementText(GetStatus.getElement(driver), GetStatus.getDescription()),Status).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Change user details to original state")
+	public void changeUserDetailsToOriginalState() {
+		waitForElementVisible(driver,NameSurnameInput.getLocator(),NameSurnameInput.getDescription(),10);
+		setElementText(NameSurnameInput.getElement(driver),"Martin Tester",NameSurnameInput.getDescription());
+		setElementText(TownInput.getElement(driver),"Bratislava - Devín",TownInput.getDescription());
+		waitForElementClickable(driver,ConfirmTownInput.getLocator(),ConfirmTownInput.getDescription(), 10);
+		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
+		ReportExtender.logScreen(driver);
+	}
 }
+

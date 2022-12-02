@@ -31,7 +31,7 @@ Feature: CestaVon - Create New Omama User
     Then    Click on button "Uložiť"
     Then    Click on button "Odstrániť používateľa"
     Then    Click on button "Odstrániť"
-    Then     Select from menu tab "Odhlásiť"
+    Then    Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
     Examples:
