@@ -19,7 +19,9 @@ Feature: CestaVon - Create New Mentor User
     And     Input new created username into "Meno" search bar and select
     Then    Verify details new created user
     And     Click on button "Odstrániť používateľa"
-    Then    Click on button "Odstrániť"
+    And     Click on button "Odstrániť"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 

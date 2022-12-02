@@ -79,7 +79,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void clickOnButton(String value) {
 		scrollElementIntoView(driver,page.getButtonElement(value));
 		waitForElementClickable(driver,page.getButtonLocator(value),"Wait for specific button is clickable",10);
-		ReportExtender.logScreen(driver);
 		clickElementUsingJavascript(driver, page.getButtonElement(value),"Click on specific button");
 	}
 
@@ -145,6 +144,26 @@ public class CestaVon_LoginSteps extends TestStepActions {
 //		new Validation("Verify EMAIL", getElementText(GetUserEmail.getElement(driver), GetUserEmail.getDescription()), Email).stringEquals();
 //		new Validation("Verify PHONE NUMBER", getElementText(GetUserPhone.getElement(driver), GetUserPhone.getDescription()), PhoneNumber).stringEquals();
 		ReportExtender.logScreen(driver);
+	}
 
+	@Then("Verify Login page is present")
+	public void verifyLoginPageIsPresent() {
+		waitForElementVisible(driver,LoginButton.getLocator(), LoginButton.getDescription(),10);
+	}
+
+	@And("Unwrap dropdown {string}")
+	public void unwrapDropdown(String value) {
+		scrollElementIntoView(driver,page.getDropdownElement(value));
+		waitForElementClickable(driver,page.getDropdownLocator(value),"Wait for specific dropdown clickable",10);
+		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver,page.getDropdownElement(value),"Unwrap specific dropdown"); }
+
+	@And("Select into input {string} actual date")
+	public void selectIntoInputActualDate(String value) {
+		scrollElementIntoView(driver,page.getInputElement(value));
+		waitForElementClickable(driver,page.getInputLocator(value),"Wait for specific input clickable",10);
+		clickElementUsingJavascript(driver,page.getInputElement(value),"Click on specific input");
+		waitForElementClickable(driver,SelectCurrentDate.getLocator(),SelectCurrentDate.getDescription(),10);
+		clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver),"Select current day from date menu");
 	}
 }

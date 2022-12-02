@@ -20,6 +20,8 @@ public class CestaVon_UserProfilPage {
 //                "Get PHONE NUMBER for verification"),
 //        GetUserEmail   (By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div/div/div[1]/div[1]/div[5]/div[2]/b"),
 //                "Get EMAIL for verification")
+        SelectCurrentDate    (By.xpath("//td[contains(@class,'today')]"),
+                "Pick current DAY from date menu")
         ;
         private String description;
         private By findBy;

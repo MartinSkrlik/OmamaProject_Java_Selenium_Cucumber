@@ -54,4 +54,6 @@ public class CestaVon_CommonPage {
     public WebElement getInputElement(String value) {return driver.findElement(getInputLocator(value));}
     public By getInputLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
 
+    public WebElement getDropdownElement(String value) {return driver.findElement(getDropdownLocator(value));}
+    public By getDropdownLocator(String value) {return By.xpath("//div[contains(text(),'" + value + "')]");}
 }
