@@ -18,14 +18,9 @@ public class CestaVon_LoginPage {
     					"Click on LOGIN Button"),
         ErrorMessage 	(null,
     					"ERROR Message"),
-        OdhlasitButton  (By.xpath("//li[@id='sign_out_button']"),
-                        "ODHLASIT BUTTON"),
         PincodeElement  (By.xpath("//input[contains(@placeholder,'pin')]"),
                         "PINCODE Input"),
-        MenuButton      (By.xpath("//div[@class='menu']"),
-                        "Click on menu Button"),
-        OdhlasitButtonInMenu  (By.xpath("//p[@class='logoff']"),
-                        "Odhlasit BUTTON from menu")
+
         ;
 
     	private String description;
@@ -49,14 +44,7 @@ public class CestaVon_LoginPage {
         }
     }
 
-    public CestaVon_LoginPage(WebDriver driver) {
-        this.driver = driver;
-    }
+    public CestaVon_LoginPage(WebDriver driver) { this.driver = driver; }
     
-    public WebElement getErrorMessageElement(String value) {return driver.findElement(getErrorMessageLocator(value));}
-    public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
-
-
-
 
 }

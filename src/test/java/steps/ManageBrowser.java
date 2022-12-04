@@ -1,20 +1,21 @@
 package steps;
 
-import java.util.HashMap;
-import org.openqa.selenium.WebDriver;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.WebDriver;
+import runner.TestRunner;
 import utility.BrowserFactory;
 import utility.ConfigFileReader;
 import utility.Log;
 import utility.ReportExtender;
-import runner.TestRunner;
+
+import java.util.HashMap;
 
 public class ManageBrowser {	
 
 	static TestRunner TestRunner = new TestRunner();
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
-	
+
     @Given("^Open browser \"([^\"]*)\"$")
     public void open_browser(String browser) throws Throwable {
     	try {
@@ -23,6 +24,7 @@ public class ManageBrowser {
         catch (Exception e) {
         	logError(e);
         }
+
     }
     
     @Given("^Open browser \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")

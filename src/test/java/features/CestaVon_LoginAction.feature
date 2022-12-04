@@ -7,8 +7,10 @@ Feature: CestaVon - Login Action
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>" and click zaregistrovat zariadenie
-    Then    Verify odhlasit button is visible and click odhlasit
+    And     Input pin code "<PINCODE>"
+    And     Click on button "Zaregistrovať zariadenie"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -21,8 +23,10 @@ Feature: CestaVon - Login Action
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>" and click zaregistrovat zariadenie
-    Then    Verify odhlasit button is visible and click odhlasit
+    And     Input pin code "<PINCODE>"
+    And     Click on button "Zaregistrovať zariadenie"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -35,8 +39,10 @@ Feature: CestaVon - Login Action
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>" and click zaregistrovat zariadenie
-    Then    Verify odhlasit button is visible and click odhlasit
+    And     Input pin code "<PINCODE>"
+    And     Click on button "Zaregistrovať zariadenie"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -49,9 +55,11 @@ Feature: CestaVon - Login Action
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
-    And     Input pin code "<PINCODE>" and click zaregistrovat zariadenie
+    And     Input pin code "<PINCODE>"
+    And     Click on button "Zaregistrovať zariadenie"
     And     Click on menu button
-    Then    Verify odhlasit button in menu is visible and click odhlasit
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -64,7 +72,7 @@ Feature: CestaVon - Login Action
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     Then    Verify odhlasit button is not visible
-    And     Verify error message is visible
+    Then    Verify error message is visible
 
     Examples:
 
