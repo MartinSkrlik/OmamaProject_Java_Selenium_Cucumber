@@ -3,6 +3,7 @@ package steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import page.CestaVon_CommonPage;
 import runner.TestRunner;
@@ -60,6 +61,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void inputpincode (String Pincode)  {
 		waitForElementVisible(driver,PincodeElement.getLocator(),PincodeElement.getDescription(),15);
 		setElementSecureText(PincodeElement.getElement(driver),Pincode,PincodeElement.getDescription());
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Click on menu button")
@@ -71,7 +73,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Select from menu tab {string}")
 	public void selectFromTabMenu(String value) {
 		waitForElementClickable(driver,page.getTabLocator(value),"Wait for specific tab is visible",10);
-		ReportExtender.logScreen(driver);
 		clickElement(page.getTabElement(value),"Click on specific tab");
 	}
 
@@ -79,6 +80,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void clickOnButton(String value) {
 		scrollElementIntoView(driver,page.getButtonElement(value));
 		waitForElementClickable(driver,page.getButtonLocator(value),"Wait for specific button is clickable",10);
+		ReportExtender.logScreen(driver);
 		clickElementUsingJavascript(driver, page.getButtonElement(value),"Click on specific button");
 	}
 
@@ -149,6 +151,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@Then("Verify Login page is present")
 	public void verifyLoginPageIsPresent() {
 		waitForElementVisible(driver,LoginButton.getLocator(), LoginButton.getDescription(),10);
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Unwrap dropdown {string}")
@@ -171,10 +174,15 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void findUser(String value) {
 		waitForFullPageLoad(driver,10);
 		while (driver.findElements(page.getUserLocator(value)).size() == 0) {
-			waitForElementClickable(driver,NextPageButton.getLocator(),NextPageButton.getDescription(),10);
+			waitForElementVisible(driver,NextPageButton.getLocator(),NextPageButton.getDescription(),10);
+			if (verifyElementIsPresent(driver,NextPageButtonDisabled.getLocator(),NextPageButtonDisabled.getDescription()))
+				{ReportExtender.logFail("USERNAME WAS NOT FOUND");
+				ReportExtender.logScreen(driver);
+				driver.close();}
 			clickElementUsingJavascript(driver,NextPageButton.getElement(driver), NextPageButton.getDescription());
 			waitForFullPageLoad(driver,10);
 		}
+		ReportExtender.logScreen(driver);
 		clickElementUsingJavascript(driver,page.getUserElement(value),"Click on desired user");
 	}
 
@@ -190,6 +198,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Set user status {string}")
 	public void setUserStatus(String value) {
+		scrollElementIntoView(driver,page.getDropdownElement(value));
 		waitForElementClickable(driver,page.getDropdownLocator(value),"Wait for user status",10);
 		clickElementUsingJavascript(driver,page.getDropdownElement(value),"Change user status");
 		ReportExtender.logScreen(driver);
@@ -207,7 +216,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		sleep(3000);
 		new Validation("Verify USERNAME",getElementText(GetUserName.getElement(driver),GetUserName.getDescription()),Username).stringEquals();
 		new Validation("Verify user TOWN",getElementText(GetUserTown.getElement(driver),GetUserTown.getDescription()),Town).stringEquals();
-		new Validation("Verify user STATUS",getElementText(GetStatus.getElement(driver), GetStatus.getDescription()),Status).stringEquals();
+		new Validation("Verify user STATUS", StringUtils.chop(getElementText(GetStatus.getElement(driver), GetStatus.getDescription())), StringUtils.chop(Status)).contains();
 		ReportExtender.logScreen(driver);
 	}
 
@@ -220,5 +229,28 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		ReportExtender.logScreen(driver);
 	}
+
+	@Then("Go back to previous page")
+	public void goBackToPreviousPage() {
+		waitForElementClickable(driver,SpatButton.getLocator(),SpatButton.getDescription(),10);
+		clickElementUsingJavascript(driver,SpatButton.getElement(driver), SpatButton.getDescription());
+	}
+
+	@And("Find user with changed status")
+	public void findUserWithChangedStatus() {
+		waitForFullPageLoad(driver, 10);
+		while (driver.findElements(page.getUserLocator(Username)).size() == 0) {
+			waitForElementVisible(driver, NextPageButton.getLocator(), NextPageButton.getDescription(), 10);
+			if (verifyElementIsPresent(driver, NextPageButtonDisabled.getLocator(), NextPageButtonDisabled.getDescription())) {
+				ReportExtender.logFail("USERNAME WAS NOT FOUND");
+				ReportExtender.logScreen(driver);
+				driver.close();
+			}
+			clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
+			waitForFullPageLoad(driver, 10);
+		}
+		clickElementUsingJavascript(driver, page.getUserElement(Username), "Click on desired user");
+	}
+
 }
 

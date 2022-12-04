@@ -19,9 +19,10 @@ public class CestaVon_CommonPage {
         SelectNewCreatedUser    (By.xpath("//tr[@data-row-key='Martin_TEST']"),
                 "Click on new created USER after searching in MENO search bar"),
         NextPageButton  (By.xpath("//li[contains(@title,'Nasledujúca')]"),
-                "Click on NEXT page")
+                "Click on NEXT page"),
+        NextPageButtonDisabled  (By.xpath("//li[contains(@aria-disabled,'true') and contains(@title,'Nasledujúca')]"),
+        "Next page BUTTON is disabled")
         ;
-
         private String description;
         private By findBy;
 
@@ -60,5 +61,5 @@ public class CestaVon_CommonPage {
     public By getDropdownLocator(String value) {return By.xpath("//div[text()='" + value + "']");}
 
     public WebElement getUserElement(String value) {return driver.findElement(getUserLocator(value));}
-    public By getUserLocator(String value)  {return By.xpath("//div[text()='" + value + "']/ancestor::tr");}
+    public By getUserLocator(String value)  {return By.xpath("//*[text()='" + value + "']/ancestor::tr");}
 }

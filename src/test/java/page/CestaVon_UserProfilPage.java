@@ -27,7 +27,9 @@ public class CestaVon_UserProfilPage {
         GetUserTown          (By.xpath("//div[contains(@class,'city')]"),
                 "Get user TOWN from user profil"),
         GetStatus            (By.xpath("(//b[contains(@class,'date')])[2]"),
-                "Get user status")
+                "Get user status"),
+        SpatButton           (By.xpath("(//div[contains(@class,'back')])[2]"),
+                "Click on Spat BUTTON")
         ;
         private String description;
         private By findBy;
