@@ -116,15 +116,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Input new created username into {string} search bar and select")
-	public void inputNewCreatedUsernameIntoSearchBarAndSelect(String value) {
-		waitForElementVisible(driver,page.getInputLocator(value),"Wait for input is visible",10);
-		setElementText(page.getInputElement(value),Username,"Set value into input");
-		waitForElementVisible(driver,SelectNewCreatedUser.getLocator(),SelectNewCreatedUser.getDescription(),10);
-		ReportExtender.logScreen(driver);
-		clickElement(SelectNewCreatedUser.getElement(driver), SelectNewCreatedUser.getDescription());
-	}
-
 	@Then("Verify details new created Admin user")
 	public void verifyDetailsNewCreatedAdminUser() {
 		waitForElementVisible(driver,GetUserName.getLocator(), GetUserName.getDescription(),10);
@@ -242,7 +233,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		while (driver.findElements(page.getUserLocator(Username)).size() == 0) {
 			waitForElementVisible(driver, NextPageButton.getLocator(), NextPageButton.getDescription(), 10);
 			if (verifyElementIsPresent(driver, NextPageButtonDisabled.getLocator(), NextPageButtonDisabled.getDescription())) {
-				ReportExtender.logFail("USERNAME WAS NOT FOUND");
+				ReportExtender.logInfo("USERNAME WAS DELETED OR DOES NOT EXIST");
 				ReportExtender.logScreen(driver);
 				driver.close();
 			}
@@ -250,6 +241,19 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			waitForFullPageLoad(driver, 10);
 		}
 		clickElementUsingJavascript(driver, page.getUserElement(Username), "Click on desired user");
+	}
+
+	@And("Input into {string} search bar username {string}")
+	public void searchForUsername(String value,String username) {
+		waitForElementVisible(driver,InputUserName.getLocator(), InputUserName.getDescription(),10);
+		setElementText(page.getInputElement(value),username,"Set USERNAME into input");
+		if (!verifyElementIsPresent(driver,page.getUserLocator(username),"Verify username is visible"))
+			{ReportExtender.logPass("USERNAME WAS DELETED OR DOES NOT EXIST");
+			ReportExtender.logScreen(driver);
+			return;}
+		waitForElementVisible(driver,page.getUserLocator(username),"Wait for username",10);
+		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver, page.getUserElement(username), "Click on desired user");
 	}
 
 }

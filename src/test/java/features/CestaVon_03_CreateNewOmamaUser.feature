@@ -16,7 +16,7 @@ Feature: CestaVon - Create New Omama User
     Then    Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     Then    Click on button "Obnoviť"
-    And     Input new created username into "Meno" search bar and select
+    And     Input into "Meno" search bar username "Martin Tester"
     And     Verify details new created user
     Then    Click on button "Upraviť profil"
     And     Unwrap dropdown "Vyber Mentora"

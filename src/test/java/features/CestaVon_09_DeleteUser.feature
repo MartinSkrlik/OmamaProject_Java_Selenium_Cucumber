@@ -1,8 +1,8 @@
-@CreateMentorUser
-Feature: CestaVon - Create New Mentor User
+@DeleteUser
+Feature: CestaVon - Delete User
 
 
-  Scenario Outline: CestaVon - Login with valid credentials and create new mentor user
+  Scenario Outline: CestaVon - Login with valid credentials,looking for specific user and delete user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -11,15 +11,13 @@ Feature: CestaVon - Create New Mentor User
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
-    And     Click on button "Pridať"
-    And     Registry new "Mentor" user and save details
-    And     Click on button "Registrovať"
+    And     Verify "Používatelia" tab is active
+    And     Find user "Martin Tester"
+    And     Click on button "Odstrániť používateľa"
+    And     Click on button "Odstrániť"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Input into "Meno" search bar username "Martin Tester"
-    Then    Verify details new created user
-    And     Click on button "Odstrániť používateľa"
-    And     Click on button "Odstrániť"
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 

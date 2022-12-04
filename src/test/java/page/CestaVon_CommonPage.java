@@ -16,12 +16,12 @@ public class CestaVon_CommonPage {
                 "ODHLASIT BUTTON"),
         SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
-        SelectNewCreatedUser    (By.xpath("//tr[@data-row-key='Martin_TEST']"),
-                "Click on new created USER after searching in MENO search bar"),
         NextPageButton  (By.xpath("//li[contains(@title,'Nasledujúca')]"),
                 "Click on NEXT page"),
         NextPageButtonDisabled  (By.xpath("//li[contains(@aria-disabled,'true') and contains(@title,'Nasledujúca')]"),
-        "Next page BUTTON is disabled")
+                "Next page BUTTON is disabled"),
+        InputUserName    (By.xpath("//input[contains(@class,'input')]"),
+                "Input USERNAME into input")
         ;
         private String description;
         private By findBy;
