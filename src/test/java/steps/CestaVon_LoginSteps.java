@@ -3,8 +3,10 @@ package steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
+import page.CestaVon_UsersPage;
 import page.CestaVon_CommonPage;
 import runner.TestRunner;
 import utility.Log;
@@ -18,6 +20,7 @@ import static page.CestaVon_CommonPage.MainPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
 import static page.CestaVon_UserProfilPage.UserProfilPage.*;
 import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
+import static page.CestaVon_UsersPage.adminMainPageItems.*;
 
 public class CestaVon_LoginSteps extends TestStepActions {
 	
@@ -203,6 +206,59 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		Status = getElementText(GetUserStatus.getElement(driver), GetUserStatus.getDescription());
 	}
 
+	@And("Click on Rola and choose option {string}")
+	public void clickOnRolaAndChooseOption(String value) {
+		CestaVon_UsersPage page = new CestaVon_UsersPage(driver);
+		waitForElementVisible(driver, RolaButton.getLocator(), RolaButton.getDescription(), 15);
+		clickElement(RolaButton.getElement(driver), RolaButton.getDescription());
+		waitForElementVisible(driver, page.getRolaOptionLocator(value), RolaOption.getDescription(), 15);
+		clickElement(page.getRolaOptionElement(value), RolaOption.getDescription());
+	}
+
+	@And("Set Search Field {string} to {string}")
+	public void setSearchFieldTo(String searchField, String searchText) {
+		waitForElementVisible(driver, page.getInputLocator(searchField), "Wait for search field visible", 15);
+		setElementText(page.getInputElement(searchField), searchText, "Setting element text");
+	}
+
+	@Then("Verify Meno {string} and Rola {string} in filtered table")
+	public void verifyMenoAndRolaInFilteredTable(String meno, String rola) {
+		boolean properlyFiltered = true;
+		int menoIndex = 0;
+		int rolaIndex = 0;
+		//getting number of columns in table
+		int numberOfColumns = driver.findElements(By.xpath("//thead//th")).size();
+		//getting number of rows in table
+		int numberOfRows = driver.findElements(By.xpath("//tbody/tr")).size();
+
+		//getting indexes of Meno and Rola columns
+		for (int x = 1; x <= numberOfColumns; x++){
+			if (driver.findElement(By.xpath("(//thead//th/span/div/span[1])[" + x + "]")).getText().startsWith("Meno")){
+				menoIndex = x;
+			} else if (driver.findElement(By.xpath("(//thead//th/span/div/span[1])[" + x + "]")).getText().startsWith("Rola")){
+				rolaIndex = x;
+			}
+		}
+
+		//verifying filtering
+		for (int x = 1; x <= numberOfRows; x++){
+			//column Meno
+			String menoString = driver.findElement(By.xpath("//tbody/tr[" + x + "]/td[" + menoIndex + "]/div")).getText();
+			if (!menoString.toLowerCase().startsWith(meno.toLowerCase())){
+				properlyFiltered = false;
+			}
+			//column Rola
+			String rolaString = driver.findElement(By.xpath("//tbody/tr[" + x + "]/td[" + rolaIndex + "]")).getText();
+			if (!rolaString.startsWith(rola)){
+				properlyFiltered = false;
+			}
+
+			ReportExtender.logInfo("Rozmer:" + numberOfRows + "x" + numberOfColumns + ", index Meno: " + menoIndex + ", index Rola: " + rolaIndex + ", riadok: " + x + ", meno je: " + menoString +", a rola je:" + rolaString);
+		}
+
+		new Validation("Table is properly filtered", properlyFiltered).isTrue();
+	}
+
 	@And("Verify user details were changed")
 	public void verifyUserDetailsWereChanged() {
 		sleep(3000);
@@ -257,5 +313,26 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElementUsingJavascript(driver, page.getUserElement(username), "Click on desired user");
 	}
 
+	@And("Select user with name {string} and remember his information")
+	public void selectUserWithNameAndRememberHisInformation(String value) {
+		CestaVon_UsersPage page = new CestaVon_UsersPage(driver);
+		waitForElementVisible(driver,page.getRowByNameLocator(value), "Waiting for row visible", 10);
+		ReportExtender.logScreen(driver);
+		Username = getElementText(page.getNameFromRowByNameElement(value), "Remembering Name");
+		Email = getElementText(page.getEmailFromRowByNameElement(value), "Remembering Email");
+		PhoneNumber = getElementText(page.getPhoneNumberFromRowByNameElement(value), "Remembering Phone Number");
+		Town = getElementText(page.getTownFromRowByNameElement(value), "Remembering City");
+		clickElement(page.getRowByNameElement(value), "Opening profile " + value + ".");
+	}
+
+	@Then("Verify all information is visible")
+	public void verifyAllInformationIsVisible() {
+		waitForElementVisible(driver, SpatButton.getLocator(), SpatButton.getDescription(), 10);
+		ReportExtender.logScreen(driver);
+		new Validation("Name visible in profile", getElementText(GetUserName.getElement(driver), GetUserName.getDescription()),Username).stringEquals();
+		new Validation("Phone Number visible in profile", getElementText(GetUserPhoneAdmin.getElement(driver), GetUserPhoneAdmin.getDescription()), PhoneNumber).stringEquals();
+		new Validation("Email visible in profile", getElementText(GetUserEmailAdmin.getElement(driver), GetUserEmailAdmin.getDescription()), Email).stringEquals();
+		new Validation("Town visible in profile", getElementText(GetUserTown.getElement(driver), GetUserTown.getDescription()), Town).stringEquals();
+	}
 }
 

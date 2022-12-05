@@ -35,7 +35,7 @@ Execute commands below in terminal from Project root directory (location of [pom
 **Reporting**
 
 Reports are stored in [reports](reports) folder, each run will generate folder __timestamp_Report_tag__ using [ExtentReport](https://www.extentreports.com/) library w/ screenshots
-## Authors and acknowledgment
+## Authors
 marek.soltes@accenture.com
 
 martin.skrlik@accenture.com
