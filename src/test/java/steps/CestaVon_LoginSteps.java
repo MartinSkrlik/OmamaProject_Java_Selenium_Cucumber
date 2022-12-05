@@ -106,6 +106,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		Username = getAttributeValue(NameSurnameInput.getElement(driver),NameSurnameInput.getDescription());
 		Email = getAttributeValue(EmailInput.getElement(driver),EmailInput.getDescription());
 		PhoneNumber = getAttributeValue(PhoneNumberInput.getElement(driver),PhoneNumberInput.getDescription());
+		Town = getAttributeValue(TownInput.getElement(driver), TownInput.getDescription());
 		ReportExtender.logScreen(driver);
 	}
 
