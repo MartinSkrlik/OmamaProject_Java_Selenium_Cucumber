@@ -1,8 +1,8 @@
-@CreateAdminUser
-Feature: CestaVon - Create New Admin User
+@CreateSupervisorUser
+Feature: CestaVon - Create New Supervisor User
 
 
-  Scenario Outline: CestaVon - Login with valid credentials and create new admin user
+  Scenario Outline: CestaVon - Login with valid credentials and create new supervisor user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -12,12 +12,12 @@ Feature: CestaVon - Create New Admin User
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     And     Click on button "Pridať"
-    And     Registry new "Admin" user and save details
+    And     Registry new "Supervízor" user and save details
     And     Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Input into "Meno" search bar username "Martin Tester"
-    Then    Verify details new created Admin user
+    Then    Verify details new created user
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
     And     Select from menu tab "Odhlásiť"

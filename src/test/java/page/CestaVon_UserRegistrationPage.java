@@ -32,8 +32,6 @@ public class CestaVon_UserRegistrationPage {
                 "Input Phone Number - create user"),
         DropDownRole        (By.xpath("//*[contains(text(),'Vyber')]"),
                 "Dropdown menu - pick role - create user"),
-        RegistrovatButton   (By.xpath("//button[contains(@class,'ant-btn')]"),
-                "Click on Registrovat button")
         ;
         private String description;
         private By findBy;

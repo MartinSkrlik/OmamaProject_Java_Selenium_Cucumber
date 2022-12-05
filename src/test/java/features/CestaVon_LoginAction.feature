@@ -9,7 +9,8 @@ Feature: CestaVon - Login Action
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
-    Then    Select from menu tab "Odhlásiť"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -24,7 +25,8 @@ Feature: CestaVon - Login Action
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
-    Then    Select from menu tab "Odhlásiť"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -39,7 +41,8 @@ Feature: CestaVon - Login Action
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
-    Then    Select from menu tab "Odhlásiť"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 
@@ -55,7 +58,8 @@ Feature: CestaVon - Login Action
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
     And     Click on menu button
-    Then    Select from menu tab "Odhlásiť"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 

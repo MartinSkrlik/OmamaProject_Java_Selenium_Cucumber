@@ -10,12 +10,26 @@ public class CestaVon_UserProfilPage {
 
 	public enum UserProfilPage {
 
-        GetUserName    (By.xpath("//b[contains(@class,'name')]"),
+        GetUserName          (By.xpath("//b[contains(@class,'name')]"),
                 "Get new created USERNAME for verfication"),
-        GetUserPhone   (By.xpath("//*[text()='Telefón:']/following-sibling::td"),
+        GetUserPhoneAdmin    (By.xpath("//*[text()='Telefón:']/following-sibling::td"),
                 "Get PHONE NUMBER for verification"),
-        GetUserEmail    (By.xpath("//*[text()='Email:']/following-sibling::td"),
-                "Get EMAIL for verification")
+        GetUserEmailAdmin    (By.xpath("//*[text()='Email:']/following-sibling::td"),
+                "Get EMAIL for verification"),
+//        GetUserPhone   (By.xpath("/html/body/div/div/div/div[2]/div/div/div/div[1]/div[1]/div[5]/div[1]/b"),
+//                "Get PHONE NUMBER for verification"),
+//        GetUserEmail   (By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div/div/div[1]/div[1]/div[5]/div[2]/b"),
+//                "Get EMAIL for verification")
+        SelectCurrentDate    (By.xpath("//td[contains(@class,'today')]"),
+                "Pick current DAY from date menu"),
+        GetUserStatus        (By.xpath("//div[@class='selected']"),
+                "Get user status AKTIVNY or NEAKTIVNY"),
+        GetUserTown          (By.xpath("//div[contains(@class,'city')]"),
+                "Get user TOWN from user profil"),
+        GetStatus            (By.xpath("(//b[contains(@class,'date')])[2]"),
+                "Get user status"),
+        SpatButton           (By.xpath("(//div[contains(@class,'back')])[2]"),
+                "Click on Spat BUTTON")
         ;
         private String description;
         private By findBy;

@@ -46,12 +46,5 @@ public class CestaVon_LoginPage {
 
     public CestaVon_LoginPage(WebDriver driver) { this.driver = driver; }
     
-    public WebElement getErrorMessageElement(String value) {return driver.findElement(getErrorMessageLocator(value));}
-    public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
 
-    public WebElement getButtonElement(String value) {return driver.findElement(getButtonLocator(value));}
-    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}
-
-    public WebElement getTabElement(String value) {return driver.findElement(getTabLocator(value));}
-    public By getTabLocator(String value) {return By.xpath("//*[text()='" + value + "']");}
 }
