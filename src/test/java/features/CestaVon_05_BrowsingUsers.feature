@@ -3,7 +3,7 @@
 Feature: CestaVon - Browsing Users
 
   @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - admin - positive
+  Scenario Outline: CestaVon - Login with valid credentials and filter users
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"

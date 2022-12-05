@@ -8,7 +8,7 @@ public class CestaVon_UsersPage {
 
     private WebDriver driver;
 
-    public enum adminMainPageItems {
+    public enum usersPageItems {
 
         RolaButton  (By.xpath("//label[contains(text(), 'Rola')]"),
                 "ROLA BUTTON"),
@@ -19,7 +19,7 @@ public class CestaVon_UsersPage {
         private String description;
         private By findBy;
 
-        private adminMainPageItems(By findBy, String description) {
+        private usersPageItems(By findBy, String description) {
             this.description = description;
             this.findBy = findBy;
         }
