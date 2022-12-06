@@ -3,12 +3,13 @@ package steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import page.CestaVon_UsersPage;
 import page.CestaVon_CommonPage;
+import page.CestaVon_UsersPage;
 import runner.TestRunner;
 import utility.Log;
 import utility.ReportExtender;
@@ -78,6 +79,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void selectFromTabMenu(String value) {
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for specific tab is visible", 10);
 		clickElement(page.getTabElement(value), "Click on specific tab");
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Click on button {string}")
@@ -156,8 +158,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void unwrapDropdown(String value) {
 		scrollElementIntoView(driver, page.getDropdownElement(value));
 		waitForElementClickable(driver, page.getDropdownLocator(value), "Wait for specific dropdown clickable", 10);
-		ReportExtender.logScreen(driver);
 		clickElementUsingJavascript(driver, page.getDropdownElement(value), "Unwrap specific dropdown");
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Select into input {string} actual date")
@@ -307,10 +309,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Input into {string} search bar username {string}")
 	public void searchForUsername(String value, String username) {
-		waitForElementVisible(driver, InputUserName.getLocator(), InputUserName.getDescription(), 10);
+		waitForElementVisible(driver, page.getInputLocator(value), "Wait for " + value + " input is visible", 10);
 		setElementText(page.getInputElement(value), username, "Set USERNAME into input");
 		if (!verifyElementIsPresent(driver, page.getUserLocator(username), "Verify username is visible")) {
-			ReportExtender.logPass("Username was deleted or does not exist");
+			ReportExtender.logWarning("Username was deleted or does not exist");
 			ReportExtender.logScreen(driver);
 			return;
 		}
@@ -345,23 +347,41 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Town visible in profile", getElementText(GetUserTown.getElement(driver), GetUserTown.getDescription()), Town).stringEquals();
 	}
 
-	@And("Verify only username {string} was filtered")
-	public void verifyonlyUsernameWasFiltered(String Username) {
-		waitForFullPageLoad(driver,10);
-		List<WebElement> elements = driver.findElements(GetEveryUsername.getLocator());
-		for (WebElement element : elements) {
-			new Validation("USERNAME visible on the page", element.getText(), Username).contains();
+	@And("Verify if in {string} search bar was filtered only username {string}")
+	public void verifyIfInSearchBarWasFilteredUsername(String textfield_input,String username) {
+		if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Meno")))
+		{
+			if (verifyElementIsPresent(driver,GetNameKlientiTab.getLocator(), GetNameKlientiTab.getDescription()))
+			{
+				List<WebElement> elements = driver.findElements(GetNameKlientiTab.getLocator());
+				for (WebElement element : elements) {
+					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
+			}}
+			else {ReportExtender.logWarning("Username " + username + " was not found in search bar "+ textfield_input);}
 		}
-		if (!verifyElementIsPresent(driver, NextPageButtonDisabled.getLocator(), NextPageButtonDisabled.getDescription())) {
-			waitForElementVisible(driver, NextPageButton.getLocator(), NextPageButton.getDescription(), 10);
-			clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
-			waitForFullPageLoad(driver,10);
-			List<WebElement> next_page_elements = driver.findElements(GetEveryUsername.getLocator());
-			for (WebElement element : next_page_elements) {
-				new Validation("USERNAME visible on the page", element.getText(), Username).contains();
-			}
+
+		else if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Priezvisko")))
+		{
+			if (verifyElementIsPresent(driver,GetSurnameKlientiTab.getLocator(), GetSurnameKlientiTab.getDescription())) {
+				List<WebElement> elements = driver.findElements(GetSurnameKlientiTab.getLocator());
+				for (WebElement element : elements) {
+					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
+				}}
+			else {ReportExtender.logWarning("Username " + username + " was not found in search bar "+ textfield_input);}
 		}
+		ReportExtender.logScreen(driver);
 	}
 
+	@And("Clear input {string}")
+	public void clearInput(String textfield) {
+		waitForElementVisible(driver,page.getInputLocator(textfield),"Wait for textfield " + textfield + " is visible",10);
+		page.getInputElement(textfield).sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+		ReportExtender.logScreen(driver);
+	}
 
+	@And("Verify if filtered clients belong {string}")
+	public void verifyIfFilteredClientsBelong(String Omama_user) {
+
+
+	}
 }
