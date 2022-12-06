@@ -14,6 +14,8 @@ public class CestaVon_UsersPage {
                 "ROLA BUTTON"),
         RolaOption  (null,
                 "ROLA OPTION"),
+        GetEveryUsername  (By.xpath("//tbody[contains(@class,'tbody')]/tr/td[2]"),
+                "Get Every Username visible on the page")
         ;
 
         private String description;

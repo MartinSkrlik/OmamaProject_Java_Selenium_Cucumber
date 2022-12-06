@@ -17,7 +17,8 @@ Feature: CestaVon - Create New Admin User
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Input into "Meno" search bar username "Martin Tester"
-    Then    Verify details new created Admin user
+    And     Select user with name "Martin Tester"
+    Then    Verify details new created user
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
     And     Select from menu tab "Odhlásiť"

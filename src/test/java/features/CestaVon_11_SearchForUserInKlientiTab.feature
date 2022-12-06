@@ -2,7 +2,7 @@
 Feature: CestaVon - Search for user in klient tab
 
 
-  Scenario Outline: CestaVon - Login with valid credentials,looking for specific user and delete user
+  Scenario Outline: CestaVon - Login with valid credentials,looking for specific client in Klienti tab
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -12,12 +12,18 @@ Feature: CestaVon - Search for user in klient tab
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Klienti"
     And     Verify "Klienti" tab is active
-    And     Find user "Martin Tester"
-    And     Click on button "Odstrániť používateľa"
-    And     Click on button "Odstrániť"
-    And     Verify "Používatelia" tab is active
-    And     Click on button "Obnoviť"
-    And     Input into "Meno" search bar username "Martin Tester"
+    And     Input into "Meno" search bar username "Anna"
+    And     Verify only username "Anna" was filtered
+#    And     Find user "Martin Tester"
+#    And     Click on button "Odstrániť používateľa"
+#    And     Click on button "Odstrániť"
+#    And     Verify "Používatelia" tab is active
+#    And     Click on button "Obnoviť"
+#    And     Input into "Meno" search bar username "Martin Tester"
+
+
+
+
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
