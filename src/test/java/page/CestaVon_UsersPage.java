@@ -14,10 +14,6 @@ public class CestaVon_UsersPage {
                 "ROLA BUTTON"),
         RolaOption  (null,
                 "ROLA OPTION"),
-        GetNameKlientiTab  (By.xpath("//tbody[contains(@class,'tbody')]//td[2]"),
-                "Get every NAME visible on the klienti tab"),
-        GetSurnameKlientiTab  (By.xpath("//tbody[contains(@class,'tbody')]//td[3]"),
-                "Get every SURNAME visible on the klienti tab"),
         GetUsernamePuzivateliaTab   (By.xpath("//div[@class='admin-omama-bottompanel']//h3"),
                 "Get every USERNAME of clients visible in omama profil page"),
         ;

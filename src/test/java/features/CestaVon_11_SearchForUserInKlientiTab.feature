@@ -12,15 +12,15 @@ Feature: CestaVon - Search for user in klient tab
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Klienti"
     And     Verify "Klienti" tab is active
-    And     Input into "Meno" search bar username "Ivan"
-    And     Verify if in "Meno" search bar was filtered only username "Ivan"
-    And     Clear input "Meno"
-    And     Input into "Priezvisko" search bar username "Mrkvička"
-    And     Verify if in "Priezvisko" search bar was filtered only username "Mrkvička"
-    And     Clear input "Priezvisko"
+#    And     Input into "Meno" search bar username "ddd"
+#    And     Verify if in "Meno" search bar was filtered only username "ddd"
+#    And     Clear input "Meno"
+#    And     Input into "Priezvisko" search bar username "Mrkvička"
+#    And     Verify if in "Priezvisko" search bar was filtered only username "Mrkvička"
+#    And     Clear input "Priezvisko"
     And     Unwrap dropdown "Všetky omamy"
     And     Select from menu tab "Alexandra Ginová"
-    And     Verify if filtered clients belong "Alexandra Ginová"
+    And     Verify if filtered clients belong omama "Alexandra Ginová"
 
 
 

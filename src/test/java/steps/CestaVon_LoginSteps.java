@@ -23,7 +23,8 @@ import static page.CestaVon_CommonPage.MainPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
 import static page.CestaVon_UserProfilPage.UserProfilPage.*;
 import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
-import static page.CestaVon_UsersPage.adminMainPageItems.*;
+import static page.CestaVon_UsersPage.adminMainPageItems.RolaButton;
+import static page.CestaVon_UsersPage.adminMainPageItems.RolaOption;
 
 public class CestaVon_LoginSteps extends TestStepActions {
 
@@ -32,6 +33,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
 	String Username, Email, PhoneNumber, Town, Status = "";
+	int countOfClientsVisibleOnPage = 0; int name_index = 2; int surname_index = 3;
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -349,11 +351,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify if in {string} search bar was filtered only username {string}")
 	public void verifyIfInSearchBarWasFilteredUsername(String textfield_input,String username) {
+		String getEveryUserElement = ".";
 		if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Meno")))
 		{
-			if (verifyElementIsPresent(driver,GetNameKlientiTab.getLocator(), GetNameKlientiTab.getDescription()))
+			if (verifyElementIsPresent(driver,page.getClientInfoByIndexLocator(name_index,getEveryUserElement), "Get every name of client"))
 			{
-				List<WebElement> elements = driver.findElements(GetNameKlientiTab.getLocator());
+				List<WebElement> elements = driver.findElements(page.getClientInfoByIndexLocator(name_index,getEveryUserElement));
 				for (WebElement element : elements) {
 					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
 			}}
@@ -362,8 +365,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 		else if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Priezvisko")))
 		{
-			if (verifyElementIsPresent(driver,GetSurnameKlientiTab.getLocator(), GetSurnameKlientiTab.getDescription())) {
-				List<WebElement> elements = driver.findElements(GetSurnameKlientiTab.getLocator());
+			if (verifyElementIsPresent(driver,page.getClientInfoByIndexLocator(surname_index,getEveryUserElement), "Get every surname of client")) {
+				List<WebElement> elements = driver.findElements(page.getClientInfoByIndexLocator(surname_index,getEveryUserElement));
 				for (WebElement element : elements) {
 					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
 				}}
@@ -379,9 +382,20 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Verify if filtered clients belong {string}")
+	@And("Verify if filtered clients belong omama {string}")
 	public void verifyIfFilteredClientsBelong(String Omama_user) {
-
-
+		String getEveryUserElement = ".";
+		countOfClientsVisibleOnPage = driver.findElements(page.getClientInfoByIndexLocator(name_index,getEveryUserElement)).size();
+		if (countOfClientsVisibleOnPage == 0) {ReportExtender.logWarning("Omama " + Omama_user + "has no CLIENTS added to her");}
+		String [] nameOfClients = new String[countOfClientsVisibleOnPage];
+		String [] surnameOfClients = new String[countOfClientsVisibleOnPage];
+		for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
+			{nameOfClients[i] = getElementText(page.getClientInfoByIndexElement(name_index,j+getEveryUserElement),"Get " + j + " name of clients");}
+		for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
+			{surnameOfClients[i] = getElementText(page.getClientInfoByIndexElement(surname_index,j+getEveryUserElement),"Get " + j + " surname of clients");}
 	}
+
+
+
+
 }

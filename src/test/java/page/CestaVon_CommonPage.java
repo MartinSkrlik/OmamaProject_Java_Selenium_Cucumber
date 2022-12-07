@@ -64,5 +64,8 @@ public class CestaVon_CommonPage {
     public WebElement getInputElementVerify(String value1,String value2) {return driver.findElement(getInputLocatorVerify(value1,value2));}
     public By getInputLocatorVerify(String value1,String value2)  {return By.xpath("//input[@placeholder='" + value1 + "' and @value='" + value2 + "']");}
 
+    public WebElement getClientInfoByIndexElement(int index1,String index2) {return driver.findElement(getClientInfoByIndexLocator(index1,index2));}
+    public By getClientInfoByIndexLocator(int index1,String index2)  {return By.xpath("(//tbody[contains(@class,'tbody')]//td[" + index1 + "])[" + index2 + "]");}
+
 
 }
