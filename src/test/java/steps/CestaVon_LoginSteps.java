@@ -33,7 +33,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
 	String Username, Email, PhoneNumber, Town, Status = "";
-	int countOfClientsVisibleOnPage = 0; int name_index = 2; int surname_index = 3;
+	int countOfClientsVisibleOnPage = 10; int name_index = 2; int surname_index = 3;
+	String [] clientsName = new String[countOfClientsVisibleOnPage];
+	String [] clientsSurname = new String[countOfClientsVisibleOnPage];
+	String [] clientsUsername = new String[countOfClientsVisibleOnPage];
+	String getEveryUserElement = ".";
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -79,8 +83,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Select from menu tab {string}")
 	public void selectFromTabMenu(String value) {
-		waitForElementClickable(driver, page.getTabLocator(value), "Wait for specific tab is visible", 10);
-		clickElement(page.getTabElement(value), "Click on specific tab");
+		waitForElementClickable(driver, page.getTabLocator(value), "Wait for tab " + value + " is visible", 10);
+		clickElement(page.getTabElement(value), "Click on tab " + value);
 		ReportExtender.logScreen(driver);
 	}
 
@@ -382,20 +386,40 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Verify if filtered clients belong omama {string}")
-	public void verifyIfFilteredClientsBelong(String Omama_user) {
-		String getEveryUserElement = ".";
+	@And("Remember clients name and surname belong to omama {string}")
+	public void rememberNameAndSurnameOfClientsBelongToOmama(String omama_user) {
+		waitForFullPageLoad(driver,10);
 		countOfClientsVisibleOnPage = driver.findElements(page.getClientInfoByIndexLocator(name_index,getEveryUserElement)).size();
-		if (countOfClientsVisibleOnPage == 0) {ReportExtender.logWarning("Omama " + Omama_user + "has no CLIENTS added to her");}
-		String [] nameOfClients = new String[countOfClientsVisibleOnPage];
-		String [] surnameOfClients = new String[countOfClientsVisibleOnPage];
-		for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
-			{nameOfClients[i] = getElementText(page.getClientInfoByIndexElement(name_index,j+getEveryUserElement),"Get " + j + " name of clients");}
-		for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
-			{surnameOfClients[i] = getElementText(page.getClientInfoByIndexElement(surname_index,j+getEveryUserElement),"Get " + j + " surname of clients");}
+		if (countOfClientsVisibleOnPage == 0)
+			{ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");}
+		else
+		{
+			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
+				{clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index,j+getEveryUserElement),"Get " + j + " name of clients");}
+			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
+				{clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index,j+getEveryUserElement),"Get " + j + " surname of clients");}
+		}
+		ReportExtender.logScreen(driver);
 	}
 
-
-
-
+	@And("Verify clients username belong to {string}")
+	public void verifyUsernameOfClientsBelong(String omama_user) {
+		waitForElementVisible(driver,page.getClientUsernameLocator(getEveryUserElement),"Wait for element is visible",10);
+		int count = driver.findElements(page.getClientUsernameLocator(getEveryUserElement)).size();
+		if (countOfClientsVisibleOnPage == 0)
+			{ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");}
+		else
+		{
+			if (countOfClientsVisibleOnPage != count )
+				{ReportExtender.logWarning("Omama " + omama_user + " has no the same count of CLIENTS like in Klienti tab");}
+			else
+				for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
+					{clientsUsername[i] = getElementText(page.getClientUsernameElement(j+getEveryUserElement),"Get "  + j + " name of clients");
+					String s = clientsUsername[i];
+					String[] b = s.split(" ");
+					String clientUsername = (b[0]+" "+b[1]).trim();
+					new Validation("Compare clients USERNAME",clientUsername,(clientsName[i] + " " + clientsSurname[i])).stringEquals(); }
+		}
+		ReportExtender.logScreen(driver);
+	}
 }

@@ -12,26 +12,22 @@ Feature: CestaVon - Search for user in klient tab
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Klienti"
     And     Verify "Klienti" tab is active
-#    And     Input into "Meno" search bar username "ddd"
-#    And     Verify if in "Meno" search bar was filtered only username "ddd"
-#    And     Clear input "Meno"
-#    And     Input into "Priezvisko" search bar username "Mrkvička"
-#    And     Verify if in "Priezvisko" search bar was filtered only username "Mrkvička"
-#    And     Clear input "Priezvisko"
+    And     Input into "Meno" search bar username "Neexistujuce meno"
+    And     Verify if in "Meno" search bar was filtered only username "Neexistujuce meno"
+    And     Clear input "Meno"
+    And     Input into "Priezvisko" search bar username "Mrkvička"
+    And     Verify if in "Priezvisko" search bar was filtered only username "Mrkvička"
+    And     Clear input "Priezvisko"
     And     Unwrap dropdown "Všetky omamy"
     And     Select from menu tab "Alexandra Ginová"
-    And     Verify if filtered clients belong omama "Alexandra Ginová"
-
-
-
-              #    And     Find user "Martin Tester"
-#    And     Click on button "Odstrániť používateľa"
-#    And     Click on button "Odstrániť"
-#    And     Verify "Používatelia" tab is active
-#    And     Click on button "Obnoviť"
-#    And     Input into "Meno" search bar username "Martin Tester"
-  #    And     Select from menu tab "Odhlásiť"
-#    Then    Verify Login page is present
+    And     Remember clients name and surname belong to omama "Alexandra Ginová"
+    And     Select from menu tab "Používatelia"
+    And     Verify "Používatelia" tab is active
+    And     Input into "Meno" search bar username "Alexandra Ginová"
+    And     Select user with name "Alexandra Ginová"
+    And     Verify clients username belong to "Alexandra Ginová"
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 

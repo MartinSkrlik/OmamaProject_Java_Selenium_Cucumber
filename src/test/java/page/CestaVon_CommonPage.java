@@ -64,8 +64,9 @@ public class CestaVon_CommonPage {
     public WebElement getInputElementVerify(String value1,String value2) {return driver.findElement(getInputLocatorVerify(value1,value2));}
     public By getInputLocatorVerify(String value1,String value2)  {return By.xpath("//input[@placeholder='" + value1 + "' and @value='" + value2 + "']");}
 
-    public WebElement getClientInfoByIndexElement(int index1,String index2) {return driver.findElement(getClientInfoByIndexLocator(index1,index2));}
-    public By getClientInfoByIndexLocator(int index1,String index2)  {return By.xpath("(//tbody[contains(@class,'tbody')]//td[" + index1 + "])[" + index2 + "]");}
+    public WebElement getClientInfoByIndexElement(int index1,String value1) {return driver.findElement(getClientInfoByIndexLocator(index1,value1));}
+    public By getClientInfoByIndexLocator(int index1,String value1)  {return By.xpath("(//tbody[contains(@class,'tbody')]//td[" + index1 + "])[" + value1 + "]");}
 
-
+    public WebElement getClientUsernameElement(String value1) {return driver.findElement(getClientUsernameLocator(value1));}
+    public By getClientUsernameLocator(String value1)  {return By.xpath("(//div[@class='admin-omama-bottompanel']//h3)[" + value1 + "]");}
 }
