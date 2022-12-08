@@ -17,6 +17,7 @@ Feature: CestaVon - Create New Supervisor User
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Input into "Meno" search bar username "Martin Tester"
+    And     Select user with name "Martin Tester"
     Then    Verify details new created user
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"

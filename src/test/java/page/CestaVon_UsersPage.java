@@ -15,7 +15,6 @@ public class CestaVon_UsersPage {
         RolaOption  (null,
                 "ROLA OPTION"),
         ;
-
         private String description;
         private By findBy;
 

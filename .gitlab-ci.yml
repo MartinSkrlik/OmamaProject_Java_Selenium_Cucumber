@@ -1,0 +1,11 @@
+image: maven:3.8.1-jdk-11
+
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - mvn clean compile
+  only:
+    - merge_requests
