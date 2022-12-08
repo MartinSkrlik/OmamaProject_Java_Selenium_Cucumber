@@ -26,7 +26,17 @@ public class ManageBrowser {
         }
 
     }
-    
+
+	@Given("^Open browser \"([^\"]*)\" on mobile device$")
+	public void open_mobile_browser(String browser) throws Throwable {
+		try {
+			BrowserFactory.getMobileBrowser(browser);
+		}
+		catch (Exception e) {
+			logError(e);
+		}
+	}
+
     @Given("^Open browser \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
     public void open_browser(String browser, String driverMode, String driverVersion) throws Throwable {
     	try {

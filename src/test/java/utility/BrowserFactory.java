@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.opera.OperaDriver;
@@ -35,7 +36,12 @@ public class BrowserFactory {
 		getOnlineDriverNoVersioning(browser);
 		getBrowserSettings(browser);
 	}
-	
+
+    public static void getMobileBrowser(String browser) throws Exception {
+        getOnlineDriverNoVersioning(browser);
+        getMobileBrowserSettings(browser);
+    }
+
     public static void getBrowser(String browser, String driverMode, String driverVersion) throws Exception {
     	if(driverIsOnlineNoVersionSpecified(driverMode, driverVersion)) {
     		getOnlineDriverNoVersioning(browser);
@@ -277,7 +283,49 @@ public class BrowserFactory {
             browser != null) {
             driver.manage().window().setSize(new Dimension(1920, 1080));
         }
-                 
+
+        globalParametersMap.put("driver", driver);
+        return driver;
+    }
+
+    private static WebDriver getMobileBrowserSettings(String browser) throws Exception {
+        WebDriver driver = null;
+        if (browser.equalsIgnoreCase("Chrome")){
+            HashMap<String, String> mobileEmulation = new HashMap<>();
+            mobileEmulation.put("deviceName", "Pixel 2");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+            driver = new ChromeDriver(chromeOptions);
+
+        }
+
+        if (browser.equalsIgnoreCase("Firefox")){
+            if (!(firefoxInstallPath == null)) {
+                System.setProperty("webdriver.firefox.bin", firefoxInstallPath);
+            }
+
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setAcceptInsecureCerts(true);
+            firefoxOptions.addArguments("--marionette-port");
+            FirefoxProfile firefoxProfile = new FirefoxProfile();
+            String userAgent = "Mozilla/5.0 (iPhone XR; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (HTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16";
+            firefoxProfile.setPreference("general.useragent.override", userAgent);
+            firefoxOptions.setProfile(firefoxProfile);
+            driver = new FirefoxDriver(firefoxOptions);
+            //iPhone XR
+            driver.manage().window().setSize(new Dimension(414, 896));
+        }
+
+        if(browser.equalsIgnoreCase("Edge")) {
+            EdgeOptions edgeOptions = new EdgeOptions();
+            edgeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+            edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+
+            driver = new EdgeDriver(edgeOptions);
+            // Pixel 2 dimensions
+            driver.manage().window().setSize(new Dimension(411, 731));
+        }
+
         globalParametersMap.put("driver", driver);
         return driver;
     }
