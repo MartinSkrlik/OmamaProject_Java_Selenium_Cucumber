@@ -1,8 +1,8 @@
 @LoginTest
 Feature: CestaVon - Login Action
 
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - admin - positive
+  @Admin
+  Scenario Outline: CestaVon - admin - positive
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
@@ -17,8 +17,8 @@ Feature: CestaVon - Login Action
       | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
       | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
 
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - supervisor - positive
+  @Supervisor
+  Scenario Outline: CestaVon - supervisor - positive
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
@@ -33,8 +33,8 @@ Feature: CestaVon - Login Action
       | BROWSER | PAGE     | USERNAME        | PASSWORD       | PINCODE |
       | Chrome  | Cestavon | supervizor_test | Supervizor1234 | 1111    |
 
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - mentor - positive
+  @Mentor
+  Scenario Outline: CestaVon - mentor - positive
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
@@ -49,8 +49,8 @@ Feature: CestaVon - Login Action
       | BROWSER | PAGE     | USERNAME    | PASSWORD   | PINCODE |
       | Chrome  | Cestavon | mentor_test | Mentor1234 | 1111    |
 
-  @Positive
-  Scenario Outline: CestaVon - Login with valid credentials - omama - positive
+  @Omama
+  Scenario Outline: CestaVon - omama - positive
 
     Given   Open browser "<BROWSER>"
     When    Go to page "<PAGE>"
