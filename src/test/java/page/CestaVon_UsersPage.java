@@ -14,8 +14,6 @@ public class CestaVon_UsersPage {
                 "ROLA BUTTON"),
         RolaOption  (null,
                 "ROLA OPTION"),
-        GetUsernamePuzivateliaTab   (By.xpath("//div[@class='admin-omama-bottompanel']//h3"),
-                "Get every USERNAME of clients visible in omama profil page"),
         ;
         private String description;
         private By findBy;

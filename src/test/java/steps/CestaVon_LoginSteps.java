@@ -15,7 +15,6 @@ import utility.Log;
 import utility.ReportExtender;
 import utility.SAUCEDEMO_PageMapper;
 import utility.Validation;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,7 +71,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void inputpincode(String Pincode) {
 		waitForElementVisible(driver, PincodeElement.getLocator(), PincodeElement.getDescription(), 15);
 		setElementSecureText(PincodeElement.getElement(driver), Pincode, PincodeElement.getDescription());
-		ReportExtender.logScreen(driver);
 	}
 
 	@And("Click on menu button")
@@ -85,7 +83,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void selectFromTabMenu(String value) {
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for tab " + value + " is visible", 10);
 		clickElement(page.getTabElement(value), "Click on tab " + value);
-		ReportExtender.logScreen(driver);
 	}
 
 	@And("Click on button {string}")
@@ -98,27 +95,27 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Registry new {string} user and save details")
 	public void registryNewUserAndSaveDetails(String value) {
-		waitForElementVisible(driver, NameSurnameInput.getLocator(), NameSurnameInput.getDescription(), 10);
-		setElementText(NameSurnameInput.getElement(driver), "Martin Tester", NameSurnameInput.getDescription());
+		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for element is visible",10);
+		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester", "Set name into input");
 		setElementText(EmailInput.getElement(driver), "Martintester@gmail.com", EmailInput.getDescription());
-		setElementText(RegionInput.getElement(driver), "test", RegionInput.getDescription());
-		setElementText(TownInput.getElement(driver), "Bratislava - Devín", TownInput.getDescription());
-		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
-		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
-		setElementText(UsernameInput.getElement(driver), "Martin_TEST", UsernameInput.getDescription());
-		setElementText(StreetInput.getElement(driver), "Testerska 38", StreetInput.getDescription());
-		setElementText(PasswordInput.getElement(driver), "Martintester123.", PasswordInput.getDescription());
-		setElementText(AgainHesloInput.getElement(driver), "Martintester123.", AgainHesloInput.getDescription());
-		setElementText(PhoneNumberInput.getElement(driver), "0915123456", PhoneNumberInput.getDescription());
-		scrollElementIntoView(driver, DropDownRole.getElement(driver));
-		waitForElementClickable(driver, DropDownRole.getLocator(), DropDownRole.getDescription(), 10);
-		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
+		setElementText(page.getInputTextfieldElement("Región"), "test","Set text into input");
+		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
+		waitForElementClickable(driver, ConfirmTownInput.getLocator(),ConfirmTownInput.getDescription(), 10);
+		clickElement(ConfirmTownInput.getElement(driver),ConfirmTownInput.getDescription());
+		setElementText(page.getInputTextfieldElement("Uzivatelske"), "Martin_TEST","Set username into input");
+		setElementText(page.getInputTextfieldElement("Ulica"), "Testerska 38","Set street into input");
+		setElementText(page.getInputTextfieldElement("Heslo"), "Martintester123.","Set heslo into input");
+		setElementText(page.getInputTextfieldElement("Zopakovat"), "Martintester123.","Set again heslo into input");
+		setElementText(page.getInputTextfieldElement("cislo"), "0915123456","Set cislo into input");
+		scrollElementIntoView(driver,DropDownRole.getElement(driver));
+		waitForElementClickable(driver,DropDownRole.getLocator(),DropDownRole.getDescription(), 10);
+		clickElement(DropDownRole.getElement(driver),DropDownRole.getDescription());
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for dropdown visible", 10);
 		clickElement(page.getTabElement(value), "Select specific role from dropdown");
-		Username = getAttributeValue(NameSurnameInput.getElement(driver), NameSurnameInput.getDescription());
+		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
 		Email = getAttributeValue(EmailInput.getElement(driver), EmailInput.getDescription());
-		PhoneNumber = getAttributeValue(PhoneNumberInput.getElement(driver), PhoneNumberInput.getDescription());
-		Town = getAttributeValue(TownInput.getElement(driver), TownInput.getDescription());
+		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("cislo"),"Save phone number into variable");
+		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"),"Save town into variable");
 		ReportExtender.logScreen(driver);
 	}
 
@@ -196,9 +193,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Change user details")
 	public void changeUserDetails() {
-		waitForElementVisible(driver, NameSurnameInput.getLocator(), NameSurnameInput.getDescription(), 10);
-		setElementText(NameSurnameInput.getElement(driver), "Martin Tester Change", NameSurnameInput.getDescription());
-		setElementText(TownInput.getElement(driver), "Bratislava - Devínska Nová Ves", TownInput.getDescription());
+		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"), "Wait for username input visieble", 10);
+		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester Change", "Set changed name into input");
+		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devínska Nová Ves","Set changed name into input");
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		ReportExtender.logScreen(driver);
@@ -214,8 +211,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Save user details")
 	public void saveUserDetails() {
-		Username = getAttributeValue(NameSurnameInput.getElement(driver), NameSurnameInput.getDescription());
-		Town = getAttributeValue(TownInput.getElement(driver), TownInput.getDescription());
+		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
+		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"),"Save username into variable" );
 		Status = getElementText(GetUserStatus.getElement(driver), GetUserStatus.getDescription());
 	}
 
@@ -283,9 +280,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Change user details to original state")
 	public void changeUserDetailsToOriginalState() {
-		waitForElementVisible(driver, NameSurnameInput.getLocator(), NameSurnameInput.getDescription(), 10);
-		setElementText(NameSurnameInput.getElement(driver), "Martin Tester", NameSurnameInput.getDescription());
-		setElementText(TownInput.getElement(driver), "Bratislava - Devín", TownInput.getDescription());
+		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for meno input is visible", 10);
+		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester","Set username into input");
+		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		ReportExtender.logScreen(driver);
@@ -421,5 +418,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 					new Validation("Compare clients USERNAME",clientUsername,(clientsName[i] + " " + clientsSurname[i])).stringEquals(); }
 		}
 		ReportExtender.logScreen(driver);
+	}
+
+	@And("Create new client and fill application form")
+	public void createNewClientAndFillApplicationForm() {
+
+
+
 	}
 }

@@ -69,4 +69,7 @@ public class CestaVon_CommonPage {
 
     public WebElement getClientUsernameElement(String value1) {return driver.findElement(getClientUsernameLocator(value1));}
     public By getClientUsernameLocator(String value1)  {return By.xpath("(//div[@class='admin-omama-bottompanel']//h3)[" + value1 + "]");}
+
+    public WebElement getInputTextfieldElement(String value) {return driver.findElement(getInputTextfieldLocator(value));}
+    public By getInputTextfieldLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
 }
