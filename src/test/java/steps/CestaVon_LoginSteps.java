@@ -32,10 +32,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
 	String Username, Email, PhoneNumber, Town, Status = "";
-	int countOfClientsVisibleOnPage = 10; int name_index = 2; int surname_index = 3;
-	String [] clientsName = new String[countOfClientsVisibleOnPage];
-	String [] clientsSurname = new String[countOfClientsVisibleOnPage];
-	String [] clientsUsername = new String[countOfClientsVisibleOnPage];
+	int countOfClientsVisibleOnPage = 10;
+	int name_index = 2;
+	int surname_index = 3;
+	String[] clientsName = new String[countOfClientsVisibleOnPage];
+	String[] clientsSurname = new String[countOfClientsVisibleOnPage];
+	String[] clientsUsername = new String[countOfClientsVisibleOnPage];
 	String getEveryUserElement = ".";
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
@@ -95,27 +97,27 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Registry new {string} user and save details")
 	public void registryNewUserAndSaveDetails(String value) {
-		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for element is visible",10);
+		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for name input is visible", 10);
 		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester", "Set name into input");
 		setElementText(EmailInput.getElement(driver), "Martintester@gmail.com", EmailInput.getDescription());
-		setElementText(page.getInputTextfieldElement("Región"), "test","Set text into input");
+		setElementText(page.getInputTextfieldElement("Región"), "test", "Set text into input");
 		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
-		waitForElementClickable(driver, ConfirmTownInput.getLocator(),ConfirmTownInput.getDescription(), 10);
-		clickElement(ConfirmTownInput.getElement(driver),ConfirmTownInput.getDescription());
-		setElementText(page.getInputTextfieldElement("Uzivatelske"), "Martin_TEST","Set username into input");
-		setElementText(page.getInputTextfieldElement("Ulica"), "Testerska 38","Set street into input");
-		setElementText(page.getInputTextfieldElement("Heslo"), "Martintester123.","Set heslo into input");
-		setElementText(page.getInputTextfieldElement("Zopakovat"), "Martintester123.","Set again heslo into input");
-		setElementText(page.getInputTextfieldElement("cislo"), "0915123456","Set cislo into input");
-		scrollElementIntoView(driver,DropDownRole.getElement(driver));
-		waitForElementClickable(driver,DropDownRole.getLocator(),DropDownRole.getDescription(), 10);
-		clickElement(DropDownRole.getElement(driver),DropDownRole.getDescription());
+		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
+		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
+		setElementText(page.getInputTextfieldElement("Uzivatelske"), "Martin_TEST", "Set username into input");
+		setElementText(page.getInputTextfieldElement("Ulica"), "Testerska 38", "Set street into input");
+		setElementText(page.getInputTextfieldElement("Heslo"), "Martintester123.", "Set heslo into input");
+		setElementText(page.getInputTextfieldElement("Zopakovat"), "Martintester123.", "Set again heslo into input");
+		setElementText(page.getInputTextfieldElement("cislo"), "0915123456", "Set cislo into input");
+		scrollElementIntoView(driver, DropDownRole.getElement(driver));
+		waitForElementClickable(driver, DropDownRole.getLocator(), DropDownRole.getDescription(), 10);
+		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for dropdown visible", 10);
 		clickElement(page.getTabElement(value), "Select specific role from dropdown");
 		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
 		Email = getAttributeValue(EmailInput.getElement(driver), EmailInput.getDescription());
-		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("cislo"),"Save phone number into variable");
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"),"Save town into variable");
+		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("cislo"), "Save phone number into variable");
+		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
 		ReportExtender.logScreen(driver);
 	}
 
@@ -193,9 +195,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Change user details")
 	public void changeUserDetails() {
-		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"), "Wait for username input visieble", 10);
+		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for username input visieble", 10);
 		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester Change", "Set changed name into input");
-		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devínska Nová Ves","Set changed name into input");
+		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devínska Nová Ves", "Set changed name into input");
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		ReportExtender.logScreen(driver);
@@ -212,7 +214,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Save user details")
 	public void saveUserDetails() {
 		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"),"Save username into variable" );
+		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save username into variable");
 		Status = getElementText(GetUserStatus.getElement(driver), GetUserStatus.getDescription());
 	}
 
@@ -280,8 +282,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Change user details to original state")
 	public void changeUserDetailsToOriginalState() {
-		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for meno input is visible", 10);
-		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester","Set username into input");
+		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for meno input is visible", 10);
+		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester", "Set username into input");
 		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
@@ -351,79 +353,102 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	}
 
 	@And("Verify if in {string} search bar was filtered only username {string}")
-	public void verifyIfInSearchBarWasFilteredUsername(String textfield_input,String username) {
+	public void verifyIfInSearchBarWasFilteredUsername(String textfield_input, String username) {
 		String getEveryUserElement = ".";
-		if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Meno")))
-		{
-			if (verifyElementIsPresent(driver,page.getClientInfoByIndexLocator(name_index,getEveryUserElement), "Get every name of client"))
-			{
-				List<WebElement> elements = driver.findElements(page.getClientInfoByIndexLocator(name_index,getEveryUserElement));
+		if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Meno"))) {
+			if (verifyElementIsPresent(driver, page.getClientInfoByIndexLocator(name_index, getEveryUserElement), "Get every name of client")) {
+				List<WebElement> elements = driver.findElements(page.getClientInfoByIndexLocator(name_index, getEveryUserElement));
 				for (WebElement element : elements) {
 					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
-			}}
-			else {ReportExtender.logWarning("Username " + username + " was not found in search bar "+ textfield_input);}
-		}
-
-		else if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Priezvisko")))
-		{
-			if (verifyElementIsPresent(driver,page.getClientInfoByIndexLocator(surname_index,getEveryUserElement), "Get every surname of client")) {
-				List<WebElement> elements = driver.findElements(page.getClientInfoByIndexLocator(surname_index,getEveryUserElement));
+				}
+			} else {
+				ReportExtender.logWarning("Username " + username + " was not found in search bar " + textfield_input);
+			}
+		} else if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Priezvisko"))) {
+			if (verifyElementIsPresent(driver, page.getClientInfoByIndexLocator(surname_index, getEveryUserElement), "Get every surname of client")) {
+				List<WebElement> elements = driver.findElements(page.getClientInfoByIndexLocator(surname_index, getEveryUserElement));
 				for (WebElement element : elements) {
 					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
-				}}
-			else {ReportExtender.logWarning("Username " + username + " was not found in search bar "+ textfield_input);}
+				}
+			} else {
+				ReportExtender.logWarning("Username " + username + " was not found in search bar " + textfield_input);
+			}
 		}
 		ReportExtender.logScreen(driver);
 	}
 
 	@And("Clear input {string}")
 	public void clearInput(String textfield) {
-		waitForElementVisible(driver,page.getInputLocator(textfield),"Wait for textfield " + textfield + " is visible",10);
-		page.getInputElement(textfield).sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+		waitForElementVisible(driver, page.getInputLocator(textfield), "Wait for textfield " + textfield + " is visible", 10);
+		page.getInputElement(textfield).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 		ReportExtender.logScreen(driver);
 	}
 
 	@And("Remember clients name and surname belong to omama {string}")
 	public void rememberNameAndSurnameOfClientsBelongToOmama(String omama_user) {
-		waitForFullPageLoad(driver,10);
-		countOfClientsVisibleOnPage = driver.findElements(page.getClientInfoByIndexLocator(name_index,getEveryUserElement)).size();
-		if (countOfClientsVisibleOnPage == 0)
-			{ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");}
-		else
-		{
-			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
-				{clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index,j+getEveryUserElement),"Get " + j + " name of clients");}
-			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
-				{clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index,j+getEveryUserElement),"Get " + j + " surname of clients");}
+		waitForFullPageLoad(driver, 10);
+		countOfClientsVisibleOnPage = driver.findElements(page.getClientInfoByIndexLocator(name_index, getEveryUserElement)).size();
+		if (countOfClientsVisibleOnPage == 0) {
+			ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");
+		} else {
+			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
+				clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index, j + getEveryUserElement), "Get " + j + " name of clients");
+			}
+			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
+				clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index, j + getEveryUserElement), "Get " + j + " surname of clients");
+			}
 		}
 		ReportExtender.logScreen(driver);
 	}
 
 	@And("Verify clients username belong to {string}")
 	public void verifyUsernameOfClientsBelong(String omama_user) {
-		waitForElementVisible(driver,page.getClientUsernameLocator(getEveryUserElement),"Wait for element is visible",10);
+		waitForElementVisible(driver, page.getClientUsernameLocator(getEveryUserElement), "Wait for element is visible", 10);
 		int count = driver.findElements(page.getClientUsernameLocator(getEveryUserElement)).size();
-		if (countOfClientsVisibleOnPage == 0)
-			{ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");}
-		else
-		{
-			if (countOfClientsVisibleOnPage != count )
-				{ReportExtender.logWarning("Omama " + omama_user + " has no the same count of CLIENTS like in Klienti tab");}
-			else
-				for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++,j++)
-					{clientsUsername[i] = getElementText(page.getClientUsernameElement(j+getEveryUserElement),"Get "  + j + " name of clients");
+		if (countOfClientsVisibleOnPage == 0) {
+			ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");
+		} else {
+			if (countOfClientsVisibleOnPage != count) {
+				ReportExtender.logWarning("Omama " + omama_user + " has no the same count of CLIENTS like in Klienti tab");
+			} else
+				for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
+					clientsUsername[i] = getElementText(page.getClientUsernameElement(j + getEveryUserElement), "Get " + j + " name of clients");
 					String s = clientsUsername[i];
 					String[] b = s.split(" ");
-					String clientUsername = (b[0]+" "+b[1]).trim();
-					new Validation("Compare clients USERNAME",clientUsername,(clientsName[i] + " " + clientsSurname[i])).stringEquals(); }
+					String clientUsername = (b[0] + " " + b[1]).trim();
+					new Validation("Compare clients USERNAME", clientUsername, (clientsName[i] + " " + clientsSurname[i])).stringEquals();
+				}
 		}
 		ReportExtender.logScreen(driver);
 	}
 
 	@And("Create new client and fill application form")
 	public void createNewClientAndFillApplicationForm() {
-
-
-
+		waitForElementVisible(driver, page.getInputTextfieldLocator("Meno"), "Wait for input meno visible", 10);
+		setElementText(page.getInputTextfieldElement("Meno"), "Martin", "Set name into input");
+		setElementText(page.getInputTextfieldElement("Priezvisko"), "Client", "Set priezvisko into input");
+		setElementText(page.getInputTextfieldElement("Prezývka"), "Prezyvka", "Set prezyvka into input");
+		setElementText(page.getInputTextfieldElement("Región"), "test", "Set region into input");
+		setElementText(page.getInputTextfieldElement("Ulica"), "Testerska 38", "Set street into input");
+		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
+		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
+		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
+		setElementText(page.getInputTextfieldElement("Miesto"), "Nemocnica", "Set street into input");
+		for (int j = 1; j < 7; j++) {
+			scrollElementIntoView(driver, page.getDatePickerElement(j));
+			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
+			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
+			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
+			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
+			sleep(1000);
+		}
 	}
+
+	@And("Select from Ano-Nie picker {string} choice {string}")
+	public void selectFromAnoNiePickerChoice(String picker_name, String picker_choice) {
+		scrollElementIntoView(driver,page.getYesNoPickerElement(picker_name,picker_choice));
+		waitForElementVisible(driver, page.getYesNoPickerLocator(picker_name, picker_choice),"Wait for choice picker", 10);
+		clickElementUsingJavascript(driver,page.getYesNoPickerElement(picker_name,picker_choice),"Click on picker choice");
+	}
+
 }

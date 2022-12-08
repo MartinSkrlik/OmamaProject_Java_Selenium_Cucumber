@@ -1,4 +1,4 @@
-@CreateNewClient
+@CreateNewClientTest
 Feature: CestaVon - Create new client add omama
 
 
@@ -14,8 +14,23 @@ Feature: CestaVon - Create new client add omama
     And     Verify "Klienti" tab is active
     And     Click on button "Pridať"
     And     Create new client and fill application form
-    And     Select from menu tab "Odhlásiť"
-    Then    Verify Login page is present
+    And     Select from Ano-Nie picker "Predškolský klub" choice "Áno"
+    And     Unwrap dropdown "Vyber omamu"
+    Then    Select from menu tab "Alexandra Ginová"
+
+
+      #    And     Fill information about Rodina
+#    And     Fill information about Tehotenstvo a pôrod
+#    And     Fill information about Kojenie
+#    And     Fill information about Psychomotorický vývin dieťaťa
+#    And     Fill information about Všeobecné zdravie
+#    And     Fill information about Obavy
+#    And     Fill information about Bývanie
+#    And     Fill information about škola
+#    And     Fill information about Ochrana osobných údajov
+#
+#    And     Select from menu tab "Odhlásiť"
+#    Then    Verify Login page is present
 
     Examples:
 

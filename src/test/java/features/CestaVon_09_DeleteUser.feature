@@ -1,4 +1,4 @@
-@DeleteUser
+@DeleteUserTest
 Feature: CestaVon - Delete User
 
 

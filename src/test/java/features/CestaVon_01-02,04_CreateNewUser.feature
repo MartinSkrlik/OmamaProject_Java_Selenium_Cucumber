@@ -1,8 +1,8 @@
-@CreateMentorUser
-Feature: CestaVon - Create New Mentor User
+@CreateUserTest
+Feature: CestaVon - Create new user
 
 
-  Scenario Outline: CestaVon - Login with valid credentials and create new mentor user
+  Scenario Outline: CestaVon - create new admin, mentor and supervisor user and deleted them.
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -12,7 +12,7 @@ Feature: CestaVon - Create New Mentor User
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     And     Click on button "Pridať"
-    And     Registry new "Mentor" user and save details
+    And     Registry new "<USER>" user and save details
     And     Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
@@ -26,8 +26,8 @@ Feature: CestaVon - Create New Mentor User
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
-
-
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER       |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Admin      |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Mentor     |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Supervízor |
 

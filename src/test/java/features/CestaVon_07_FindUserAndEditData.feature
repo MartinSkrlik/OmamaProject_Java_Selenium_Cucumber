@@ -1,4 +1,4 @@
-@EdidUserData
+@EdidUserDataTest
 Feature: CestaVon - Edit user data
 
 
