@@ -11,7 +11,9 @@ Feature: CestaVon - Edit user data
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
-    And     Find user "<USER>"
+    And     Verify "Používatelia" tab is active
+    And     Input into "Meno" search bar username "<USER>"
+    And     Select user with name "<USER>"
     And     Click on button "Upraviť profil"
     And     Change user details
     And     Set user status "neaktívny"

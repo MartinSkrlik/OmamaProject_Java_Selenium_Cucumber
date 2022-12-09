@@ -12,7 +12,7 @@ Feature: CestaVon - Create New Omama User
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     Then    Click on button "Pridať"
-    And     Registry new "<USER>" user and save details
+    And     Registry new "<USER>" and save details
     Then    Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     Then    Click on button "Obnoviť"

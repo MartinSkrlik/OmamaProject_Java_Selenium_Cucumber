@@ -12,12 +12,12 @@ Feature: CestaVon - Create new user
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     And     Click on button "Pridať"
-    And     Registry new "<USER>" user and save details
+    And     Registry new "<USER>" and save details
     And     Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-    And     Input into "Meno" search bar username "Martin Tester"
-    And     Select user with name "Martin Tester"
+    And     Find user with changed details
+    And     Select user with changed details
     Then    Verify details new created user
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"

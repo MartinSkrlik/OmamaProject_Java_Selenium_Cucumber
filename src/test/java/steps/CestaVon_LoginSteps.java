@@ -11,10 +11,8 @@ import org.openqa.selenium.WebElement;
 import page.CestaVon_CommonPage;
 import page.CestaVon_UsersPage;
 import runner.TestRunner;
-import utility.Log;
-import utility.ReportExtender;
-import utility.SAUCEDEMO_PageMapper;
-import utility.Validation;
+import utility.*;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -95,20 +93,20 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElementUsingJavascript(driver, page.getButtonElement(value), "Click on specific button");
 	}
 
-	@And("Registry new {string} user and save details")
-	public void registryNewUserAndSaveDetails(String value) {
+	@And("Registry new {string} and save details")
+	public void registryNewAndSaveDetails(String value) {
 		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for name input is visible", 10);
-		setElementText(page.getInputTextfieldElement("Priezvisko"), "Martin Tester", "Set name into input");
-		setElementText(EmailInput.getElement(driver), "Martintester@gmail.com", EmailInput.getDescription());
+		setElementText(page.getInputTextfieldElement("Priezvisko"),RandomData.generateFirstName(), "Set name into input");
+		setElementText(EmailInput.getElement(driver), RandomData.generateEmail(), EmailInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Región"), "test", "Set text into input");
 		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
-		setElementText(page.getInputTextfieldElement("Uzivatelske"), "Martin_TEST", "Set username into input");
-		setElementText(page.getInputTextfieldElement("Ulica"), "Testerska 38", "Set street into input");
-		setElementText(page.getInputTextfieldElement("Heslo"), "Martintester123.", "Set heslo into input");
+		setElementText(page.getInputTextfieldElement("Uzivatelske"), RandomData.generateFirstName(), "Set username into input");
+		setElementText(page.getInputTextfieldElement("Ulica"), RandomData.generateEmail(), "Set street into input");
+		setElementText(page.getInputTextfieldElement("Heslo"),"Martintester123." , "Set heslo into input");
 		setElementText(page.getInputTextfieldElement("Zopakovat"), "Martintester123.", "Set again heslo into input");
-		setElementText(page.getInputTextfieldElement("cislo"), "0915123456", "Set cislo into input");
+		setElementText(page.getInputTextfieldElement("cislo"), RandomData.generateMobileNumber(), "Set cislo into input");
 		scrollElementIntoView(driver, DropDownRole.getElement(driver));
 		waitForElementClickable(driver, DropDownRole.getLocator(), DropDownRole.getDescription(), 10);
 		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
@@ -119,6 +117,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("cislo"), "Save phone number into variable");
 		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
 		ReportExtender.logScreen(driver);
+		sleep(10000);
 	}
 
 	@And("Verify {string} tab is active")
@@ -296,20 +295,16 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElementUsingJavascript(driver, SpatButton.getElement(driver), SpatButton.getDescription());
 	}
 
-	@And("Find user with changed status")
-	public void findUserWithChangedStatus() {
-		waitForFullPageLoad(driver, 10);
-		while (driver.findElements(page.getUserLocator(Username)).size() == 0) {
-			waitForElementVisible(driver, NextPageButton.getLocator(), NextPageButton.getDescription(), 10);
-			if (verifyElementIsPresent(driver, NextPageButtonDisabled.getLocator(), NextPageButtonDisabled.getDescription())) {
-				ReportExtender.logInfo("Username was deleted or does not exist");
-				ReportExtender.logScreen(driver);
-				driver.close();
-			}
-			clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
-			waitForFullPageLoad(driver, 10);
+	@And("Find user with changed details")
+	public void findUserWithChangedDetails() {
+		waitForElementVisible(driver, page.getInputLocator("Meno"), "Wait for Meno input is visible", 10);
+		setElementText(page.getInputElement("Meno"), Username, "Set USERNAME into input");
+		if (!verifyElementIsPresent(driver, page.getUserLocator(Username), "Verify username is visible")) {
+			ReportExtender.logWarning("Username was deleted or does not exist");
+			ReportExtender.logScreen(driver);
+			return;
 		}
-		clickElementUsingJavascript(driver, page.getUserElement(Username), "Click on desired user");
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Input into {string} search bar username {string}")
@@ -325,9 +320,15 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	}
 
 	@And("Select user with name {string}")
-	public void selectUserWithName(String username) {
-		waitForElementVisible(driver, page.getUserLocator(username), "Wait for username", 10);
-		clickElementUsingJavascript(driver, page.getUserElement(username), "Click on desired user");
+	public void selectUserWithName(String Username) {
+		waitForElementVisible(driver, page.getUserLocator(Username), "Wait for username", 10);
+		clickElementUsingJavascript(driver, page.getUserElement(Username), "Click on desired user");
+	}
+
+	@And("Select user with changed details")
+	public void selectUserWithName() {
+		waitForElementVisible(driver, page.getUserLocator(Username), "Wait for username", 10);
+		clickElementUsingJavascript(driver, page.getUserElement(Username), "Click on user");
 	}
 
 	@And("Select user with name {string} and remember his information")
@@ -461,9 +462,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
 			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
 		}
-
-
 	}
+
+
+
 
 
 

@@ -13,7 +13,10 @@ Feature: CestaVon - Delete User
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
     Then    Click on button "Pridať"
-    And     Registry new "<USER>" user and save details
+    And     Registry new "<USER>" and save details
+    And     Click on button "Registrovať"
+    And     Verify "Používatelia" tab is active
+    And     Click on button "Obnoviť"
     And     Find user "Martin Tester"
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
@@ -25,8 +28,8 @@ Feature: CestaVon - Delete User
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER|
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | gdfgd|
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER  |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Admin |
 
 
 
