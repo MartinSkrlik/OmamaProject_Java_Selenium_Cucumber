@@ -203,7 +203,20 @@
      <artifactId>json-io</artifactId>
      <version>4.13.0</version>
    </dependency>
-   
+
+  <!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
+  <dependency>
+      <groupId>com.github.javafaker</groupId>
+      <artifactId>javafaker</artifactId>
+      <version>1.0.2</version>
+      <exclusions>
+          <exclusion>  <!-- duplicite library -->
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+          </exclusion>
+      </exclusions>
+  </dependency>
+
    <!-- This dependency is needed if you want use winium
    <dependency>
      <groupId>com.github.2gis.winium</groupId>
