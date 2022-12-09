@@ -26,7 +26,7 @@ Feature: CestaVon - Delete User
     Examples:
 
       | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER|
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | gdfgd|
 
 
 

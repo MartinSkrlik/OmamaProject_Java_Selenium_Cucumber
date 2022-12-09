@@ -11,7 +11,7 @@ Feature: CestaVon - Edit user data
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
-    And     Find user "Martin Tester"
+    And     Find user "<USER>"
     And     Click on button "Upraviť profil"
     And     Change user details
     And     Set user status "neaktívny"
@@ -29,8 +29,8 @@ Feature: CestaVon - Edit user data
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER           |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Viera Kováčová |
 
 
 

@@ -2,7 +2,7 @@
 Feature: CestaVon - Create new user
 
 
-  Scenario Outline: CestaVon - create new admin, mentor and supervisor user and deleted them.
+  Scenario Outline: CestaVon - create and delete new admin, mentor and supervisor user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
