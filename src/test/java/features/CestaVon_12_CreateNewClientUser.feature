@@ -17,9 +17,7 @@ Feature: CestaVon - Create new client add omama
     And     Select from Ano-Nie picker "Predškolský klub" choice "Áno"
     And     Unwrap dropdown "Vyber omamu"
     Then    Select from menu tab "Alexandra Ginová"
-
-
-      #    And     Fill information about Rodina
+    And     Fill information about Rodina
 #    And     Fill information about Tehotenstvo a pôrod
 #    And     Fill information about Kojenie
 #    And     Fill information about Psychomotorický vývin dieťaťa

@@ -76,6 +76,6 @@ public class CestaVon_CommonPage {
     public WebElement getYesNoPickerElement(String value1,String value2) {return driver.findElement(getYesNoPickerLocator(value1,value2));}
     public By getYesNoPickerLocator(String value1,String value2) {return By.xpath("//*[text()='" + value1 + "']/ancestor::div[@class='yesNoQuestion']//div[text()='" + value2 + "']");}
 
-     public WebElement getDatePickerElement(int index) {return driver.findElement(getDatePickerLocator(index));}
+    public WebElement getDatePickerElement(int index) {return driver.findElement(getDatePickerLocator(index));}
     public By getDatePickerLocator(int index)  {return By.xpath("(//input[contains(@class,'calendar-picker')])[" + index + "]");}
 }

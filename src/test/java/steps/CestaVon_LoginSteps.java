@@ -434,7 +434,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Miesto"), "Nemocnica", "Set street into input");
-		for (int j = 1; j < 7; j++) {
+		for (int j = 1; j < 4; j++) {
 			scrollElementIntoView(driver, page.getDatePickerElement(j));
 			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
 			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
@@ -442,6 +442,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
 			sleep(1000);
 		}
+	ReportExtender.logScreen(driver);
 	}
 
 	@And("Select from Ano-Nie picker {string} choice {string}")
@@ -450,5 +451,21 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementVisible(driver, page.getYesNoPickerLocator(picker_name, picker_choice),"Wait for choice picker", 10);
 		clickElementUsingJavascript(driver,page.getYesNoPickerElement(picker_name,picker_choice),"Click on picker choice");
 	}
+
+	@And("Fill information about Rodina")
+	public void fillInformationAboutRodina() {
+		for (int j = 4; j < 6; j++) {
+			scrollElementIntoView(driver, page.getDatePickerElement(j));
+			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
+			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
+			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
+			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
+		}
+
+
+	}
+
+
+
 
 }

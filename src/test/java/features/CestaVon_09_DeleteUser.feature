@@ -2,7 +2,7 @@
 Feature: CestaVon - Delete User
 
 
-  Scenario Outline: CestaVon - Login with valid credentials,looking for specific user and delete user
+  Scenario Outline: CestaVon - create, find and delete specific user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -12,6 +12,8 @@ Feature: CestaVon - Delete User
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
+    Then    Click on button "Pridať"
+    And     Registry new "<USER>" user and save details
     And     Find user "Martin Tester"
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
@@ -23,7 +25,7 @@ Feature: CestaVon - Delete User
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER|
       | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
 
 

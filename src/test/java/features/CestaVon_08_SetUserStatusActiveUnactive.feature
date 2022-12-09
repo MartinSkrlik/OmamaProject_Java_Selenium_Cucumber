@@ -2,7 +2,7 @@
 Feature: CestaVon - Edit user status
 
 
-  Scenario Outline: CestaVon - Login with valid credentials,looking for specific user and edit user status
+  Scenario Outline: CestaVon - looking for specific user and edit user status
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

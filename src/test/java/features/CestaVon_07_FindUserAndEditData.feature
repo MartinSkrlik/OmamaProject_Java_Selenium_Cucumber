@@ -2,7 +2,7 @@
 Feature: CestaVon - Edit user data
 
 
-  Scenario Outline: CestaVon - Login with valid credentials,looking for specific user and edit data
+  Scenario Outline: CestaVon - looking for specific user and edit data
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

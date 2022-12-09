@@ -2,7 +2,7 @@
 Feature: CestaVon - Create New Omama User
 
 
-  Scenario Outline: CestaVon - Login with valid credentials and create new Omama user
+  Scenario Outline: CestaVon - create New Omama user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -12,7 +12,7 @@ Feature: CestaVon - Create New Omama User
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     Then    Click on button "Pridať"
-    And     Registry new "Omama" user and save details
+    And     Registry new "<USER>>" user and save details
     Then    Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     Then    Click on button "Obnoviť"
@@ -37,8 +37,8 @@ Feature: CestaVon - Create New Omama User
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER  |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Omama |
 
 
 
