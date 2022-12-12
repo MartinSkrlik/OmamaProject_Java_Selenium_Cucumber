@@ -17,7 +17,7 @@ Feature: CestaVon - Edit user status
     And     Set user status "aktívny"
     And     Save user details
     Then    Click on button "Uložiť"
-    And     Verify user details were changed
+    Then    Verify details new created user
     Then    Go back to previous page
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
@@ -27,7 +27,7 @@ Feature: CestaVon - Edit user status
     And     Set user status "neaktívny"
     And     Save user details
     Then    Click on button "Uložiť"
-    And     Verify user details were changed
+    Then    Verify details new created user
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 

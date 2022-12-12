@@ -5,6 +5,7 @@ Feature: CestaVon - Login Action
   Scenario Outline: CestaVon - admin - supervizor - mentor - positive
 
     Given   Open browser "<BROWSER>"
+    When    Maximalize window
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
@@ -23,6 +24,7 @@ Feature: CestaVon - Login Action
   Scenario Outline: CestaVon - omama - positive
 
     Given   Open browser "<BROWSER>"
+    When    Maximalize window
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
@@ -39,6 +41,7 @@ Feature: CestaVon - Login Action
   @LockOutedTest
   Scenario Outline: CestaVon - Login with lock-outed user - negative
     Given   Open browser "<BROWSER>"
+    When    Maximalize window
     When    Go to page "<PAGE>"
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     Then    Verify odhlasit button is not visible

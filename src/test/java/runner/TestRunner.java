@@ -14,7 +14,7 @@ import java.util.Map;
 @RunWith(Cucumber.class)
 //Options used in test run
 @CucumberOptions(features   =  "src/test/java/features/",
-                 tags       = {"@DeleteUserTest"},
+                 tags       = {"@EdidUserDataTest"},
                  glue       = {"steps"},
                  plugin     = {"pretty"},
                  monochrome = true)
