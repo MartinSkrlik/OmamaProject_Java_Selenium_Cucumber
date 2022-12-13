@@ -23,7 +23,7 @@ public class RandomData {
             firstName = faker.name().firstName();
         }
 
-        return "AutoTest_"+firstName;
+        return "AutoTest "+firstName;
     }
 
     /**
@@ -180,8 +180,20 @@ public class RandomData {
      * @param array - array of strings
      * return String
      */
-    public static String getRandomItem(String[] array) {
-        return array[new Random().nextInt(array.length)];
+    public static String getRandomItem(String[] array) { return array[new Random().nextInt(array.length)]; }
+
+    /**
+     * Return random string aktivny/neaktivny
+     * return String
+     */
+    public static String getRandomStatus() {
+        String[] answer = {"aktívny", "neaktívny"};
+        Random rand = new Random();
+        int randomValue = rand.nextInt() % 2;
+        return answer[randomValue];
     }
+
+
+
 
 }

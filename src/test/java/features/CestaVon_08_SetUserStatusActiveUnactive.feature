@@ -1,8 +1,8 @@
-@EdidUserStatus
+@EdidUserStatusTest
 Feature: CestaVon - Edit user status
 
 
-  Scenario Outline: CestaVon - Login with valid credentials,looking for specific user and edit user status
+  Scenario Outline: CestaVon - looking for specific user and edit user status
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -17,16 +17,17 @@ Feature: CestaVon - Edit user status
     And     Set user status "aktívny"
     And     Save user details
     Then    Click on button "Uložiť"
-    And     Verify user details were changed
+    Then    Verify details new created user
     Then    Go back to previous page
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-    And     Find user with changed status
+    And     Find user with changed details
+    And     Select user with name "Martin Tester"
     And     Click on button "Upraviť profil"
     And     Set user status "neaktívny"
     And     Save user details
     Then    Click on button "Uložiť"
-    And     Verify user details were changed
+    Then    Verify details new created user
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
