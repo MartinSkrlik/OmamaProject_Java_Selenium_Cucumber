@@ -30,7 +30,7 @@ Feature: CestaVon - Edit user data
     Examples:
 
       | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER           |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | AutoTest Alfréd |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Jana Mentorová |
 
 
 

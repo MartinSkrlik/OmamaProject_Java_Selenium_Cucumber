@@ -14,15 +14,16 @@ Feature: CestaVon - Edit user status
     And     Verify "Používatelia" tab is active
     And     Find user "neaktívna"
     And     Click on button "Upraviť profil"
-    And     Set user status "aktívny"
     And     Save user details
+    And     Set user status "aktívny"
     Then    Click on button "Uložiť"
     Then    Verify details new created user
     Then    Go back to previous page
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Find user with changed details
-    And     Select user with name "Martin Tester"
+    And     Select user with changed details
+    Then    Verify details new created user
     And     Click on button "Upraviť profil"
     And     Set user status "neaktívny"
     And     Save user details

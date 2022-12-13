@@ -82,4 +82,12 @@ public class CestaVon_CommonPage {
     public WebElement getOmamaSpecificationElement(int index) {return driver.findElement(getOmamaSpecificationLocator(index));}
     public By getOmamaSpecificationLocator(int index) {return By.xpath("(//div[contains(@class,'trigger')])[" + index + "]");}
 
+    public WebElement getTextfieldIndexElement(String value, int index) {return driver.findElement(getTextfieldIndexLocator(value,index));}
+    public By getTextfieldIndexLocator(String value, int index) {return By.xpath("(//input[contains(@placeholder,'" + value + "')])[" + index + "]");}
+
+    public WebElement getInputTextareaElement(String value) {return driver.findElement(getInputTextareaLocator(value));}
+    public By getInputTextareaLocator(String value) {return By.xpath("//*[@name='" + value + "']");}
+
+
 }
+

@@ -14,13 +14,13 @@ Feature: CestaVon - Create new client add omama
     And     Verify "Klienti" tab is active
     And     Click on button "Pridať"
     And     Create new client and fill application form
-    And     Select from Ano-Nie picker "Predškolský klub" choice "Áno"
+    And     Select from AnoNie picker "Predškolský klub" choice "Áno"
     And     Unwrap dropdown "Vyber omamu"
     Then    Select from menu tab "Alexandra Ginová"
     And     Fill information about Rodina
-#    And     Fill information about Tehotenstvo a pôrod
-#    And     Fill information about Kojenie
-#    And     Fill information about Psychomotorický vývin dieťaťa
+    And     Fill information about Tehotenstvo a porod
+    And     Fill information about Kojenie
+    And     Fill information about Psychomotorický vývin dieťaťa
 #    And     Fill information about Všeobecné zdravie
 #    And     Fill information about Obavy
 #    And     Fill information about Bývanie
