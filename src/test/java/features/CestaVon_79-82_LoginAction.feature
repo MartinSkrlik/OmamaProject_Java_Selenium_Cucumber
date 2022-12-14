@@ -1,3 +1,4 @@
+@Martin
 @LoginTest
 Feature: CestaVon - Login Action
 
@@ -30,13 +31,13 @@ Feature: CestaVon - Login Action
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
     And     Click on menu button
-    And     Select from menu tab "Odhlásiť"
+    And     Click on "Odhlásiť" button from menu
     Then    Verify Login page is present
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME   | PASSWORD  | PINCODE |
-      | Chrome  | Cestavon | omama_test | Omama1234 | 1111    |
+      | BROWSER | PAGE     | USERNAME  | PASSWORD  | PINCODE |
+      | Chrome  | Cestavon | omama_new | Omama1234 | 1111    |
 
   @LockOutedTest
   Scenario Outline: CestaVon - Login with lock-outed user - negative

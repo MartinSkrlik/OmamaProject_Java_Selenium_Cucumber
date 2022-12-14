@@ -1,4 +1,5 @@
-@EdidUserStatusTest
+@Martin
+@EditUserStatusTest
 Feature: CestaVon - Edit user status
 
 

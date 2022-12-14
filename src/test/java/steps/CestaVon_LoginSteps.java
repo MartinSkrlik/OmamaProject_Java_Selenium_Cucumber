@@ -29,7 +29,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
-	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification,
+	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification, //prmenne v jave s malym pismenom zaciatocnym
 			OnLevelSince, OmamaMentor = "";
 	int countOfClientsVisibleOnPage = 10;
 	int name_index = 2;
@@ -43,19 +43,18 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
 		setElementSecureText(UsernameElement.getElement(driver), username, UsernameElement.getDescription());
 		setElementSecureText(PasswordElement.getElement(driver), password, PasswordElement.getDescription());
-		ReportExtender.logScreen(driver);
 		waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
 		clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
 	}
 
 	@Then("^Verify odhlasit button is not visible$")
 	public void verify_odhlasit_button_is_not_visible() throws Throwable {
-		if (driver.findElements(OdhlasitButton.getLocator()).size() > 0) {
+		if (driver.findElements(LogOffButton.getLocator()).size() > 0) {
 			Log.info(SAUCEDEMO_PageMapper.FAIL_MESSAGE);
-			ReportExtender.logPass("Validating " + OdhlasitButton.getDescription() + ": </br>" + ReportExtender.addMarkup("FAIL") + SAUCEDEMO_PageMapper.FAIL_MESSAGE_ODHLASIT_BUTTON);
+			ReportExtender.logPass("Validating " + LogOffButton.getDescription() + ": </br>" + ReportExtender.addMarkup("FAIL") + SAUCEDEMO_PageMapper.FAIL_MESSAGE_ODHLASIT_BUTTON);
 		} else {
 			Log.info(SAUCEDEMO_PageMapper.SUCCESS_MESSAGE);
-			ReportExtender.logPass("Validating " + OdhlasitButton.getDescription() + ": </br>" + ReportExtender.addMarkup("PASS") + SAUCEDEMO_PageMapper.SUCCESS_MESSAGE_ODHLSIT_BUTTON);
+			ReportExtender.logPass("Validating " + LogOffButton.getDescription() + ": </br>" + ReportExtender.addMarkup("PASS") + SAUCEDEMO_PageMapper.SUCCESS_MESSAGE_ODHLSIT_BUTTON);
 		}
 	}
 
@@ -83,21 +82,20 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Select from menu tab {string}")
 	public void selectFromTabMenu(String value) {
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for choice " + value + " is visible", 10);
-		clickElementUsingJavascript(driver,page.getTabElement(value), "Click on choice " + value);
+		clickElementUsingJavascript(driver, page.getTabElement(value), "Click on choice " + value);
 	}
 
 	@And("Click on button {string}")
 	public void clickOnButton(String value) {
 		scrollElementIntoView(driver, page.getButtonElement(value));
 		waitForElementClickable(driver, page.getButtonLocator(value), "Wait for " + value + "button is visible", 10);
-		ReportExtender.logScreen(driver);
 		clickElementUsingJavascript(driver, page.getButtonElement(value), "Click on " + value + " button");
 	}
 
 	@And("Registry new {string} and save details")
 	public void registryNewAndSaveDetails(String value) {
 		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for name input is visible", 10);
-		setElementText(page.getInputTextfieldElement("Priezvisko"),RandomData.generateFirstName(), "Set name into input");
+		setElementText(page.getInputTextfieldElement("Priezvisko"), RandomData.generateFirstName(), "Set name into input");
 		setElementText(EmailInput.getElement(driver), RandomData.generateEmail(), EmailInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Región"), "test", "Set text into input");
 		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
@@ -105,7 +103,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Uzivatelske"), RandomData.generateFirstName(), "Set username into input");
 		setElementText(page.getInputTextfieldElement("Ulica"), RandomData.generateStreet(), "Set street into input");
-		setElementText(page.getInputTextfieldElement("Heslo"),"Martintester123." , "Set heslo into input");
+		setElementText(page.getInputTextfieldElement("Heslo"), "Martintester123.", "Set heslo into input");
 		setElementText(page.getInputTextfieldElement("Zopakovat"), "Martintester123.", "Set again heslo into input");
 		setElementText(page.getInputTextfieldElement("cislo"), RandomData.generateMobileNumber(), "Set cislo into input");
 		scrollElementIntoView(driver, DropDownRole.getElement(driver));
@@ -131,22 +129,22 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void verifyDetailsNewCreatedUser() {
 		sleep(2000);
 //		waitForElementVisible(driver, GetUserName.getLocator(), GetUserName.getDescription(), 10);
-		new Validation("Verify USERNAME", getElementText(GetUserName.getElement(driver), GetUserName.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(GetUserTown.getElement(driver), GetUserTown.getDescription()), Town).stringEquals();
-		if (driver.findElements(GetUserEmailAdmin.getLocator()).size() > 0) {
-			new Validation("Verify EMAIL", getElementText(GetUserEmailAdmin.getElement(driver), GetUserEmailAdmin.getDescription()), Email).stringEquals();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		if (driver.findElements(EmailAdminText.getLocator()).size() > 0) {
+			new Validation("Verify EMAIL", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
 		}
-		if (driver.findElements(GetUserPhoneAdmin.getLocator()).size() > 0) {
-			new Validation("Verify PHONE NUMBER", getElementText(GetUserPhoneAdmin.getElement(driver), GetUserPhoneAdmin.getDescription()), PhoneNumber).stringEquals();
+		if (driver.findElements(PhoneAdminText.getLocator()).size() > 0) {
+			new Validation("Verify PHONE NUMBER", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), PhoneNumber).stringEquals();
 		}
-		if (driver.findElements(GetUserEmailMentor.getLocator()).size() > 0) {
-			new Validation("Verify EMAIL", getElementText(GetUserEmailMentor.getElement(driver), GetUserEmailMentor.getDescription()), Email).contains();
+		if (driver.findElements(EmailMentorText.getLocator()).size() > 0) {
+			new Validation("Verify EMAIL", getElementText(EmailMentorText.getElement(driver), EmailMentorText.getDescription()), Email).contains();
 		}
-		if (driver.findElements(GetUserPhoneMentor.getLocator()).size() > 0) {
-			new Validation("Verify PHONE NUMBER", getElementText(GetUserPhoneMentor.getElement(driver), GetUserPhoneMentor.getDescription()), PhoneNumber).contains();
+		if (driver.findElements(PhoneMentorText.getLocator()).size() > 0) {
+			new Validation("Verify PHONE NUMBER", getElementText(PhoneMentorText.getElement(driver), PhoneMentorText.getDescription()), PhoneNumber).contains();
 		}
-		if (driver.findElements(GetStatus.getLocator()).size() > 0) {
-			new Validation("Verify user STATUS", StringUtils.chop(getElementText(GetStatus.getElement(driver), GetStatus.getDescription())), StringUtils.chop(Status)).stringEquals();
+		if (driver.findElements(StatusText.getLocator()).size() > 0) {
+			new Validation("Verify user STATUS", StringUtils.chop(getElementText(StatusText.getElement(driver), StatusText.getDescription())), StringUtils.chop(Status)).stringEquals();
 		}
 		ReportExtender.logScreen(driver);
 	}
@@ -217,12 +215,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Save user details")
 	public void saveUserDetails() {
-		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for input visible",10);
+		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for input visible", 10);
 		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
 		Email = getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable");
 		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable");
 		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
-		Status = getElementText(GetUserStatus.getElement(driver), GetUserStatus.getDescription());
+		Status = getElementText(UserStatusText.getElement(driver), UserStatusText.getDescription());
 		ReportExtender.logScreen(driver);
 	}
 
@@ -294,8 +292,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Go back to previous page")
 	public void goBackToPreviousPage() {
-		waitForElementClickable(driver, SpatButton.getLocator(), SpatButton.getDescription(), 10);
-		clickElementUsingJavascript(driver, SpatButton.getElement(driver), SpatButton.getDescription());
+		waitForElementClickable(driver, BackButton.getLocator(), BackButton.getDescription(), 10);
+		clickElementUsingJavascript(driver, BackButton.getElement(driver), BackButton.getDescription());
 	}
 
 	@And("Find user with changed details")
@@ -348,12 +346,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Verify all information is visible")
 	public void verifyAllInformationIsVisible() {
-		waitForElementVisible(driver, SpatButton.getLocator(), SpatButton.getDescription(), 10);
+		waitForElementVisible(driver, BackButton.getLocator(), BackButton.getDescription(), 10);
 		ReportExtender.logScreen(driver);
-		new Validation("Name visible in profile", getElementText(GetUserName.getElement(driver), GetUserName.getDescription()), Username).stringEquals();
-		new Validation("Phone Number visible in profile", getElementText(GetUserPhoneAdmin.getElement(driver), GetUserPhoneAdmin.getDescription()), PhoneNumber).stringEquals();
-		new Validation("Email visible in profile", getElementText(GetUserEmailAdmin.getElement(driver), GetUserEmailAdmin.getDescription()), Email).stringEquals();
-		new Validation("Town visible in profile", getElementText(GetUserTown.getElement(driver), GetUserTown.getDescription()), Town).stringEquals();
+		new Validation("Name visible in profile", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
+		new Validation("Phone Number visible in profile", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), PhoneNumber).stringEquals();
+		new Validation("Email visible in profile", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
+		new Validation("Town visible in profile", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
 	}
 
 	@And("Verify if in {string} search bar was filtered only username {string}")
@@ -429,11 +427,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Create new client and fill application form")
 	public void createNewClientAndFillApplicationForm() {
 		waitForElementVisible(driver, page.getInputTextfieldLocator("Meno"), "Wait for input meno visible", 10);
-		setElementText(page.getInputTextfieldElement("Meno"),RandomData.generateFirstName(), "Set name into input");
-		setElementText(page.getInputTextfieldElement("Priezvisko"),RandomData.generateLastName(), "Set priezvisko into input");
+		setElementText(page.getInputTextfieldElement("Meno"), RandomData.generateFirstName(), "Set name into input");
+		setElementText(page.getInputTextfieldElement("Priezvisko"), RandomData.generateLastName(), "Set priezvisko into input");
 		setElementText(page.getInputTextfieldElement("Prezývka"), RandomData.generateLastName(), "Set prezyvka into input");
 		setElementText(page.getInputTextfieldElement("Región"), "test", "Set region into input");
-		setElementText(page.getInputTextfieldElement("Ulica"),RandomData.generateStreet(), "Set street into input");
+		setElementText(page.getInputTextfieldElement("Ulica"), RandomData.generateStreet(), "Set street into input");
 		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
@@ -452,83 +450,109 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Select from AnoNie picker {string} choice {string}")
 	public void selectFromAnoNiePickerChoice(String picker_name, String picker_choice) {
-		scrollElementIntoView(driver,page.getYesNoPickerElement(picker_name,picker_choice));
-		waitForElementVisible(driver, page.getYesNoPickerLocator(picker_name, picker_choice),"Wait for choice picker", 10);
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement(picker_name,RandomData.getRandomAnoNie()),"Click on picker choice");
+		scrollElementIntoView(driver, page.getYesNoPickerElement(picker_name, picker_choice));
+		waitForElementVisible(driver, page.getYesNoPickerLocator(picker_name, picker_choice), "Wait for choice picker", 10);
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement(picker_name, RandomData.getRandomAnoNie()), "Click on picker choice");
 	}
 
 	@And("Fill information about Rodina")
 	public void fillInformationAboutRodina() {
 		for (int i = 1; i < 3; i++) {
-			setElementText(page.getTextfieldIndexElement("Meno a Priezvisko",i),RandomData.generateFirstName(), "Set name into input");
-			setElementText(page.getTextfieldIndexElement("Telefón",i),RandomData.generateMobileNumber(), "Set mobil phone into input");
-			setElementText(page.getTextfieldIndexElement("Zdravotný stav",i),RandomData.generateLastName(), "Set mobil phone into input");
-			setElementText(page.getTextfieldIndexElement("Ukončené vzdelanie",i),RandomData.generateLastName(), "Set mobil phone into input");
-			setElementText(page.getTextfieldIndexElement("Trieda",i),RandomData.generateLastName(), "Set mobil phone into input");
-			setElementText(page.getTextfieldIndexElement("Zamestnanie",i),RandomData.generateLastName(), "Set mobil phone into input");
+			setElementText(page.getTextfieldIndexElement("Meno a Priezvisko", i), RandomData.generateFirstName(), "Set name into input");
+			setElementText(page.getTextfieldIndexElement("Telefón", i), RandomData.generateMobileNumber(), "Set mobil phone into input");
+			setElementText(page.getTextfieldIndexElement("Zdravotný stav", i), RandomData.generateLastName(), "Set mobil phone into input");
+			setElementText(page.getTextfieldIndexElement("Ukončené vzdelanie", i), RandomData.generateLastName(), "Set mobil phone into input");
+			setElementText(page.getTextfieldIndexElement("Trieda", i), RandomData.generateLastName(), "Set mobil phone into input");
+			setElementText(page.getTextfieldIndexElement("Zamestnanie", i), RandomData.generateLastName(), "Set mobil phone into input");
 			ReportExtender.logScreen(driver);
 		}
-		setElementText(page.getInputTextfieldElement("Počet súrodencov"),RandomData.generateStreetNumber(),"Set number of children into input");
-		setElementText(page.getInputTextfieldElement("Dieťa je narodené v poradí"),RandomData.generateStreetNumber(), "Set name into input");
-		setElementText(page.getInputTextfieldElement("Jazyk/jazyky, ktorými sa v domácnosti rozpráva"),RandomData.generateStreetNumber(), "Set name into input");
+		setElementText(page.getInputTextfieldElement("Počet súrodencov"), RandomData.generateStreetNumber(), "Set number of children into input");
+		setElementText(page.getInputTextfieldElement("Dieťa je narodené v poradí"), RandomData.generateStreetNumber(), "Set name into input");
+		setElementText(page.getInputTextfieldElement("Jazyk/jazyky, ktorými sa v domácnosti rozpráva"), RandomData.generateStreetNumber(), "Set name into input");
 		ReportExtender.logScreen(driver);
 	}
 
 	@Then("Save omama specification")
 	public void saveomamaSpecification() {
-		OmamaMentor = getElementText(page.getOmamaSpecificationElement(1),"Get omama mentor");
-		OmamaLevel = getElementText(page.getOmamaSpecificationElement(4),"Get omama level");
-		KidsCount = getElementText(page.getOmamaSpecificationElement(5),"Get kids count");
-		JobSpecification = getElementText(page.getOmamaSpecificationElement(6),"Get job specification");
-		OnLevelSince = getAttributeValue(OnLevelSinceDate.getElement(driver),OnLevelSinceDate.getDescription());
+		OmamaMentor = getElementText(page.getOmamaSpecificationElement(1), "Get omama mentor");
+		OmamaLevel = getElementText(page.getOmamaSpecificationElement(4), "Get omama level");
+		KidsCount = getElementText(page.getOmamaSpecificationElement(5), "Get kids count");
+		JobSpecification = getElementText(page.getOmamaSpecificationElement(6), "Get job specification");
+		OnLevelSince = getAttributeValue(OnLevelSinceDate.getElement(driver), OnLevelSinceDate.getDescription());
 	}
 
 	@And("Verify omama specification was changed")
 	public void verifyomamaSpecificationWasChanged() {
-		waitForElementVisible(driver, OnLevelSinceDate.getLocator(),"Wait for date picker",10);
-		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1),""), OmamaMentor).stringEquals();
-		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4),""), OmamaLevel).stringEquals();
-		new Validation("Verify omama kids", getElementText(page.getOmamaSpecificationElement(5),""), KidsCount).stringEquals();
-		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6),""), JobSpecification).stringEquals();
-		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver),""), OnLevelSince).stringEquals();
+		waitForElementVisible(driver, OnLevelSinceDate.getLocator(), "Wait for date picker", 10);
+		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), OmamaMentor).stringEquals();
+		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), OmamaLevel).stringEquals();
+		new Validation("Verify omama kids", getElementText(page.getOmamaSpecificationElement(5), ""), KidsCount).stringEquals();
+		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6), ""), JobSpecification).stringEquals();
+		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver), ""), OnLevelSince).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
 	@And("Fill information about Tehotenstvo a porod")
 	public void fillInformationAboutTehotenstvoAPorod() {
-		scrollElementIntoView(driver,page.getInputTextareaElement("pregnancy"));
-		setElementText(page.getInputTextareaElement("pregnancy"),RandomData.generateFirstName(),"Input random text into pregnancy textfield");
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Fajčenie počas obdobia tehotenstva",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Alkohol počas obdobia tehotenstva",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Drogy počas obdobia tehotenstva",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		setElementText(page.getInputTextareaElement("medicinePregrancy"),RandomData.getRandomAnoNie(),"Input random Ano/Nie");
-		clickElementUsingJavascript(driver,page.getDropdownElement("Vyvolaný"),"Select button");
+		scrollElementIntoView(driver, page.getInputTextareaElement("pregnancy"));
+		setElementText(page.getInputTextareaElement("pregnancy"), RandomData.generateFirstName(), "Input random text into pregnancy textfield");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fajčenie počas obdobia tehotenstva", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Alkohol počas obdobia tehotenstva", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Drogy počas obdobia tehotenstva", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("medicinePregrancy"), RandomData.getRandomAnoNie(), "Input random Ano/Nie");
+		clickElementUsingJavascript(driver, page.getDropdownElement("Vyvolaný"), "Select button");
 		ReportExtender.logScreen(driver);
-		scrollElementIntoView(driver,page.getInputTextareaElement("childbirthComplications"));
-		setElementText(page.getInputTextareaElement("childbirthComplications"),RandomData.generateFirstName(),"Input random text into child complication textfield");
-		setElementText(page.getInputTextareaElement("birthWeight"),RandomData.generateStreetNumber(),"Input random number");
-		setElementText(page.getInputTextareaElement("birthLength"),RandomData.generateStreetNumber(),"Input random number");
-		setElementText(page.getInputTextareaElement("birthHeadCircumference"),RandomData.generateStreetNumber(),"Input random number");
+		scrollElementIntoView(driver, page.getInputTextareaElement("childbirthComplications"));
+		setElementText(page.getInputTextareaElement("childbirthComplications"), RandomData.generateFirstName(), "Input random text into child complication textfield");
+		setElementText(page.getInputTextareaElement("birthWeight"), RandomData.generateStreetNumber(), "Input random number");
+		setElementText(page.getInputTextareaElement("birthLength"), RandomData.generateStreetNumber(), "Input random number");
+		setElementText(page.getInputTextareaElement("birthHeadCircumference"), RandomData.generateStreetNumber(), "Input random number");
 		ReportExtender.logScreen(driver);
 	}
 
 	@And("Fill information about Kojenie")
 	public void fillInformationAboutKojenie() {
-		scrollElementIntoView(driver,page.getYesNoPickerElement("Kojené dieťa",RandomData.getRandomAnoNie()));
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Kojené dieťa",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		setElementText(page.getInputTextareaElement("breastFeedTime"),RandomData.generateStreetNumber(),"Input random number");
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Kojené dieťa", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Kojené dieťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("breastFeedTime"), RandomData.generateStreetNumber(), "Input random number");
 		clickElementUsingJavascript(driver, page.getDropdownElement("Zvoľte"), "Unwrap dropdown Zvolte");
-		clickElementUsingJavascript(driver,page.getTabElement("4"), "Select random choice");
+		clickElementUsingJavascript(driver, page.getTabElement("4"), "Select random choice");
 		ReportExtender.logScreen(driver);
-		scrollElementIntoView(driver,page.getYesNoPickerElement("Fajčenie počas kojenia",RandomData.getRandomAnoNie()));
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Fajčenie počas kojenia",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Alkohol počas kojenia",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		clickElementUsingJavascript(driver,page.getYesNoPickerElement("Drogy počas kojenia",RandomData.getRandomAnoNie()),"Click random Ano/nie");
-		setElementText(page.getInputTextareaElement("medicineBreastFeeding"),RandomData.generateLastName(),"Input random text");
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Fajčenie počas kojenia", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fajčenie počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Alkohol počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Drogy počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("medicineBreastFeeding"), RandomData.generateLastName(), "Input random text");
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Fill information about Psychomotorický vývin dieťaťa")
-	public void fillInformationAboutPsychomotorickýVývinDieťaťa() {
+	@And("Fill information about Psychomotoricky vyvin dietata")
+	public void fillInformationAboutPsychomotorickyVyvinDietata() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Drogy počas kojenia",RandomData.getRandomAnoNie()));
+		int i = 1;
+		while (i < 7) {
+			waitForElementClickable(driver, page.getInputDropdownLocator("nevyplnené", 1), "Wait for dropdown is clickable", 10);
+			clickElementUsingJavascript(driver, page.getInputDropdownElement("nevyplnené", 1), "Click on dropdown");
+			waitForElementClickable(driver, page.getTabIndexLocator("4 mesiace",i), "Wait for choice is visible", 10);
+			clickElementUsingJavascript(driver, page.getTabIndexElement("4 mesiace",i), "Click on choice ");
+			i++;
+		}
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Fill information about Všeobecné zdravie")
+	public void fillInformationAboutVšeobecnéZdravie() {
+
+
+
+
+
+	}
+
+	@And("Click on {string} button from menu")
+	public void clickOnButtonFromMenu(String value) {
+		waitForElementVisible(driver,page.getErrorMessageLocator(value),"Wait for "+ value + " button",10);
+		clickElementUsingJavascript(driver,page.getErrorMessageElement(value),"Click on " + value + " button");
 	}
 }
+

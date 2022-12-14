@@ -12,7 +12,7 @@ public class CestaVon_CommonPage {
 
         MenuButton      (By.xpath("//div[@class='menu']"),
                 "MENU BUTTON"),
-        OdhlasitButton  (By.xpath("//li[@id='sign_out_button']"),
+        LogOffButton  (By.xpath("//li[@id='sign_out_button']"),
                 "ODHLASIT BUTTON"),
         SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
@@ -47,7 +47,7 @@ public class CestaVon_CommonPage {
     public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
 
     public WebElement getButtonElement(String value) {return driver.findElement(getButtonLocator(value));}
-    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}
+    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}//pozriet xpath, *
 
     public WebElement getTabElement(String value) {return driver.findElement(getTabLocator(value));}
     public By getTabLocator(String value) {return By.xpath("//li[text()='" + value + "']");}
@@ -88,6 +88,11 @@ public class CestaVon_CommonPage {
     public WebElement getInputTextareaElement(String value) {return driver.findElement(getInputTextareaLocator(value));}
     public By getInputTextareaLocator(String value) {return By.xpath("//*[@name='" + value + "']");}
 
+    public WebElement getInputDropdownElement(String value,int index) {return driver.findElement(getInputDropdownLocator(value,index));}
+    public By getInputDropdownLocator(String value, int index) {return By.xpath("(//span[text()='" + value + "'])[" + index + "]");}
+
+    public WebElement getTabIndexElement(String value,int index) {return driver.findElement(getTabIndexLocator(value,index));}
+    public By getTabIndexLocator(String value, int index) {return By.xpath("(//li[text()='" + value + "'])[" + index + "]");}
 
 }
 

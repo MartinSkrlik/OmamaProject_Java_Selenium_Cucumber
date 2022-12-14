@@ -198,7 +198,13 @@ public class RandomData {
         return new Random().nextBoolean() ? "Áno" : "Nie";
     }
 
-
+    /**
+     * Return random number 1-9
+     * return String
+     */
+    public static String generateRandomNumber(){
+        return faker.regexify("[1-9]");
+    }
 
 
 }

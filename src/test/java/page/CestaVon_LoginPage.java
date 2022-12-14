@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class CestaVon_LoginPage {
 
-	private WebDriver driver;
+	private WebDriver driver; //zmazat kde sa nepouziva
 
     public enum loginPageItems {
 
@@ -44,7 +44,7 @@ public class CestaVon_LoginPage {
         }
     }
 
-    public CestaVon_LoginPage(WebDriver driver) { this.driver = driver; }
+
     
 
 }
