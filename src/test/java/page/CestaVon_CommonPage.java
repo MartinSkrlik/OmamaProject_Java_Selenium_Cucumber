@@ -16,10 +16,6 @@ public class CestaVon_CommonPage {
                 "ODHLASIT BUTTON"),
         SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
-        NextPageButton  (By.xpath("//li[contains(@title,'Nasledujúca')]"),
-                "Click on NEXT page"),
-        NextPageButtonDisabled  (By.xpath("//li[contains(@aria-disabled,'true') and contains(@title,'Nasledujúca')]"),
-                "Next page BUTTON is disabled"),
         ;
         private String description;
         private By findBy;
@@ -60,6 +56,9 @@ public class CestaVon_CommonPage {
 
     public WebElement getUserElement(String value) {return driver.findElement(getUserLocator(value));}
     public By getUserLocator(String value)  {return By.xpath("//*[text()='" + value + "']/ancestor::tr");}
+
+    public WebElement getFirstUserElement(String value) {return driver.findElement(getFirstUserLocator(value));}
+    public By getFirstUserLocator(String value)  {return By.xpath("//*[contains(text(),'" + value + "')]/ancestor::tr");}
 
     public WebElement getInputElementVerify(String value1,String value2) {return driver.findElement(getInputLocatorVerify(value1,value2));}
     public By getInputLocatorVerify(String value1,String value2)  {return By.xpath("//input[@placeholder='" + value1 + "' and @value='" + value2 + "']");}

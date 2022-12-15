@@ -14,24 +14,19 @@ Feature: CestaVon - Edit user data
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
     And     Input into "Meno" search bar username "<USER>"
-    And     Select user with name "<USER>"
+    And     Select first user contains "<USER>"
     And     Click on button "Upraviť profil"
-    And     Save user details
     And     Change user details
-    Then    Click on button "Uložiť"
-    Then    Verify details new created user
-    And     Click on button "Upraviť profil"
-    And     Change user details to original state
     And     Save user details
     Then    Click on button "Uložiť"
-    Then    Verify details new created user
+    And     Verify omama details
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER           |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Jana Mentorová |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER     |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | AutoTest |
 
 
 

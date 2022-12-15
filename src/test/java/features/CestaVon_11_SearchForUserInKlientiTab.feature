@@ -24,7 +24,7 @@ Feature: CestaVon - Search for user in klient tab
     And     Remember clients name and surname belong to omama "Alexandra Ginová"
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
-    And     Input into "Meno" search bar username "<OMAMA>"// zmenit vysledok testcasu na pass, aj ked nenajde user
+    And     Input into "Meno" search bar username "<OMAMA>"
     And     Select user with name "<OMAMA>"
     And     Verify clients username belong to "<OMAMA>"
     And     Select from menu tab "Odhlásiť"

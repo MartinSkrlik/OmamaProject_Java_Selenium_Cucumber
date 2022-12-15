@@ -19,7 +19,7 @@ Feature: CestaVon - Create New Omama User
     Then    Click on button "Obnoviť"
     And     Find user with changed details
     And     Select user with changed details
-    And     Verify details new created user
+    And     Verify omama details
     Then    Click on button "Upraviť profil"
     And     Unwrap dropdown "Vyber Mentora"
     Then    Select from menu tab "Mentorka Testovacia"
@@ -32,13 +32,14 @@ Feature: CestaVon - Create New Omama User
     Then    Select from menu tab "Trojštvrtinový úväzok"
     Then    Save omama specification
     Then    Click on button "Uložiť"
+    Then    Wait for changes is processed
     Then    Click on button "Upraviť profil"
     And     Verify omama specification was changed
     Then    Click on button "Uložiť"
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
-    And     Select from menu tab "Odhlásiť"
-    Then    Verify Login page is present
+#    And     Select from menu tab "Odhlásiť"
+#    Then    Verify Login page is present
 
     Examples:
 

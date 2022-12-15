@@ -25,6 +25,7 @@ Feature: CestaVon - Delete User
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
     And     Find user with changed details
+    And     Verify user was deleted
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
