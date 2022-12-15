@@ -20,6 +20,16 @@ public class CestaVon_CommonPage {
                 "Click on NEXT page"),
         NextPageButtonDisabled  (By.xpath("//li[contains(@aria-disabled,'true') and contains(@title,'Nasledujúca')]"),
                 "Next page BUTTON is disabled"),
+        FirstTableRow(By.xpath("//tbody/tr[1]"),
+                "First table row"),
+        TableColumns(By.xpath("//thead//th"),
+                "Table rows"),
+        TableRows(By.xpath("//tbody//tr"),
+                "Table columns"),
+        PaginationNextButton(By.xpath("//li[contains(@class, 'pagination-next')]"),
+                "Pagination next button"),
+        PaginationNumbers(By.xpath("//li[contains(@class, 'pagination-item')]"),
+                "Pagination numbers"),
         ;
         private String description;
         private By findBy;
@@ -29,11 +39,11 @@ public class CestaVon_CommonPage {
             this.findBy = findBy;
         }
 
-        public String getDescription(){
+        public String getDescription() {
             return description;
         }
 
-        public By getLocator(){
+        public By getLocator() {
             return findBy;
         }
 
@@ -70,8 +80,37 @@ public class CestaVon_CommonPage {
     public WebElement getClientUsernameElement(String value1) {return driver.findElement(getClientUsernameLocator(value1));}
     public By getClientUsernameLocator(String value1)  {return By.xpath("(//div[@class='admin-omama-bottompanel']//h3)[" + value1 + "]");}
 
-    public WebElement getInputTextfieldElement(String value) {return driver.findElement(getInputTextfieldLocator(value));}
-    public By getInputTextfieldLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
+    public WebElement getInputTextfieldElement(String value) {
+        return driver.findElement(getInputTextfieldLocator(value));
+    }
+
+    public By getInputTextfieldLocator(String value) {
+        return By.xpath("//input[contains(@placeholder,'" + value + "')]");
+    }
+
+    public WebElement getTableColumnPredecessorsElement(String value) {
+        return driver.findElement(getTableColumnPredecessorsLocator(value));
+    }
+
+    public By getTableColumnPredecessorsLocator(String value) {
+        return By.xpath("//span[text()='" + value + "']/ancestor::th/preceding-sibling::th");
+    }
+
+    public WebElement getTableNameValueElement(int row, int column) {
+        return driver.findElement(getTableNameValueLocator(row, column));
+    }
+
+    public By getTableNameValueLocator(int row, int column) {
+        return By.xpath("//tbody/tr[" + row + "]/td[" + column + "]/div");
+    }
+
+    public WebElement getTableValueElement(int row, int column) {
+        return driver.findElement(getTableValueLocator(row, column));
+    }
+
+    public By getTableValueLocator(int row, int column) {
+        return By.xpath("//tbody/tr[" + row + "]/td[" + column + "]");
+    }
 
     public WebElement getYesNoPickerElement(String value1,String value2) {return driver.findElement(getYesNoPickerLocator(value1,value2));}
     public By getYesNoPickerLocator(String value1,String value2) {return By.xpath("//*[text()='" + value1 + "']/ancestor::div[@class='yesNoQuestion']//div[text()='" + value2 + "']");}
