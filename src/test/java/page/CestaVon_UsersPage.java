@@ -10,9 +10,9 @@ public class CestaVon_UsersPage {
 
     public enum usersPageItems {
 
-        RolaButton  (By.xpath("//label[contains(text(), 'Rola')]"),
+        RoleButton(By.xpath("//label[contains(text(), 'Rola')]"),
                 "ROLA BUTTON"),
-        RolaOption  (null,
+        RoleOption(null,
                 "ROLA OPTION"),
         ;
         private String description;

@@ -6,20 +6,30 @@ import org.openqa.selenium.WebElement;
 
 public class CestaVon_CommonPage {
 
-	private WebDriver driver;
+    private WebDriver driver;
 
-	public enum MainPage {
+    public enum MainPage {
 
-        MenuButton      (By.xpath("//div[@class='menu']"),
+        MenuButton(By.xpath("//div[@class='menu']"),
                 "MENU BUTTON"),
-        OdhlasitButton  (By.xpath("//li[@id='sign_out_button']"),
+        OdhlasitButton(By.xpath("//li[@id='sign_out_button']"),
                 "ODHLASIT BUTTON"),
-        SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
+        SelectedTab(By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
-        NextPageButton  (By.xpath("//li[contains(@title,'Nasledujúca')]"),
+        NextPageButton(By.xpath("//li[contains(@title,'Nasledujúca')]"),
                 "Click on NEXT page"),
-        NextPageButtonDisabled  (By.xpath("//li[contains(@aria-disabled,'true') and contains(@title,'Nasledujúca')]"),
+        NextPageButtonDisabled(By.xpath("//li[contains(@aria-disabled,'true') and contains(@title,'Nasledujúca')]"),
                 "Next page BUTTON is disabled"),
+        FirstTableRow(By.xpath("//tbody/tr[1]"),
+                "First table row"),
+        TableColumns(By.xpath("//thead//th"),
+                "Table rows"),
+        TableRows(By.xpath("//tbody//tr"),
+                "Table columns"),
+        PaginationNextButton(By.xpath("//li[contains(@class, 'pagination-next')]"),
+                "Pagination next button"),
+        PaginationNumbers(By.xpath("//li[contains(@class, 'pagination-item')]"),
+                "Pagination numbers"),
         ;
         private String description;
         private By findBy;
@@ -29,11 +39,11 @@ public class CestaVon_CommonPage {
             this.findBy = findBy;
         }
 
-        public String getDescription(){
+        public String getDescription() {
             return description;
         }
 
-        public By getLocator(){
+        public By getLocator() {
             return findBy;
         }
 
@@ -41,35 +51,112 @@ public class CestaVon_CommonPage {
             return driver.findElement(getLocator());
         }
     }
-        public CestaVon_CommonPage(WebDriver driver) { this.driver = driver; }
 
-    public WebElement getErrorMessageElement(String value) {return driver.findElement(getErrorMessageLocator(value));}
-    public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
+    public CestaVon_CommonPage(WebDriver driver) {
+        this.driver = driver;
+    }
 
-    public WebElement getButtonElement(String value) {return driver.findElement(getButtonLocator(value));}
-    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}
+    public WebElement getErrorMessageElement(String value) {
+        return driver.findElement(getErrorMessageLocator(value));
+    }
 
-    public WebElement getTabElement(String value) {return driver.findElement(getTabLocator(value));}
-    public By getTabLocator(String value) {return By.xpath("//li[text()='" + value + "']");}
+    public By getErrorMessageLocator(String value) {
+        return By.xpath("//p[text()='" + value + "']");
+    }
 
-    public WebElement getInputElement(String value) {return driver.findElement(getInputLocator(value));}
-    public By getInputLocator(String value) {return By.xpath("//input[@placeholder='" + value+ "']");}
+    public WebElement getButtonElement(String value) {
+        return driver.findElement(getButtonLocator(value));
+    }
 
-    public WebElement getDropdownElement(String value) {return driver.findElement(getDropdownLocator(value));}
-    public By getDropdownLocator(String value) {return By.xpath("//div[text()='" + value + "']");}
+    public By getButtonLocator(String value) {
+        return By.xpath("//*[text()='" + value + "']/parent::button");
+    }
 
-    public WebElement getUserElement(String value) {return driver.findElement(getUserLocator(value));}
-    public By getUserLocator(String value)  {return By.xpath("//*[text()='" + value + "']/ancestor::tr");}
+    public WebElement getTabElement(String value) {
+        return driver.findElement(getTabLocator(value));
+    }
 
-    public WebElement getInputElementVerify(String value1,String value2) {return driver.findElement(getInputLocatorVerify(value1,value2));}
-    public By getInputLocatorVerify(String value1,String value2)  {return By.xpath("//input[@placeholder='" + value1 + "' and @value='" + value2 + "']");}
+    public By getTabLocator(String value) {
+        return By.xpath("//li[text()='" + value + "']");
+    }
 
-    public WebElement getClientInfoByIndexElement(int index1,String value1) {return driver.findElement(getClientInfoByIndexLocator(index1,value1));}
-    public By getClientInfoByIndexLocator(int index1,String value1)  {return By.xpath("(//tbody[contains(@class,'tbody')]//td[" + index1 + "])[" + value1 + "]");}
+    public WebElement getInputElement(String value) {
+        return driver.findElement(getInputLocator(value));
+    }
 
-    public WebElement getClientUsernameElement(String value1) {return driver.findElement(getClientUsernameLocator(value1));}
-    public By getClientUsernameLocator(String value1)  {return By.xpath("(//div[@class='admin-omama-bottompanel']//h3)[" + value1 + "]");}
+    public By getInputLocator(String value) {
+        return By.xpath("//input[@placeholder='" + value + "']");
+    }
 
-    public WebElement getInputTextfieldElement(String value) {return driver.findElement(getInputTextfieldLocator(value));}
-    public By getInputTextfieldLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
+    public WebElement getDropdownElement(String value) {
+        return driver.findElement(getDropdownLocator(value));
+    }
+
+    public By getDropdownLocator(String value) {
+        return By.xpath("//div[text()='" + value + "']");
+    }
+
+    public WebElement getUserElement(String value) {
+        return driver.findElement(getUserLocator(value));
+    }
+
+    public By getUserLocator(String value) {
+        return By.xpath("//*[text()='" + value + "']/ancestor::tr");
+    }
+
+    public WebElement getInputElementVerify(String value1, String value2) {
+        return driver.findElement(getInputLocatorVerify(value1, value2));
+    }
+
+    public By getInputLocatorVerify(String value1, String value2) {
+        return By.xpath("//input[@placeholder='" + value1 + "' and @value='" + value2 + "']");
+    }
+
+    public WebElement getClientInfoByIndexElement(int index1, String value1) {
+        return driver.findElement(getClientInfoByIndexLocator(index1, value1));
+    }
+
+    public By getClientInfoByIndexLocator(int index1, String value1) {
+        return By.xpath("(//tbody[contains(@class,'tbody')]//td[" + index1 + "])[" + value1 + "]");
+    }
+
+    public WebElement getClientUsernameElement(String value1) {
+        return driver.findElement(getClientUsernameLocator(value1));
+    }
+
+    public By getClientUsernameLocator(String value1) {
+        return By.xpath("(//div[@class='admin-omama-bottompanel']//h3)[" + value1 + "]");
+    }
+
+    public WebElement getInputTextfieldElement(String value) {
+        return driver.findElement(getInputTextfieldLocator(value));
+    }
+
+    public By getInputTextfieldLocator(String value) {
+        return By.xpath("//input[contains(@placeholder,'" + value + "')]");
+    }
+
+    public WebElement getTableColumnPredecessorsElement(String value) {
+        return driver.findElement(getTableColumnPredecessorsLocator(value));
+    }
+
+    public By getTableColumnPredecessorsLocator(String value) {
+        return By.xpath("//span[text()='" + value + "']/ancestor::th/preceding-sibling::th");
+    }
+
+    public WebElement getTableNameValueElement(int row, int column) {
+        return driver.findElement(getTableNameValueLocator(row, column));
+    }
+
+    public By getTableNameValueLocator(int row, int column) {
+        return By.xpath("//tbody/tr[" + row + "]/td[" + column + "]/div");
+    }
+
+    public WebElement getTableValueElement(int row, int column) {
+        return driver.findElement(getTableValueLocator(row, column));
+    }
+
+    public By getTableValueLocator(int row, int column) {
+        return By.xpath("//tbody/tr[" + row + "]/td[" + column + "]");
+    }
 }
