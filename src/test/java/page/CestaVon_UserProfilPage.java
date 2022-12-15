@@ -29,7 +29,9 @@ public class CestaVon_UserProfilPage {
         GetStatus            (By.xpath("(//b[contains(@class,'date')])[2]"),
                 "Get user status"),
         SpatButton           (By.xpath("(//div[contains(@class,'back')])[2]"),
-                "Click on Spat BUTTON")
+                "Click on Spat BUTTON"),
+        OnLevelSinceDate     (By.xpath("//input[contains(@class,'picker')]"),
+                "Get date from 'Na urovni od' date picker")
         ;
         private String description;
         private By findBy;
