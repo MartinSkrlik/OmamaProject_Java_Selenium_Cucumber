@@ -346,7 +346,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 				ReportExtender.logWarning("Surname " + username + " was not found in " + textfield_input + " search bar");
 			}
 		}
-		ReportExtender.logScreen(driver);
 	}
 
 	@And("Clear input {string}")
@@ -364,10 +363,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");
 		} else {
 			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
-				clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index, j + getEveryUserElement), "Get " + j + " name of clients");
+				clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index, j + getEveryUserElement), "Save " + j + " client name");
 			}
 			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
-				clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index, j + getEveryUserElement), "Get " + j + " surname of clients");
+				clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index, j + getEveryUserElement), "Save " + j + " client surname");
 			}
 		}
 		ReportExtender.logScreen(driver);
@@ -530,7 +529,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Select first user contains {string}")
 	public void selectFirstUser(String value) {
 		waitForElementVisible(driver,page.getFirstUserLocator(value),"Wait for first user contains " + value,10);
-		clickElementUsingJavascript(driver, page.getFirstUserElement(value), "Select first user contains "+ value);
+		clickElementUsingJavascript(driver, page.getFirstUserElement(value), "Select first user contains " + value);
 	}
 
 	@And("Verify user was deleted")

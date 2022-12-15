@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class CestaVon_LoginPage {
 
-	private WebDriver driver; //zmazat kde sa nepouziva
+	private WebDriver driver;
 
     public enum loginPageItems {
 
