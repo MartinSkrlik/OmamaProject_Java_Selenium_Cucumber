@@ -1,4 +1,5 @@
-@EdidUserStatusTest
+@Martin
+@EditUserStatusTest
 Feature: CestaVon - Edit user status
 
 
@@ -12,29 +13,31 @@ Feature: CestaVon - Edit user status
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
-    And     Find user "neaktívna"
+    And     Input into "Meno" search bar username "<USER>"
+    And     Select user with name "<USER>"
     And     Click on button "Upraviť profil"
     And     Set user status "aktívny"
     And     Save user details
     Then    Click on button "Uložiť"
-    Then    Verify details new created user
+    Then    Verify user status
     Then    Go back to previous page
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-    And     Find user with changed details
-    And     Select user with name "Martin Tester"
+    And     Clear input "Meno"
+    And     Input into "Meno" search bar username "<USER>"
+    And     Select user with name "<USER>"
     And     Click on button "Upraviť profil"
     And     Set user status "neaktívny"
     And     Save user details
     Then    Click on button "Uložiť"
-    Then    Verify details new created user
+    Then    Verify user status
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | USER        |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Omama Druhá |
 
 
 

@@ -103,7 +103,7 @@ public class RandomData {
      * @return String
      */
     public static String generateStreetNumber(){
-        return faker.regexify("[0-9]{1,3}");
+        return faker.regexify("[0-9]{1,2}");
     }
 
     /**
@@ -187,13 +187,24 @@ public class RandomData {
      * return String
      */
     public static String getRandomStatus() {
-        String[] answer = {"aktívny", "neaktívny"};
-        Random rand = new Random();
-        int randomValue = rand.nextInt() % 2;
-        return answer[randomValue];
+        return new Random().nextBoolean() ? "aktívny" : "neaktívny";
     }
 
+    /**
+     * Return random string Ano/Nie
+     * return String
+     */
+    public static String getRandomAnoNie() {
+        return new Random().nextBoolean() ? "Áno" : "Nie";
+    }
 
+    /**
+     * Return random number 1-9
+     * return String
+     */
+    public static String generateRandomNumber(){
+        return faker.regexify("[1-9]");
+    }
 
 
 }

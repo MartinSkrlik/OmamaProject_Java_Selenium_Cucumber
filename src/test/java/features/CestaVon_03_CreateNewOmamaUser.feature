@@ -1,3 +1,4 @@
+@Martin
 @CreateOmamaUserTest
 Feature: CestaVon - Create New Omama User
 
@@ -18,7 +19,7 @@ Feature: CestaVon - Create New Omama User
     Then    Click on button "Obnoviť"
     And     Find user with changed details
     And     Select user with changed details
-    And     Verify details new created user
+    And     Verify omama details
     Then    Click on button "Upraviť profil"
     And     Unwrap dropdown "Vyber Mentora"
     Then    Select from menu tab "Mentorka Testovacia"
@@ -28,9 +29,10 @@ Feature: CestaVon - Create New Omama User
     And     Unwrap dropdown "Vyber očakávaný počet detí"
     Then    Select from menu tab "4"
     And     Unwrap dropdown "Vyber typ úväzku"
-    Then    Select from menu tab "Trojštvrtinový úväzok"
+    Then    Select from menu tab "Plný úväzok"
     Then    Save omama specification
     Then    Click on button "Uložiť"
+    Then    Wait for changes is processed
     Then    Click on button "Upraviť profil"
     And     Verify omama specification was changed
     Then    Click on button "Uložiť"

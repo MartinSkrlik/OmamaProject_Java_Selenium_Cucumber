@@ -44,7 +44,7 @@ public class CestaVon_LoginPage {
         }
     }
 
-    public CestaVon_LoginPage(WebDriver driver) { this.driver = driver; }
+
     
 
 }

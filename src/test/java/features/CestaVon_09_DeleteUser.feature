@@ -1,3 +1,4 @@
+@Martin
 @DeleteUserTest
 Feature: CestaVon - Delete User
 
@@ -17,12 +18,14 @@ Feature: CestaVon - Delete User
     And     Click on button "Registrovať"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-    And     Find user "Martin Tester"
+    And     Find user with changed details
+    And     Select user with changed details
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
-    And     Input into "Meno" search bar username "Martin Tester"
+    And     Find user with changed details
+    And     Verify user was deleted
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 

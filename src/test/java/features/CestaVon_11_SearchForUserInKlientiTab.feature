@@ -1,8 +1,9 @@
+@Martin
 @SearchForUserTest
 Feature: CestaVon - Search for user in klient tab
 
 
-  Scenario Outline: CestaVon - Login with valid credentials,looking for specific client in Klienti tab
+  Scenario Outline: CestaVon - looking for specific client in Klienti tab
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -31,8 +32,7 @@ Feature: CestaVon - Search for user in klient tab
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME         | SURNAME      | OMAMA            |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna         | Vrbova       | Alexandra Ginová |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | DoesNotExist | DoesNotExist | Alexandra Ginová |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME | SURNAME | OMAMA            |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna | Vrbova  | Alexandra Ginová |
 
 
