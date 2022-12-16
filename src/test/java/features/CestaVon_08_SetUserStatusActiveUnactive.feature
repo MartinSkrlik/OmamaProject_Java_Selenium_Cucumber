@@ -23,6 +23,7 @@ Feature: CestaVon - Edit user status
     Then    Go back to previous page
     And     Verify "Používatelia" tab is active
     And     Click on button "Obnoviť"
+    And     Clear input "Meno"
     And     Input into "Meno" search bar username "<USER>"
     And     Select user with name "<USER>"
     And     Click on button "Upraviť profil"

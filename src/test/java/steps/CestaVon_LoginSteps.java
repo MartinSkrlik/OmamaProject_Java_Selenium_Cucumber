@@ -405,7 +405,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 				ReportExtender.logWarning("Surname " + username + " was not found in search bar " + textfield_input + " search bar");
 			}
 		}
-		ReportExtender.logScreen(driver);
 	}
 
 	@And("Clear input {string}")
@@ -423,10 +422,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			ReportExtender.logWarning("Omama " + omama_user + "has no CLIENTS added to her");
 		} else {
 			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
-				clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index, j + getEveryUserElement), "Get " + j + " name of clients");
+				clientsName[i] = getElementText(page.getClientInfoByIndexElement(name_index, j + getEveryUserElement), "Save " + j + " client name");
 			}
 			for (int j = 1, i = 0; i < countOfClientsVisibleOnPage; i++, j++) {
-				clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index, j + getEveryUserElement), "Get " + j + " surname of clients");
+				clientsSurname[i] = getElementText(page.getClientInfoByIndexElement(surname_index, j + getEveryUserElement), "Save " + j + " client surname");
 			}
 		}
 		ReportExtender.logScreen(driver);
@@ -513,6 +512,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify omama specification was changed")
 	public void verifyomamaSpecificationWasChanged() {
+		scrollPageIntoBottom(driver);
 		waitForElementVisible(driver, OnLevelSinceDate.getLocator(), "Wait for date picker", 10);
 		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), OmamaMentor).stringEquals();
 		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), OmamaLevel).stringEquals();
@@ -597,21 +597,19 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Wait for changes is processed")
 	public void waitForChangesIsProcessed() {
-		waitForFullPageLoad(driver,10);
+		sleep(2000);
 	}
 
 	@And("Select first user contains {string}")
 	public void selectFirstUser(String value) {
 		waitForElementVisible(driver,page.getFirstUserLocator(value),"Wait for first user contains " + value,10);
-		clickElementUsingJavascript(driver, page.getFirstUserElement(value), "Select first user contains "+ value);
+		clickElementUsingJavascript(driver, page.getFirstUserElement(value), "Select first user contains " + value);
 	}
 
 	@And("Verify user was deleted")
 	public void verifyUserWasDeleted() {
 		if(!verifyElementIsPresent(driver, page.getUserLocator(Username), "Find if element was deleted"))
-		{
-			ReportExtender.logPass("Username " + Username + " was deleted");
-		}
+			{ReportExtender.logPass("Username " + Username + " was deleted");}
 		else
 			ReportExtender.logWarning("Username " + Username + " was not deleted");
 	}

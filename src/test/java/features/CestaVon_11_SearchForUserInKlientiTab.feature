@@ -32,8 +32,7 @@ Feature: CestaVon - Search for user in klient tab
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME         | SURNAME      | OMAMA            |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna         | Vrbova       | Alexandra Ginová |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | DoesNotExist | DoesNotExist | Alexandra Ginová |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME | SURNAME | OMAMA            |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna | Vrbova  | Alexandra Ginová |
 
 

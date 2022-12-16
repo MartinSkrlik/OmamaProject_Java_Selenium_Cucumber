@@ -29,7 +29,7 @@ Feature: CestaVon - Create New Omama User
     And     Unwrap dropdown "Vyber očakávaný počet detí"
     Then    Select from menu tab "4"
     And     Unwrap dropdown "Vyber typ úväzku"
-    Then    Select from menu tab "Trojštvrtinový úväzok"
+    Then    Select from menu tab "Plný úväzok"
     Then    Save omama specification
     Then    Click on button "Uložiť"
     Then    Wait for changes is processed
@@ -38,8 +38,8 @@ Feature: CestaVon - Create New Omama User
     Then    Click on button "Uložiť"
     And     Click on button "Odstrániť používateľa"
     And     Click on button "Odstrániť"
-#    And     Select from menu tab "Odhlásiť"
-#    Then    Verify Login page is present
+    And     Select from menu tab "Odhlásiť"
+    Then    Verify Login page is present
 
     Examples:
 

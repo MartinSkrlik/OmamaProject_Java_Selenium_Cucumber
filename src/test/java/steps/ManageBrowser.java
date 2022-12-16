@@ -68,8 +68,8 @@ public class ManageBrowser {
     }
 	
 	@When("Go to page \"([^\"]*)\"$")
-	public void go_to_page(String page) {		
-        WebDriver driver = (WebDriver)globalParametersMap.get("driver");
+	public void go_to_page(String page) {
+    	WebDriver driver = (WebDriver)globalParametersMap.get("driver");
 		try {
             driver.get(ConfigFileReader.getValueFromProperties(page));
             ReportExtender.logInfo(driver.getCurrentUrl());
