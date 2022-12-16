@@ -453,6 +453,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify omama specification was changed")
 	public void verifyomamaSpecificationWasChanged() {
+		scrollPageIntoBottom(driver);
 		waitForElementVisible(driver, OnLevelSinceDate.getLocator(), "Wait for date picker", 10);
 		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), OmamaMentor).stringEquals();
 		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), OmamaLevel).stringEquals();
@@ -523,7 +524,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Wait for changes is processed")
 	public void waitForChangesIsProcessed() {
-		waitForFullPageLoad(driver,10);
+		sleep(2000);
 	}
 
 	@And("Select first user contains {string}")
@@ -535,9 +536,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Verify user was deleted")
 	public void verifyUserWasDeleted() {
 		if(!verifyElementIsPresent(driver, page.getUserLocator(Username), "Find if element was deleted"))
-		{
-			ReportExtender.logPass("Username " + Username + " was deleted");
-		}
+			{ReportExtender.logPass("Username " + Username + " was deleted");}
 		else
 			ReportExtender.logWarning("Username " + Username + " was not deleted");
 	}
