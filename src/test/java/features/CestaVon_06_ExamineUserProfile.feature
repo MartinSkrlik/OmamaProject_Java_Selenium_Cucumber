@@ -3,7 +3,7 @@
 Feature: CestaVon - Examine User Profile
 
     @Positive
-    Scenario Outline: CestaVon - Login with valid credentials - admin - positive
+    Scenario Outline: CestaVon - 06 - Examine user profile
 
         Given   Open browser "<BROWSER>"
         When    Go to page "<PAGE>"

@@ -20,8 +20,9 @@ import static page.CestaVon_CommonPage.MainPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
 import static page.CestaVon_UserProfilPage.UserProfilPage.*;
 import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
-import static page.CestaVon_UsersPage.adminMainPageItems.RolaButton;
-import static page.CestaVon_UsersPage.adminMainPageItems.RolaOption;
+import static page.CestaVon_UsersPage.usersPageItems.*;
+import static page.CestaVon_ClientProfilePage.ClientProfilePage.*;
+import static page.CestaVon_SettingsPage.settingsPageItems.*;
 
 public class CestaVon_LoginSteps extends TestStepActions {
 
@@ -29,7 +30,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
-	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification, //prmenne v jave s malym pismenom zaciatocnym
+	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification,
 			OnLevelSince, OmamaMentor = "";
 	int countOfClientsVisibleOnPage = 10;
 	int name_index = 2;
@@ -43,6 +44,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
 		setElementSecureText(UsernameElement.getElement(driver), username, UsernameElement.getDescription());
 		setElementSecureText(PasswordElement.getElement(driver), password, PasswordElement.getDescription());
+		ReportExtender.logScreen(driver);
 		waitForElementClickable(driver, LoginButton.getLocator(), LoginButton.getDescription(), 15);
 		clickElement(LoginButton.getElement(driver), LoginButton.getDescription());
 	}
@@ -82,7 +84,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Select from menu tab {string}")
 	public void selectFromTabMenu(String value) {
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for choice " + value + " is visible", 10);
-		clickElementUsingJavascript(driver, page.getTabElement(value), "Click on choice " + value);
+		clickElementUsingJavascript(driver,page.getTabElement(value), "Click on choice " + value);
 	}
 
 	@And("Click on button {string}")
@@ -95,7 +97,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Registry new {string} and save details")
 	public void registryNewAndSaveDetails(String value) {
 		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for name input is visible", 10);
-		setElementText(page.getInputTextfieldElement("Priezvisko"), RandomData.generateFirstName(), "Set name into input");
+		setElementText(page.getInputTextfieldElement("Priezvisko"),RandomData.generateFirstName(), "Set name into input");
 		setElementText(EmailInput.getElement(driver), RandomData.generateEmail(), EmailInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Región"), "test", "Set text into input");
 		setElementText(page.getInputTextfieldElement("Mesto"), "Bratislava - Devín", "Set town into input");
@@ -103,7 +105,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Uzivatelske"), RandomData.generateFirstName(), "Set username into input");
 		setElementText(page.getInputTextfieldElement("Ulica"), RandomData.generateStreet(), "Set street into input");
-		setElementText(page.getInputTextfieldElement("Heslo"), "Martintester123.", "Set heslo into input");
+		setElementText(page.getInputTextfieldElement("Heslo"),"Martintester123." , "Set heslo into input");
 		setElementText(page.getInputTextfieldElement("Zopakovat"), "Martintester123.", "Set again heslo into input");
 		setElementText(page.getInputTextfieldElement("cislo"), RandomData.generateMobileNumber(), "Set cislo into input");
 		scrollElementIntoView(driver, DropDownRole.getElement(driver));
@@ -159,6 +161,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
+
 	@When("Maximalize window")
 	public void maximalizeWindow() {
 		driver.manage().window().maximize();
@@ -186,6 +189,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), "Select current day from date menu");
 	}
 
+
 	@And("Change user details")
 	public void changeUserDetails() {
 		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for username input visieble", 10);
@@ -208,7 +212,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Save user details")
 	public void saveUserDetails() {
-		waitForElementVisible(driver, page.getInputTextfieldLocator("Priezvisko"), "Wait for input visible", 10);
+		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for input visible",10);
 		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
 		Email = getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable");
 		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable");
@@ -220,16 +224,17 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Click on Rola and choose option {string}")
 	public void clickOnRolaAndChooseOption(String value) {
 		CestaVon_UsersPage page = new CestaVon_UsersPage(driver);
-		waitForElementVisible(driver, RolaButton.getLocator(), RolaButton.getDescription(), 15);
-		clickElement(RolaButton.getElement(driver), RolaButton.getDescription());
-		waitForElementVisible(driver, page.getRolaOptionLocator(value), RolaOption.getDescription(), 15);
-		clickElement(page.getRolaOptionElement(value), RolaOption.getDescription());
+		waitForElementVisible(driver, RoleButton.getLocator(), RoleButton.getDescription(), 15);
+		clickElement(RoleButton.getElement(driver), RoleButton.getDescription());
+		waitForElementVisible(driver, page.getRolaOptionLocator(value), RoleButton.getDescription(), 15);
+		clickElement(page.getRolaOptionElement(value), RoleButton.getDescription());
 	}
 
-	@And("Set Search Field {string} to {string}")
+	@And("Set Input Field {string} to {string}")
 	public void setSearchFieldTo(String searchField, String searchText) {
 		waitForElementVisible(driver, page.getInputLocator(searchField), "Wait for search field visible", 15);
 		setElementText(page.getInputElement(searchField), searchText, "Setting element text");
+		sleep(3000);
 	}
 
 	@Then("Verify Meno {string} and Rola {string} in filtered table")
@@ -237,38 +242,49 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		boolean properlyFiltered = true;
 		int menoIndex = 0;
 		int rolaIndex = 0;
+		int numberOfPages = 0;
 		//getting number of columns in table
-		int numberOfColumns = driver.findElements(By.xpath("//thead//th")).size();
+		int numberOfColumns = driver.findElements(TableColumns.getLocator()).size();
 		//getting number of rows in table
-		int numberOfRows = driver.findElements(By.xpath("//tbody/tr")).size();
+		int numberOfRows = 0;
+		//getting number of pages in table
+		numberOfPages = driver.findElements(PaginationNumbers.getLocator()).size();
 
-		//getting indexes of Meno and Rola columns
-		for (int x = 1; x <= numberOfColumns; x++) {
-			if (driver.findElement(By.xpath("(//thead//th/span/div/span[1])[" + x + "]")).getText().startsWith("Meno")) {
-				menoIndex = x;
-			} else if (driver.findElement(By.xpath("(//thead//th/span/div/span[1])[" + x + "]")).getText().startsWith("Rola")) {
-				rolaIndex = x;
-			}
-		}
+		//indexes of Meno and Rola columns
+		menoIndex = 1 + driver.findElements(page.getTableColumnPredecessorsLocator("Meno")).size();
+		rolaIndex = 1 + driver.findElements(page.getTableColumnPredecessorsLocator("Rola")).size();
+
+		ReportExtender.logInfo("Index Meno: " + menoIndex + ", index Rola: " + rolaIndex);
 
 		//verifying filtering
-		for (int x = 1; x <= numberOfRows; x++) {
-			//column Meno
-			String menoString = driver.findElement(By.xpath("//tbody/tr[" + x + "]/td[" + menoIndex + "]/div")).getText();
-			if (!menoString.toLowerCase().startsWith(meno.toLowerCase())) {
-				properlyFiltered = false;
-			}
-			//column Rola
-			String rolaString = driver.findElement(By.xpath("//tbody/tr[" + x + "]/td[" + rolaIndex + "]")).getText();
-			if (!rolaString.startsWith(rola)) {
-				properlyFiltered = false;
-			}
+		for (int y = 1; y <= numberOfPages; y++) {
+			numberOfRows = driver.findElements(TableRows.getLocator()).size();
+			ReportExtender.logInfo("Strana: " + y + "z " + numberOfPages + ", rozmer: " + numberOfRows + "x" + numberOfColumns + ".");
+			for (int x = 1; x <= numberOfRows; x++) {
+				//column Meno
+				String menoString = driver.findElement(page.getTableNameValueLocator(x, menoIndex)).getText();
+				if (!menoString.toLowerCase().startsWith(meno.toLowerCase())) {
+					properlyFiltered = false;
+				}
+				//column Rola
+				String rolaString = driver.findElement(page.getTableValueLocator(x, rolaIndex)).getText();
+				if (!rolaString.startsWith(rola)) {
+					properlyFiltered = false;
+					ReportExtender.logWarning("Rola " + rola + "does not match " + rolaString + ".");
+				}
 
-			ReportExtender.logInfo("Rozmer:" + numberOfRows + "x" + numberOfColumns + ", index Meno: " + menoIndex + ", index Rola: " + rolaIndex + ", riadok: " + x + ", meno je: " + menoString + ", a rola je:" + rolaString);
+				ReportExtender.logInfo("Riadok: " + x + ", meno je: " + menoString + ", a rola je:" + rolaString);
+			}
+			if (PaginationNextButton.getElement(driver).getAttribute("aria-disabled").equals("false")) {
+				scrollElementIntoMiddleOfScreen(driver, PaginationNextButton.getElement(driver));
+				sleep(2000);
+				clickElement(PaginationNextButton.getElement(driver), PaginationNextButton.getDescription());
+			}
 		}
 
 		new Validation("Table is properly filtered", properlyFiltered).isTrue();
 	}
+
 
 	@Then("Go back to previous page")
 	public void goBackToPreviousPage() {
@@ -324,6 +340,49 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Town visible in profile", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
 	}
 
+	@And("Click on Change password")
+	public void clickOnChangePassword() {
+		waitForElementVisible(driver, ChangePasswordButton.getLocator(), ChangePasswordButton.getDescription(), 10);
+		clickElement(ChangePasswordButton.getElement(driver), ChangePasswordButton.getDescription());
+	}
+
+
+	@And("Set old password as {string}")
+	public void setOldPasswordAs(String value) {
+		waitForElementVisible(driver, OldPasswordInput.getLocator(), OldPasswordInput.getDescription(), 10);
+		setElementSecureText(OldPasswordInput.getElement(driver), value, OldPasswordInput.getDescription());
+	}
+
+	@And("Set new password as {string}")
+	public void setNewPasswordAs(String value) {
+		waitForElementVisible(driver, NewPasswordInput.getLocator(), NewPasswordInput.getDescription(), 10);
+		setElementSecureText(NewPasswordInput.getElement(driver), value, NewPasswordInput.getDescription());
+	}
+
+	@And("Set confirm new password as {string}")
+	public void setConfirmNewPasswordAs(String value) {
+		waitForElementVisible(driver, ConfirmNewPasswordInput.getLocator(), ConfirmNewPasswordInput.getDescription(), 10);
+		setElementSecureText(ConfirmNewPasswordInput.getElement(driver), value, ConfirmNewPasswordInput.getDescription());
+	}
+
+	@And("Confirm password change")
+	public void confirmPasswordChange() {
+		waitForElementVisible(driver, ConfirmPasswordChangeButton.getLocator(), ConfirmPasswordChangeButton.getDescription(), 10);
+		boolean isEnabled = driver.findElement(ConfirmPasswordChangeButton.getLocator()).isEnabled();
+		new Validation("Confirm button is enabled", isEnabled).isTrue();
+		ReportExtender.logScreen(driver);
+		clickElement(ConfirmPasswordChangeButton.getElement(driver), ConfirmPasswordChangeButton.getDescription());
+	}
+
+	@And("Confirm password change negative")
+	public void confirmPasswordChangeNegative() {
+		waitForElementVisible(driver, ConfirmPasswordChangeButton.getLocator(), ConfirmPasswordChangeButton.getDescription(), 10);
+		boolean isEnabled = driver.findElement(ConfirmPasswordChangeButton.getLocator()).isEnabled();
+		new Validation("Confirm button is enabled", !isEnabled).isTrue();
+		ReportExtender.logScreen(driver);
+		clickElement(ConfirmPasswordChangeButton.getElement(driver), ConfirmPasswordChangeButton.getDescription());
+	}
+
 	@And("Verify if in {string} search bar was filtered only username {string}")
 	public void verifyIfInSearchBarWasFilteredUsername(String textfield_input, String username) {
 		String getEveryUserElement = ".";
@@ -334,7 +393,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
 				}
 			} else {
-				ReportExtender.logWarning("Name " + username + " was not found in " + textfield_input + " search bar");
+				ReportExtender.logWarning("Name " + username + " was not found in search bar " + textfield_input+ " search bar");
 			}
 		} else if ((verifyElementIsPresent(driver, page.getInputLocatorVerify(textfield_input, username), "Wait if meno input contains username " + username)) && (textfield_input.equals("Priezvisko"))) {
 			if (verifyElementIsPresent(driver, page.getClientInfoByIndexLocator(surname_index, getEveryUserElement), "Get every surname of client")) {
@@ -343,7 +402,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 					new Validation("USERNAME visible on the page", element.getText(), username).stringEquals();
 				}
 			} else {
-				ReportExtender.logWarning("Surname " + username + " was not found in " + textfield_input + " search bar");
+				ReportExtender.logWarning("Surname " + username + " was not found in search bar " + textfield_input + " search bar");
 			}
 		}
 		ReportExtender.logScreen(driver);
@@ -420,9 +479,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Select from AnoNie picker {string} choice {string}")
 	public void selectFromAnoNiePickerChoice(String picker_name, String picker_choice) {
-		scrollElementIntoView(driver, page.getYesNoPickerElement(picker_name, picker_choice));
-		waitForElementVisible(driver, page.getYesNoPickerLocator(picker_name, picker_choice), "Wait for choice picker", 10);
-		clickElementUsingJavascript(driver, page.getYesNoPickerElement(picker_name, RandomData.getRandomAnoNie()), "Click on picker choice");
+		scrollElementIntoView(driver,page.getYesNoPickerElement(picker_name,picker_choice));
+		waitForElementVisible(driver, page.getYesNoPickerLocator(picker_name, picker_choice),"Wait for choice picker", 10);
+		clickElementUsingJavascript(driver,page.getYesNoPickerElement(picker_name,RandomData.getRandomAnoNie()),"Click on picker choice");
 	}
 
 	@And("Fill information about Rodina")
@@ -461,6 +520,20 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6), ""), JobSpecification).stringEquals();
 		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver), ""), OnLevelSince).stringEquals();
 		ReportExtender.logScreen(driver);
+	}
+
+	@And("Select first row from table")
+	public void selectFirstRowFromTable() {
+		waitForElementVisible(driver, FirstTableRow.getLocator(), FirstTableRow.getDescription(), 10);
+		clickElement(FirstTableRow.getElement(driver), FirstTableRow.getDescription());
+	}
+
+	String firstName;
+	String lastName;
+	@And("Save First and Last Name")
+	public void saveFirstAndLastName() {
+		firstName = getAttributeValue(MenoInput.getElement(driver), MenoInput.getDescription());
+		lastName = getAttributeValue(PriezviskoInput.getElement(driver), PriezviskoInput.getDescription());
 	}
 
 	@And("Fill information about Tehotenstvo a porod")
@@ -542,6 +615,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		else
 			ReportExtender.logWarning("Username " + Username + " was not deleted");
 	}
+
+
 
 
 }

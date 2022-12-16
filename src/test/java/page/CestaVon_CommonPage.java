@@ -16,6 +16,16 @@ public class CestaVon_CommonPage {
                 "ODHLASIT BUTTON"),
         SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
+        FirstTableRow(By.xpath("//tbody/tr[1]"),
+                "First table row"),
+        TableColumns(By.xpath("//thead//th"),
+                "Table rows"),
+        TableRows(By.xpath("//tbody//tr"),
+                "Table columns"),
+        PaginationNextButton(By.xpath("//li[contains(@class, 'pagination-next')]"),
+                "Pagination next button"),
+        PaginationNumbers(By.xpath("//li[contains(@class, 'pagination-item')]"),
+                "Pagination numbers"),
         ;
         private String description;
         private By findBy;
@@ -43,7 +53,7 @@ public class CestaVon_CommonPage {
     public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
 
     public WebElement getButtonElement(String value) {return driver.findElement(getButtonLocator(value));}
-    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}//pozriet xpath, *
+    public By getButtonLocator(String value) {return By.xpath("//*[text()='" + value + "']/parent::button");}
 
     public WebElement getTabElement(String value) {return driver.findElement(getTabLocator(value));}
     public By getTabLocator(String value) {return By.xpath("//li[text()='" + value + "']");}
@@ -92,6 +102,4 @@ public class CestaVon_CommonPage {
 
     public WebElement getTabIndexElement(String value,int index) {return driver.findElement(getTabIndexLocator(value,index));}
     public By getTabIndexLocator(String value, int index) {return By.xpath("(//li[text()='" + value + "'])[" + index + "]");}
-
 }
-
