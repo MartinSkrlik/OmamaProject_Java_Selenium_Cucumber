@@ -4,7 +4,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,13 +15,14 @@ import utility.*;
 import java.util.HashMap;
 import java.util.List;
 
+import static page.CestaVon_ClientProfilePage.ClientProfilePage.NameInput;
+import static page.CestaVon_ClientProfilePage.ClientProfilePage.SurnameInput;
 import static page.CestaVon_CommonPage.MainPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
+import static page.CestaVon_SettingsPage.settingsPageItems.*;
 import static page.CestaVon_UserProfilPage.UserProfilPage.*;
 import static page.CestaVon_UserRegistrationPage.UserRegistrationPage.*;
-import static page.CestaVon_UsersPage.usersPageItems.*;
-import static page.CestaVon_ClientProfilePage.ClientProfilePage.*;
-import static page.CestaVon_SettingsPage.settingsPageItems.*;
+import static page.CestaVon_UsersPage.usersPageItems.RoleButton;
 
 public class CestaVon_LoginSteps extends TestStepActions {
 
@@ -532,8 +532,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	String lastName;
 	@And("Save First and Last Name")
 	public void saveFirstAndLastName() {
-		firstName = getAttributeValue(MenoInput.getElement(driver), MenoInput.getDescription());
-		lastName = getAttributeValue(PriezviskoInput.getElement(driver), PriezviskoInput.getDescription());
+		firstName = getAttributeValue(NameInput.getElement(driver), NameInput.getDescription());
+		lastName = getAttributeValue(SurnameInput.getElement(driver), SurnameInput.getDescription());
 	}
 
 	@And("Fill information about Tehotenstvo a porod")

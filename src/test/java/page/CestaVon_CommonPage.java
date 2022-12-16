@@ -82,6 +82,30 @@ public class CestaVon_CommonPage {
     public WebElement getInputTextfieldElement(String value) {return driver.findElement(getInputTextfieldLocator(value));}
     public By getInputTextfieldLocator(String value) {return By.xpath("//input[contains(@placeholder,'" + value + "')]");}
 
+    public WebElement getTableColumnPredecessorsElement(String value) {
+        return driver.findElement(getTableColumnPredecessorsLocator(value));
+    }
+
+    public By getTableColumnPredecessorsLocator(String value) {
+        return By.xpath("//span[text()='" + value + "']/ancestor::th/preceding-sibling::th");
+    }
+
+    public WebElement getTableNameValueElement(int row, int column) {
+        return driver.findElement(getTableNameValueLocator(row, column));
+    }
+
+    public By getTableNameValueLocator(int row, int column) {
+        return By.xpath("//tbody/tr[" + row + "]/td[" + column + "]/div");
+    }
+
+    public WebElement getTableValueElement(int row, int column) {
+        return driver.findElement(getTableValueLocator(row, column));
+    }
+
+    public By getTableValueLocator(int row, int column) {
+        return By.xpath("//tbody/tr[" + row + "]/td[" + column + "]");
+    }
+
     public WebElement getYesNoPickerElement(String value1,String value2) {return driver.findElement(getYesNoPickerLocator(value1,value2));}
     public By getYesNoPickerLocator(String value1,String value2) {return By.xpath("//*[text()='" + value1 + "']/ancestor::div[@class='yesNoQuestion']//div[text()='" + value2 + "']");}
 
