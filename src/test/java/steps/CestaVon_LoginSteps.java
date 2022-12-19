@@ -30,15 +30,13 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
-	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification,
-			OnLevelSince, OmamaMentor, Surname = "";
-	int countOfClientsVisibleOnPage = 10;
-	int name_index = 2;
-	int surname_index = 3;
+	String Username, Email, PhoneNumber, Town = "";
+	int countOfClientsVisibleOnPage = 10, name_index = 2, surname_index = 3;
 	String[] clientsName = new String[countOfClientsVisibleOnPage];
 	String[] clientsSurname = new String[countOfClientsVisibleOnPage];
 	String[] clientsUsername = new String[countOfClientsVisibleOnPage];
 	String getEveryUserElement = ".";
+	HashMap<String, String> textparameters = new HashMap<String, String>();
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -148,7 +146,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@Then("Verify user status")
 	public void verifyUserstatus() {
 		sleep(1000);
-		new Validation("Verify user STATUS", StringUtils.chop(getElementText(StatusText.getElement(driver), StatusText.getDescription())), StringUtils.chop(Status)).stringEquals();
+		new Validation("Verify user STATUS", StringUtils.chop(getElementText(StatusText.getElement(driver), StatusText.getDescription())), StringUtils.chop(textparameters.get("status"))).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
@@ -216,7 +214,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		Email = getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable");
 		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable");
 		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
-		Status = getElementText(UserStatusText.getElement(driver), UserStatusText.getDescription());
+		textparameters.put("status", getElementText(UserStatusText.getElement(driver), UserStatusText.getDescription()));
 		ReportExtender.logScreen(driver);
 	}
 
@@ -295,6 +293,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void findUserWithChangedDetails() {
 		waitForElementVisible(driver, page.getInputLocator("Meno"), "Wait for Meno input is visible", 10);
 		setElementText(page.getInputElement("Meno"), Username, "Set " + Username + " into input");
+		sleep(1000);
 		ReportExtender.logScreen(driver);
 	}
 
@@ -464,7 +463,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Miesto"), "Nemocnica", "Set street into input");
 		Username = getAttributeValue(page.getInputTextfieldElement("Meno"), "Save username into variable");
-		Surname = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
+		textparameters.put("surname",getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
 		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
 		ReportExtender.logScreen(driver);
 		for (int j = 1; j < 6; j++) {
@@ -503,11 +502,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Save omama specification")
 	public void saveomamaSpecification() {
-		OmamaMentor = getElementText(page.getOmamaSpecificationElement(1), "Save omama mentor");
-		OmamaLevel = getElementText(page.getOmamaSpecificationElement(4), "Save omama level");
-		KidsCount = getElementText(page.getOmamaSpecificationElement(5), "Save kids count");
-		JobSpecification = getElementText(page.getOmamaSpecificationElement(6), "Save job specification");
-		OnLevelSince = getAttributeValue(OnLevelSinceDate.getElement(driver), OnLevelSinceDate.getDescription());
+		textparameters.put("mentor", getElementText(page.getOmamaSpecificationElement(1), "Save omama mentor"));
+		textparameters.put("omamaLevel", getElementText(page.getOmamaSpecificationElement(4), "Save omama level"));
+		textparameters.put("kidsCount",getElementText(page.getOmamaSpecificationElement(5), "Save kids count"));
+		textparameters.put("jobSpecification", getElementText(page.getOmamaSpecificationElement(6), "Save job specification"));
+		textparameters.put("onLevelSince",getAttributeValue(OnLevelSinceDate.getElement(driver), OnLevelSinceDate.getDescription()));
 		ReportExtender.logScreen(driver);
 	}
 
@@ -515,11 +514,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void verifyomamaSpecificationWasChanged() {
 		scrollPageIntoBottom(driver);
 		waitForElementVisible(driver, OnLevelSinceDate.getLocator(), "Wait for date picker", 10);
-		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), OmamaMentor).stringEquals();
-		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), OmamaLevel).stringEquals();
-		new Validation("Verify omama kids", getElementText(page.getOmamaSpecificationElement(5), ""), KidsCount).stringEquals();
-		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6), ""), JobSpecification).stringEquals();
-		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver), ""), OnLevelSince).stringEquals();
+		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), textparameters.get("mentor")).stringEquals();
+		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), textparameters.get("omamaLevel")).stringEquals();
+		new Validation("Verify omama kids", getElementText(page.getOmamaSpecificationElement(5), ""), textparameters.get("kidsCount")).stringEquals();
+		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6), ""), textparameters.get("jobSpecification")).stringEquals();
+		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver), ""), textparameters.get("onLevelSince")).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
@@ -670,8 +669,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Študijný a kariérny vývoj", RandomData.getRandomAnoNie()), "Click random Ano/nie");
 		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Neskoršie kontaktovanie a meranie dopadu programu", RandomData.getRandomAnoNie()), "Click random Ano/nie");
 		ReportExtender.logScreen(driver);
-		sleep(30000);
-
 	}
 
 	@And("Fill information about Skola")
@@ -694,15 +691,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-
 	@And("Verify client details")
 	public void verifyClientDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username + " " + Surname).stringEquals();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username + " " + textparameters.get("surname")).stringEquals();
 		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
 		ReportExtender.logScreen(driver);
-
-
-
 	}
 }
