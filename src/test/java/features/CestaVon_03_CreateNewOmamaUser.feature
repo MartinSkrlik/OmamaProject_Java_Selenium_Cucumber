@@ -19,7 +19,7 @@ Feature: CestaVon - Create New Omama User
     Then    Click on button "Obnoviť"
     And     Find user with changed details
     And     Select user with changed details
-    And     Verify omama details
+    And     Verify details
     Then    Click on button "Upraviť profil"
     And     Unwrap dropdown "Vyber Mentora"
     Then    Select from menu tab "Mentorka Testovacia"

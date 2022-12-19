@@ -65,7 +65,7 @@ public class CestaVon_CommonPage {
     public By getDropdownLocator(String value) {return By.xpath("//div[text()='" + value + "']");}
 
     public WebElement getUserElement(String value) {return driver.findElement(getUserLocator(value));}
-    public By getUserLocator(String value)  {return By.xpath("//div[text()='" + value + "']/ancestor::tr");}
+    public By getUserLocator(String value)  {return By.xpath("//*[text()='" + value + "']/ancestor::tr");}
 
     public WebElement getFirstUserElement(String value) {return driver.findElement(getFirstUserLocator(value));}
     public By getFirstUserLocator(String value)  {return By.xpath("//div[contains(text(),'" + value + "')]/ancestor::tr");}
@@ -126,6 +126,7 @@ public class CestaVon_CommonPage {
 
     public WebElement getTabIndexElement(String value,int index) {return driver.findElement(getTabIndexLocator(value,index));}
     public By getTabIndexLocator(String value, int index) {return By.xpath("(//li[text()='" + value + "'])[" + index + "]");}
+
 
 }
 

@@ -19,7 +19,7 @@ Feature: CestaVon - Edit user data
     And     Change user details
     And     Save user details
     Then    Click on button "Uložiť"
-    And     Verify omama details
+    And     Verify details
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 

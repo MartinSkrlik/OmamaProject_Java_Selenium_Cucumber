@@ -31,7 +31,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
 	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification,
-			OnLevelSince, OmamaMentor = "";
+			OnLevelSince, OmamaMentor, Surname = "";
 	int countOfClientsVisibleOnPage = 10;
 	int name_index = 2;
 	int surname_index = 3;
@@ -129,8 +129,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Verify admin details")
 	public void verifyAdminDetails() {
-		sleep(2000);
-//		waitForElementVisible(driver, GetUserName.getLocator(), GetUserName.getDescription(), 10);
+		sleep(1000);
 		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
 		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
 		new Validation("Verify EMAIL", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
@@ -153,8 +152,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@Then("Verify omama details")
-	public void verifyOmamaDetails() {
+	@Then("Verify details")
+	public void verifyDetails() {
 		sleep(1000);
 		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
 		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
@@ -464,6 +463,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Miesto"), "Nemocnica", "Set street into input");
+		Username = getAttributeValue(page.getInputTextfieldElement("Meno"), "Save username into variable");
+		Surname = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
+		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
 		ReportExtender.logScreen(driver);
 		for (int j = 1; j < 6; j++) {
 			scrollElementIntoView(driver, page.getDatePickerElement(j));
@@ -472,8 +474,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
 			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
 			sleep(1000);
-			ReportExtender.logScreen(driver);
 		}
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Select from AnoNie picker {string} choice {string}")
@@ -492,7 +494,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			setElementText(page.getTextfieldIndexElement("Ukončené vzdelanie", i), RandomData.generateLastName(), "Set mobil phone into input");
 			setElementText(page.getTextfieldIndexElement("Trieda", i), RandomData.generateLastName(), "Set mobil phone into input");
 			setElementText(page.getTextfieldIndexElement("Zamestnanie", i), RandomData.generateLastName(), "Set mobil phone into input");
-			ReportExtender.logScreen(driver);
 		}
 		setElementText(page.getInputTextfieldElement("Počet súrodencov"), RandomData.generateStreetNumber(), "Set number of children into input");
 		setElementText(page.getInputTextfieldElement("Dieťa je narodené v poradí"), RandomData.generateStreetNumber(), "Set name into input");
@@ -561,7 +562,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		setElementText(page.getInputTextareaElement("breastFeedTime"), RandomData.generateStreetNumber(), "Input random number");
 		clickElementUsingJavascript(driver, page.getDropdownElement("Zvoľte"), "Unwrap dropdown Zvolte");
 		clickElementUsingJavascript(driver, page.getTabElement("4"), "Select random choice");
-		ReportExtender.logScreen(driver);
 		scrollElementIntoView(driver, page.getYesNoPickerElement("Fajčenie počas kojenia", RandomData.getRandomAnoNie()));
 		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fajčenie počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
 		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Alkohol počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
@@ -584,9 +584,29 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Fill information about Všeobecné zdravie")
-	public void fillInformationAboutVšeobecnéZdravie() {
-
+	@And("Fill information about Vseobecne zdravie")
+	public void fillInformationAboutVseobecneZdravie() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Alkohol počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fajčenie počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Alkohol počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Drogy počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("medicineNearChildBelowTwoYears"), RandomData.generateLastName(), "Input random text");
+		ReportExtender.logScreen(driver);
+		setElementText(page.getInputTextareaElement("hospitalization"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("injury"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("healthIssues"), RandomData.generateLastName(), "Input random text");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Povinné očkovania", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Pravidelné prehliadky v pediatrickej ambulancii", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("examinationOffice"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("healthCondition"), RandomData.generateLastName(), "Input random text");
+		for (int j = 6; j < 7; j++) {
+			scrollElementIntoView(driver, page.getDatePickerElement(j));
+			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
+			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
+			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
+			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
+		}
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Click on {string} button from menu")
@@ -614,7 +634,75 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			ReportExtender.logWarning("Username " + Username + " was not deleted");
 	}
 
+	@And("Fill information about Obavy")
+	public void fillInformationAboutObavy() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Spánok dieťaťa", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Zrak dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Sluch dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Spánok dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Rast a výživu dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Zdravie dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Celkový vývin dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		ReportExtender.logScreen(driver);
+	}
+
+
+	@And("Fill information about Byvanie")
+	public void fillInformationAboutByvanie() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Varíte v rovnakej izbe ako spáva dieťa?", RandomData.getRandomAnoNie()));
+		setElementText(page.getInputTextareaElement("houseMaterial"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("houseRooms"), RandomData.generateRandomNumber(), "Input random text");
+		setElementText(page.getInputTextareaElement("houseInhabitants"), RandomData.generateRandomNumber(), "Input random text");
+		setElementText(page.getInputTextareaElement("houseFuel"), RandomData.generateLastName(), "Input random text");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Varíte v rovnakej izbe ako spáva dieťa?", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Fill information about Osobne udaje")
+	public void fillInformationAboutskolaAOsobneUdaje() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Fotografie v tlačených materiáloch", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fotografie v aplikácii", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fotografie na sociálnych médiách a webe", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fotografie v tlačených materiáloch", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Videá a reportáže", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Pediatrické skríningy", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Meranie vývinu", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Študijný a kariérny vývoj", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Neskoršie kontaktovanie a meranie dopadu programu", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		ReportExtender.logScreen(driver);
+		sleep(30000);
+
+	}
+
+	@And("Fill information about Skola")
+	public void fillInformationAboutSkola() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Materská škola", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Materská škola", "Áno"), "Click random Ano/nie");
+		setElementText(page.getInputTextfieldElement("Názov materskej školy"), RandomData.generateFirstName(), "Set name into input");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Základná škola", "Áno"), "Click random Ano/nie");
+		setElementText(page.getInputTextfieldElement("Názov základnej školy"), RandomData.generateFirstName(), "Set name into input");
+		clickElementUsingJavascript(driver,page.getDropdownElement("Špeciálna"),"Select specialna skola");
+		ReportExtender.logScreen(driver);
+		for (int j = 7; j < 11; j++) {
+			scrollElementIntoView(driver, page.getDatePickerElement(j));
+			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
+			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
+			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
+			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
+			sleep(1000);
+		}
+		ReportExtender.logScreen(driver);
+	}
+
+
+	@And("Verify client details")
+	public void verifyClientDetails() {
+		sleep(1000);
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username + " " + Surname).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		ReportExtender.logScreen(driver);
 
 
 
+	}
 }
