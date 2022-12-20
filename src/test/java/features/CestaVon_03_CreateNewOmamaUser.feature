@@ -3,7 +3,7 @@
 Feature: CestaVon - Create New Omama User
 
 
-  Scenario Outline: CestaVon - create and delete New Omama user
+  Scenario Outline: CestaVon - 03 - create and delete New Omama user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

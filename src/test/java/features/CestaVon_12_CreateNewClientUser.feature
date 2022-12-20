@@ -2,7 +2,7 @@
 Feature: CestaVon - Create new client add omama
 
 
-  Scenario Outline: CestaVon - create new client and add omama to this client.
+  Scenario Outline: CestaVon - 12 - create new client and add omama to this client.
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

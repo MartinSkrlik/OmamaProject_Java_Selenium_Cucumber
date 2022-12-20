@@ -3,7 +3,7 @@
 Feature: CestaVon - Edit user data
 
 
-  Scenario Outline: CestaVon - looking for specific user and edit data
+  Scenario Outline: CestaVon - 07 - looking for specific user and edit data
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

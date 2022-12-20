@@ -3,7 +3,7 @@
 Feature: CestaVon - Create new admin user
 
 
-  Scenario Outline: CestaVon - create and delete new admin user
+  Scenario Outline: CestaVon - 01 - create and delete new admin user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -32,7 +32,7 @@ Feature: CestaVon - Create new admin user
 
 
   @CreateMentorSupervisorUserTest
-  Scenario Outline: CestaVon - create and delete new mentor or supervisor user
+  Scenario Outline: CestaVon - 02,04 - create and delete new mentor or supervisor user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
