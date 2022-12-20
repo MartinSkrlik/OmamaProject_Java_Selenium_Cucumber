@@ -30,13 +30,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
-	String Username, Email, PhoneNumber, Town = "";
 	int countOfClientsVisibleOnPage = 10, name_index = 2, surname_index = 3;
 	String[] clientsName = new String[countOfClientsVisibleOnPage];
 	String[] clientsSurname = new String[countOfClientsVisibleOnPage];
 	String[] clientsUsername = new String[countOfClientsVisibleOnPage];
 	String getEveryUserElement = ".";
-	HashMap<String, String> textparameters = new HashMap<String, String>();
+	HashMap<String, String> textparameters = new HashMap<>();
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -111,10 +110,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for dropdown visible", 10);
 		clickElement(page.getTabElement(value), "Select specific role from dropdown");
-		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
-		Email = getAttributeValue(EmailInput.getElement(driver), EmailInput.getDescription());
-		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("cislo"), "Save phone number into variable");
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
+		textparameters.put("username", getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
+		textparameters.put("email", getAttributeValue(EmailInput.getElement(driver), EmailInput.getDescription()));
+		textparameters.put("phoneNumber", getAttributeValue(page.getInputTextfieldElement("cislo"), "Save phone number into variable"));
+		textparameters.put("town", getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable"));
 		ReportExtender.logScreen(driver);
 	}
 
@@ -128,19 +127,19 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@Then("Verify admin details")
 	public void verifyAdminDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
-		new Validation("Verify EMAIL", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
-		new Validation("Verify PHONE NUMBER", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), PhoneNumber).stringEquals();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
+		new Validation("Verify EMAIL", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), textparameters.get("email")).stringEquals();
+		new Validation("Verify PHONE NUMBER", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), textparameters.get("phoneNumber")).stringEquals();
 	}
 
 	@Then("Verify supervisor-mentor details")
 	public void verifySupervisorMentorDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
-		new Validation("Verify EMAIL", getElementText(EmailMentorText.getElement(driver), EmailMentorText.getDescription()), Email).contains();
-		new Validation("Verify PHONE NUMBER", getElementText(PhoneMentorText.getElement(driver), PhoneMentorText.getDescription()), PhoneNumber).contains();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
+		new Validation("Verify EMAIL", getElementText(EmailMentorText.getElement(driver), EmailMentorText.getDescription()), textparameters.get("email")).contains();
+		new Validation("Verify PHONE NUMBER", getElementText(PhoneMentorText.getElement(driver), PhoneMentorText.getDescription()), textparameters.get("phoneNumber")).contains();
 	}
 
 	@Then("Verify user status")
@@ -153,8 +152,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@Then("Verify details")
 	public void verifyDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
@@ -210,10 +209,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Save user details")
 	public void saveUserDetails() {
 		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for input visible",10);
-		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
-		Email = getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable");
-		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable");
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
+		textparameters.put("username", getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
+		textparameters.put("email", getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable"));
+		textparameters.put("phoneNumber", getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable"));
+		textparameters.put("town",getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable"));
 		textparameters.put("status", getElementText(UserStatusText.getElement(driver), UserStatusText.getDescription()));
 		ReportExtender.logScreen(driver);
 	}
@@ -292,7 +291,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Find user with changed details")
 	public void findUserWithChangedDetails() {
 		waitForElementVisible(driver, page.getInputLocator("Meno"), "Wait for Meno input is visible", 10);
-		setElementText(page.getInputElement("Meno"), Username, "Set " + Username + " into input");
+		setElementText(page.getInputElement("Meno"), textparameters.get("username"), "Set " + textparameters.get("username") + " into input");
 		sleep(1000);
 		ReportExtender.logScreen(driver);
 	}
@@ -312,8 +311,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Select user with changed details")
 	public void selectUserWithName() {
-		waitForElementVisible(driver, page.getUserLocator(Username), "Wait for " + Username + " is visible", 10);
-		clickElementUsingJavascript(driver, page.getUserElement(Username), "Select " + Username);
+		waitForElementVisible(driver, page.getUserLocator(textparameters.get("username")), "Wait for " + textparameters.get("username") + " is visible", 10);
+		clickElementUsingJavascript(driver, page.getUserElement(textparameters.get("username")), "Select " + textparameters.get("username"));
 	}
 
 	@And("Select user with name {string} and remember his information")
@@ -321,10 +320,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		CestaVon_UsersPage page = new CestaVon_UsersPage(driver);
 		waitForElementVisible(driver, page.getRowByNameLocator(value), "Waiting for row visible", 10);
 		ReportExtender.logScreen(driver);
-		Username = getElementText(page.getNameFromRowByNameElement(value), "Remembering Name");
-		Email = getElementText(page.getEmailFromRowByNameElement(value), "Remembering Email");
-		PhoneNumber = getElementText(page.getPhoneNumberFromRowByNameElement(value), "Remembering Phone Number");
-		Town = getElementText(page.getTownFromRowByNameElement(value), "Remembering City");
+		textparameters.put("username", getElementText(page.getNameFromRowByNameElement(value), "Remembering Name"));
+		textparameters.put("email", getElementText(page.getEmailFromRowByNameElement(value), "Remembering Email"));
+		textparameters.put("phoneNumber", getElementText(page.getPhoneNumberFromRowByNameElement(value), "Remembering Phone Number"));
+		textparameters.put("town", getElementText(page.getTownFromRowByNameElement(value), "Remembering City"));
 		clickElement(page.getRowByNameElement(value), "Opening profile " + value + ".");
 	}
 
@@ -332,10 +331,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void verifyAllInformationIsVisible() {
 		waitForElementVisible(driver, BackButton.getLocator(), BackButton.getDescription(), 10);
 		ReportExtender.logScreen(driver);
-		new Validation("Name visible in profile", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Phone Number visible in profile", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), PhoneNumber).stringEquals();
-		new Validation("Email visible in profile", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
-		new Validation("Town visible in profile", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		new Validation("Name visible in profile", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Phone Number visible in profile", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), textparameters.get("phoneNumber")).stringEquals();
+		new Validation("Email visible in profile", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), textparameters.get("email")).stringEquals();
+		new Validation("Town visible in profile", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 	}
 
 	@And("Click on Change password")
@@ -462,9 +461,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Miesto"), "Nemocnica", "Set street into input");
-		Username = getAttributeValue(page.getInputTextfieldElement("Meno"), "Save username into variable");
+		textparameters.put("username", getAttributeValue(page.getInputTextfieldElement("Meno"), "Save username into variable"));
 		textparameters.put("surname",getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
+		textparameters.put("town", getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable"));
 		ReportExtender.logScreen(driver);
 		for (int j = 1; j < 6; j++) {
 			scrollElementIntoView(driver, page.getDatePickerElement(j));
@@ -627,10 +626,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify user was deleted")
 	public void verifyUserWasDeleted() {
-		if(!verifyElementIsPresent(driver, page.getUserLocator(Username), "Find if element was deleted"))
-			{ReportExtender.logPass("Username " + Username + " was deleted");}
+		if(!verifyElementIsPresent(driver, page.getUserLocator(textparameters.get("username")), "Find if element was deleted"))
+			{ReportExtender.logPass("Username " + (textparameters.get("username") + " was deleted"));}
 		else
-			ReportExtender.logWarning("Username " + Username + " was not deleted");
+			ReportExtender.logWarning("Username " + (textparameters.get("username") + " was not deleted"));
 	}
 
 	@And("Fill information about Obavy")
@@ -694,8 +693,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Verify client details")
 	public void verifyClientDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username + " " + textparameters.get("surname")).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username") + " " + textparameters.get("surname")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 }
