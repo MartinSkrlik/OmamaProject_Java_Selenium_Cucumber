@@ -127,6 +127,14 @@ public class CestaVon_CommonPage {
     public WebElement getTabIndexElement(String value,int index) {return driver.findElement(getTabIndexLocator(value,index));}
     public By getTabIndexLocator(String value, int index) {return By.xpath("(//li[text()='" + value + "'])[" + index + "]");}
 
+    public WebElement getGalleryCountElement(String value) {return driver.findElement(getGalleryCountLocator(value));}
+    public By getGalleryCountLocator(String value) {return By.xpath("(//div[contains(@class,'bottompanel')]//div[contains(@class,'galleryFolder')])[" + value + "]");}
+
+    public WebElement getPictureCountElement(String value) {return driver.findElement(getPictureCountLocator(value));}
+    public By getPictureCountLocator(String value) {return By.xpath("(//div[contains(@class,'bottompanel')]//div[contains(@class,'imageWrapper')])[" + value + "]");}
+
+    public WebElement getProfilTabElement(String value) {return driver.findElement(getProfilTabLocator(value));}
+    public By getProfilTabLocator(String value) {return By.xpath("//a[text()='" + value + "']");}
 
 }
 

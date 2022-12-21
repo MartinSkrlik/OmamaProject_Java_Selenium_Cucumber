@@ -12,6 +12,8 @@ import page.CestaVon_UsersPage;
 import runner.TestRunner;
 import utility.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -696,5 +698,75 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username") + " " + textparameters.get("surname")).stringEquals();
 		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify properly ordered gallery")
+	public void verifyProperlyOrderedGallery() {
+		sleep(1000);
+		boolean properlyOrdered = false;
+		int year = 0;
+		int galleryCount = driver.findElements(page.getGalleryCountLocator(getEveryUserElement)).size();
+		if(galleryCount > 1){
+			//gallery order
+			List<WebElement> elements = driver.findElements(page.getGalleryCountLocator(getEveryUserElement));
+			for (WebElement element : elements) {
+				int galleryEle = Integer.parseInt(element.getText());
+				if (galleryEle > year)
+				{
+					year = galleryEle;
+					properlyOrdered = true;
+//					String ako = String.valueOf(year);
+//					ReportExtender.logPass(ako);
+				}
+				else properlyOrdered = false;
+			}
+		}
+		new Validation("Galery is properly ordered", properlyOrdered).isTrue();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify properly ordered pictures in gallery")
+	public void verifyProperlyOrderedPicturesInGallery() {
+		sleep(1000);
+		boolean properlyOrdered = false;
+		LocalDateTime datumy;
+		String startInput = "01. 1. 2000 00:00";
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern( "dd. M. uuuu HH:mm" );
+		LocalDateTime stop = LocalDateTime.parse(startInput, dateFormat);
+		int galleryCount = driver.findElements(page.getGalleryCountLocator(getEveryUserElement)).size();
+		if(galleryCount > 0){
+			for (int i = 1; i <= galleryCount; i++) {
+				clickElementUsingJavascript(driver, page.getGalleryCountElement(i+getEveryUserElement),"Unwrap galery");
+				sleep(5000);
+				int pictureCount = driver.findElements(page.getPictureCountLocator(getEveryUserElement)).size();
+				String number = String.valueOf(pictureCount);
+				ReportExtender.logInfo(number);
+				if(pictureCount > 1) {
+					for (int j = 1; j <= pictureCount; j++) {
+						String ako = driver.findElement(page.getPictureCountLocator(j+getEveryUserElement)).getText();
+						ReportExtender.logInfo(ako);
+						LocalDateTime start = LocalDateTime.parse(ako, dateFormat);
+						if (stop.isBefore(start))
+						{
+							stop = start;
+							properlyOrdered = true;
+							String mama = String.valueOf(start);
+							ReportExtender.logPass(mama);
+						}
+					}
+
+				}
+				else properlyOrdered = false;
+				clickElementUsingJavascript(driver, page.getDropdownElement("Galéria"),"Close galery" );
+				sleep(2000);
+			}
+		}
+		new Validation("Galery is properly ordered", properlyOrdered).isTrue();
+	}
+
+	@And("In profil page select {string}")
+	public void inProfilPageSelect(String tab) {
+		waitForElementClickable(driver, page.getProfilTabLocator(tab), "Wait for choice " + tab + " is visible", 10);
+		clickElementUsingJavascript(driver,page.getProfilTabElement(tab), "Click on choice " + tab);
 	}
 }

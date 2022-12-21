@@ -16,13 +16,18 @@ Feature: CestaVon - Browsing in profil
     And     Input into "Meno" search bar username "<NAME>"
     And     Input into "Priezvisko" search bar username "<SURNAME>"
     And     Select user with name "<NAME>"
+    And     In profil page select "Galéria"
+    And     Verify properly ordered gallery
+    And     Verify properly ordered pictures in gallery
+
+
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
     Examples:
 
       | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME | SURNAME |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna | Modrá   |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna | Ružová   |
 
 
 
