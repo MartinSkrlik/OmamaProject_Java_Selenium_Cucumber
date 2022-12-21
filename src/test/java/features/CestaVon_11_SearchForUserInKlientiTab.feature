@@ -3,7 +3,7 @@
 Feature: CestaVon - Search for user in klient tab
 
 
-  Scenario Outline: CestaVon - looking for specific client in Klienti tab
+  Scenario Outline: CestaVon - 11 - looking for specific client in Klienti tab
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

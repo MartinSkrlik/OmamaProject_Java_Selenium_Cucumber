@@ -30,15 +30,12 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	private static HashMap<String, Object> globalParametersMap = TestRunner.getGlobalParametersMap();
 	private WebDriver driver = (WebDriver) globalParametersMap.get("driver");
 	CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
-	String Username, Email, PhoneNumber, Town, Status, OmamaLevel, KidsCount, JobSpecification,
-			OnLevelSince, OmamaMentor = "";
-	int countOfClientsVisibleOnPage = 10;
-	int name_index = 2;
-	int surname_index = 3;
+	int countOfClientsVisibleOnPage = 10, name_index = 2, surname_index = 3;
 	String[] clientsName = new String[countOfClientsVisibleOnPage];
 	String[] clientsSurname = new String[countOfClientsVisibleOnPage];
 	String[] clientsUsername = new String[countOfClientsVisibleOnPage];
 	String getEveryUserElement = ".";
+	HashMap<String, String> textparameters = new HashMap<>();
 
 	@When("^Login user with username SECURE \"([^\"]*)\" and password SECURE \"([^\"]*)\"$")
 	public void login_user_with_username_secure_and_password_secure(String username, String password) throws Throwable {
@@ -113,10 +110,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(DropDownRole.getElement(driver), DropDownRole.getDescription());
 		waitForElementClickable(driver, page.getTabLocator(value), "Wait for dropdown visible", 10);
 		clickElement(page.getTabElement(value), "Select specific role from dropdown");
-		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
-		Email = getAttributeValue(EmailInput.getElement(driver), EmailInput.getDescription());
-		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("cislo"), "Save phone number into variable");
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
+		textparameters.put("username", getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
+		textparameters.put("email", getAttributeValue(EmailInput.getElement(driver), EmailInput.getDescription()));
+		textparameters.put("phoneNumber", getAttributeValue(page.getInputTextfieldElement("cislo"), "Save phone number into variable"));
+		textparameters.put("town", getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable"));
 		ReportExtender.logScreen(driver);
 	}
 
@@ -129,35 +126,34 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Verify admin details")
 	public void verifyAdminDetails() {
-		sleep(2000);
-//		waitForElementVisible(driver, GetUserName.getLocator(), GetUserName.getDescription(), 10);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
-		new Validation("Verify EMAIL", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
-		new Validation("Verify PHONE NUMBER", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), PhoneNumber).stringEquals();
+		sleep(1000);
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
+		new Validation("Verify EMAIL", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), textparameters.get("email")).stringEquals();
+		new Validation("Verify PHONE NUMBER", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), textparameters.get("phoneNumber")).stringEquals();
 	}
 
 	@Then("Verify supervisor-mentor details")
 	public void verifySupervisorMentorDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
-		new Validation("Verify EMAIL", getElementText(EmailMentorText.getElement(driver), EmailMentorText.getDescription()), Email).contains();
-		new Validation("Verify PHONE NUMBER", getElementText(PhoneMentorText.getElement(driver), PhoneMentorText.getDescription()), PhoneNumber).contains();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
+		new Validation("Verify EMAIL", getElementText(EmailMentorText.getElement(driver), EmailMentorText.getDescription()), textparameters.get("email")).contains();
+		new Validation("Verify PHONE NUMBER", getElementText(PhoneMentorText.getElement(driver), PhoneMentorText.getDescription()), textparameters.get("phoneNumber")).contains();
 	}
 
 	@Then("Verify user status")
 	public void verifyUserstatus() {
 		sleep(1000);
-		new Validation("Verify user STATUS", StringUtils.chop(getElementText(StatusText.getElement(driver), StatusText.getDescription())), StringUtils.chop(Status)).stringEquals();
+		new Validation("Verify user STATUS", StringUtils.chop(getElementText(StatusText.getElement(driver), StatusText.getDescription())), StringUtils.chop(textparameters.get("status"))).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
-	@Then("Verify omama details")
-	public void verifyOmamaDetails() {
+	@Then("Verify details")
+	public void verifyDetails() {
 		sleep(1000);
-		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
@@ -213,11 +209,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Save user details")
 	public void saveUserDetails() {
 		waitForElementVisible(driver,page.getInputTextfieldLocator("Priezvisko"),"Wait for input visible",10);
-		Username = getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable");
-		Email = getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable");
-		PhoneNumber = getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable");
-		Town = getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable");
-		Status = getElementText(UserStatusText.getElement(driver), UserStatusText.getDescription());
+		textparameters.put("username", getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
+		textparameters.put("email", getAttributeValue(page.getInputTextfieldElement("Email"), "Save email into variable"));
+		textparameters.put("phoneNumber", getAttributeValue(page.getInputTextfieldElement("Telefon"), "Save phone number into variable"));
+		textparameters.put("town",getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable"));
+		textparameters.put("status", getElementText(UserStatusText.getElement(driver), UserStatusText.getDescription()));
 		ReportExtender.logScreen(driver);
 	}
 
@@ -295,7 +291,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Find user with changed details")
 	public void findUserWithChangedDetails() {
 		waitForElementVisible(driver, page.getInputLocator("Meno"), "Wait for Meno input is visible", 10);
-		setElementText(page.getInputElement("Meno"), Username, "Set " + Username + " into input");
+		setElementText(page.getInputElement("Meno"), textparameters.get("username"), "Set " + textparameters.get("username") + " into input");
+		sleep(1000);
 		ReportExtender.logScreen(driver);
 	}
 
@@ -314,8 +311,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Select user with changed details")
 	public void selectUserWithName() {
-		waitForElementVisible(driver, page.getUserLocator(Username), "Wait for " + Username + " is visible", 10);
-		clickElementUsingJavascript(driver, page.getUserElement(Username), "Select " + Username);
+		waitForElementVisible(driver, page.getUserLocator(textparameters.get("username")), "Wait for " + textparameters.get("username") + " is visible", 10);
+		clickElementUsingJavascript(driver, page.getUserElement(textparameters.get("username")), "Select " + textparameters.get("username"));
 	}
 
 	@And("Select user with name {string} and remember his information")
@@ -323,10 +320,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		CestaVon_UsersPage page = new CestaVon_UsersPage(driver);
 		waitForElementVisible(driver, page.getRowByNameLocator(value), "Waiting for row visible", 10);
 		ReportExtender.logScreen(driver);
-		Username = getElementText(page.getNameFromRowByNameElement(value), "Remembering Name");
-		Email = getElementText(page.getEmailFromRowByNameElement(value), "Remembering Email");
-		PhoneNumber = getElementText(page.getPhoneNumberFromRowByNameElement(value), "Remembering Phone Number");
-		Town = getElementText(page.getTownFromRowByNameElement(value), "Remembering City");
+		textparameters.put("username", getElementText(page.getNameFromRowByNameElement(value), "Remembering Name"));
+		textparameters.put("email", getElementText(page.getEmailFromRowByNameElement(value), "Remembering Email"));
+		textparameters.put("phoneNumber", getElementText(page.getPhoneNumberFromRowByNameElement(value), "Remembering Phone Number"));
+		textparameters.put("town", getElementText(page.getTownFromRowByNameElement(value), "Remembering City"));
 		clickElement(page.getRowByNameElement(value), "Opening profile " + value + ".");
 	}
 
@@ -334,10 +331,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void verifyAllInformationIsVisible() {
 		waitForElementVisible(driver, BackButton.getLocator(), BackButton.getDescription(), 10);
 		ReportExtender.logScreen(driver);
-		new Validation("Name visible in profile", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), Username).stringEquals();
-		new Validation("Phone Number visible in profile", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), PhoneNumber).stringEquals();
-		new Validation("Email visible in profile", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), Email).stringEquals();
-		new Validation("Town visible in profile", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), Town).stringEquals();
+		new Validation("Name visible in profile", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username")).stringEquals();
+		new Validation("Phone Number visible in profile", getElementText(PhoneAdminText.getElement(driver), PhoneAdminText.getDescription()), textparameters.get("phoneNumber")).stringEquals();
+		new Validation("Email visible in profile", getElementText(EmailAdminText.getElement(driver), EmailAdminText.getDescription()), textparameters.get("email")).stringEquals();
+		new Validation("Town visible in profile", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 	}
 
 	@And("Click on Change password")
@@ -464,6 +461,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		waitForElementClickable(driver, ConfirmTownInput.getLocator(), ConfirmTownInput.getDescription(), 10);
 		clickElement(ConfirmTownInput.getElement(driver), ConfirmTownInput.getDescription());
 		setElementText(page.getInputTextfieldElement("Miesto"), "Nemocnica", "Set street into input");
+		textparameters.put("username", getAttributeValue(page.getInputTextfieldElement("Meno"), "Save username into variable"));
+		textparameters.put("surname",getAttributeValue(page.getInputTextfieldElement("Priezvisko"), "Save username into variable"));
+		textparameters.put("town", getAttributeValue(page.getInputTextfieldElement("Mesto"), "Save town into variable"));
 		ReportExtender.logScreen(driver);
 		for (int j = 1; j < 6; j++) {
 			scrollElementIntoView(driver, page.getDatePickerElement(j));
@@ -472,8 +472,8 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
 			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
 			sleep(1000);
-			ReportExtender.logScreen(driver);
 		}
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Select from AnoNie picker {string} choice {string}")
@@ -492,7 +492,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			setElementText(page.getTextfieldIndexElement("Ukončené vzdelanie", i), RandomData.generateLastName(), "Set mobil phone into input");
 			setElementText(page.getTextfieldIndexElement("Trieda", i), RandomData.generateLastName(), "Set mobil phone into input");
 			setElementText(page.getTextfieldIndexElement("Zamestnanie", i), RandomData.generateLastName(), "Set mobil phone into input");
-			ReportExtender.logScreen(driver);
 		}
 		setElementText(page.getInputTextfieldElement("Počet súrodencov"), RandomData.generateStreetNumber(), "Set number of children into input");
 		setElementText(page.getInputTextfieldElement("Dieťa je narodené v poradí"), RandomData.generateStreetNumber(), "Set name into input");
@@ -502,11 +501,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@Then("Save omama specification")
 	public void saveomamaSpecification() {
-		OmamaMentor = getElementText(page.getOmamaSpecificationElement(1), "Save omama mentor");
-		OmamaLevel = getElementText(page.getOmamaSpecificationElement(4), "Save omama level");
-		KidsCount = getElementText(page.getOmamaSpecificationElement(5), "Save kids count");
-		JobSpecification = getElementText(page.getOmamaSpecificationElement(6), "Save job specification");
-		OnLevelSince = getAttributeValue(OnLevelSinceDate.getElement(driver), OnLevelSinceDate.getDescription());
+		textparameters.put("mentor", getElementText(page.getOmamaSpecificationElement(1), "Save omama mentor"));
+		textparameters.put("omamaLevel", getElementText(page.getOmamaSpecificationElement(4), "Save omama level"));
+		textparameters.put("kidsCount",getElementText(page.getOmamaSpecificationElement(5), "Save kids count"));
+		textparameters.put("jobSpecification", getElementText(page.getOmamaSpecificationElement(6), "Save job specification"));
+		textparameters.put("onLevelSince",getAttributeValue(OnLevelSinceDate.getElement(driver), OnLevelSinceDate.getDescription()));
 		ReportExtender.logScreen(driver);
 	}
 
@@ -514,11 +513,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void verifyomamaSpecificationWasChanged() {
 		scrollPageIntoBottom(driver);
 		waitForElementVisible(driver, OnLevelSinceDate.getLocator(), "Wait for date picker", 10);
-		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), OmamaMentor).stringEquals();
-		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), OmamaLevel).stringEquals();
-		new Validation("Verify omama kids", getElementText(page.getOmamaSpecificationElement(5), ""), KidsCount).stringEquals();
-		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6), ""), JobSpecification).stringEquals();
-		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver), ""), OnLevelSince).stringEquals();
+		new Validation("Verify omama mentor", getElementText(page.getOmamaSpecificationElement(1), ""), textparameters.get("mentor")).stringEquals();
+		new Validation("Verify omama level", getElementText(page.getOmamaSpecificationElement(4), ""), textparameters.get("omamaLevel")).stringEquals();
+		new Validation("Verify omama kids", getElementText(page.getOmamaSpecificationElement(5), ""), textparameters.get("kidsCount")).stringEquals();
+		new Validation("Verify omama job specification", getElementText(page.getOmamaSpecificationElement(6), ""), textparameters.get("jobSpecification")).stringEquals();
+		new Validation("Verify omama first date", getAttributeValue(OnLevelSinceDate.getElement(driver), ""), textparameters.get("onLevelSince")).stringEquals();
 		ReportExtender.logScreen(driver);
 	}
 
@@ -561,7 +560,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		setElementText(page.getInputTextareaElement("breastFeedTime"), RandomData.generateStreetNumber(), "Input random number");
 		clickElementUsingJavascript(driver, page.getDropdownElement("Zvoľte"), "Unwrap dropdown Zvolte");
 		clickElementUsingJavascript(driver, page.getTabElement("4"), "Select random choice");
-		ReportExtender.logScreen(driver);
 		scrollElementIntoView(driver, page.getYesNoPickerElement("Fajčenie počas kojenia", RandomData.getRandomAnoNie()));
 		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fajčenie počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
 		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Alkohol počas kojenia", RandomData.getRandomAnoNie()), "Click random Ano/nie");
@@ -584,9 +582,29 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Fill information about Všeobecné zdravie")
-	public void fillInformationAboutVšeobecnéZdravie() {
-
+	@And("Fill information about Vseobecne zdravie")
+	public void fillInformationAboutVseobecneZdravie() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Alkohol počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fajčenie počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Alkohol počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Drogy počas prvých 2 rokov dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("medicineNearChildBelowTwoYears"), RandomData.generateLastName(), "Input random text");
+		ReportExtender.logScreen(driver);
+		setElementText(page.getInputTextareaElement("hospitalization"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("injury"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("healthIssues"), RandomData.generateLastName(), "Input random text");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Povinné očkovania", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Pravidelné prehliadky v pediatrickej ambulancii", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		setElementText(page.getInputTextareaElement("examinationOffice"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("healthCondition"), RandomData.generateLastName(), "Input random text");
+		for (int j = 6; j < 7; j++) {
+			scrollElementIntoView(driver, page.getDatePickerElement(j));
+			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
+			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
+			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
+			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
+		}
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Click on {string} button from menu")
@@ -608,13 +626,75 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify user was deleted")
 	public void verifyUserWasDeleted() {
-		if(!verifyElementIsPresent(driver, page.getUserLocator(Username), "Find if element was deleted"))
-			{ReportExtender.logPass("Username " + Username + " was deleted");}
+		if(!verifyElementIsPresent(driver, page.getUserLocator(textparameters.get("username")), "Find if element was deleted"))
+			{ReportExtender.logPass("Username " + (textparameters.get("username") + " was deleted"));}
 		else
-			ReportExtender.logWarning("Username " + Username + " was not deleted");
+			ReportExtender.logWarning("Username " + (textparameters.get("username") + " was not deleted"));
+	}
+
+	@And("Fill information about Obavy")
+	public void fillInformationAboutObavy() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Spánok dieťaťa", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Zrak dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Sluch dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Spánok dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Rast a výživu dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Zdravie dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Celkový vývin dieťaťa", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		ReportExtender.logScreen(driver);
 	}
 
 
+	@And("Fill information about Byvanie")
+	public void fillInformationAboutByvanie() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Varíte v rovnakej izbe ako spáva dieťa?", RandomData.getRandomAnoNie()));
+		setElementText(page.getInputTextareaElement("houseMaterial"), RandomData.generateLastName(), "Input random text");
+		setElementText(page.getInputTextareaElement("houseRooms"), RandomData.generateRandomNumber(), "Input random text");
+		setElementText(page.getInputTextareaElement("houseInhabitants"), RandomData.generateRandomNumber(), "Input random text");
+		setElementText(page.getInputTextareaElement("houseFuel"), RandomData.generateLastName(), "Input random text");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Varíte v rovnakej izbe ako spáva dieťa?", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		ReportExtender.logScreen(driver);
+	}
 
+	@And("Fill information about Osobne udaje")
+	public void fillInformationAboutskolaAOsobneUdaje() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Fotografie v tlačených materiáloch", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fotografie v aplikácii", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fotografie na sociálnych médiách a webe", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Fotografie v tlačených materiáloch", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Videá a reportáže", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Pediatrické skríningy", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Meranie vývinu", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Študijný a kariérny vývoj", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Neskoršie kontaktovanie a meranie dopadu programu", RandomData.getRandomAnoNie()), "Click random Ano/nie");
+		ReportExtender.logScreen(driver);
+	}
 
+	@And("Fill information about Skola")
+	public void fillInformationAboutSkola() {
+		scrollElementIntoView(driver, page.getYesNoPickerElement("Materská škola", RandomData.getRandomAnoNie()));
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Materská škola", "Áno"), "Click random Ano/nie");
+		setElementText(page.getInputTextfieldElement("Názov materskej školy"), RandomData.generateFirstName(), "Set name into input");
+		clickElementUsingJavascript(driver, page.getYesNoPickerElement("Základná škola", "Áno"), "Click random Ano/nie");
+		setElementText(page.getInputTextfieldElement("Názov základnej školy"), RandomData.generateFirstName(), "Set name into input");
+		clickElementUsingJavascript(driver,page.getDropdownElement("Špeciálna"),"Select specialna skola");
+		ReportExtender.logScreen(driver);
+		for (int j = 7; j < 11; j++) {
+			scrollElementIntoView(driver, page.getDatePickerElement(j));
+			waitForElementVisible(driver, page.getDatePickerLocator(j), "Wait for date picker", 10);
+			clickElementUsingJavascript(driver, page.getDatePickerElement(j), "Click on date input");
+			waitForElementClickable(driver, SelectCurrentDate.getLocator(), SelectCurrentDate.getDescription(), 10);
+			clickElementUsingJavascript(driver, SelectCurrentDate.getElement(driver), SelectCurrentDate.getDescription());
+			sleep(1000);
+		}
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify client details")
+	public void verifyClientDetails() {
+		sleep(1000);
+		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username") + " " + textparameters.get("surname")).stringEquals();
+		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
 }

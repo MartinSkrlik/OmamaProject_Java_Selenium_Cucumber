@@ -3,7 +3,7 @@
 Feature: CestaVon - Delete User
 
 
-  Scenario Outline: CestaVon - create, find and delete specific user
+  Scenario Outline: CestaVon - 09 - create find and delete specific user
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window

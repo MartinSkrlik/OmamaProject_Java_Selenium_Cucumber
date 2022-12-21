@@ -195,7 +195,7 @@ public class RandomData {
      * return String
      */
     public static String getRandomAnoNie() {
-        return new Random().nextBoolean() ? "Áno" : "Nie";
+        return new Random().nextBoolean() ? "Nie" : "Áno";
     }
 
     /**
