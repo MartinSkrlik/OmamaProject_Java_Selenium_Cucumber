@@ -703,70 +703,64 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Verify properly ordered gallery")
 	public void verifyProperlyOrderedGallery() {
 		sleep(1000);
-		boolean properlyOrdered = false;
-		int year = 0;
+		boolean properlyOrderedGallery = true;
+		boolean properlyOrderedPictures = true;
+		int year = 2000;
 		int galleryCount = driver.findElements(page.getGalleryCountLocator(getEveryUserElement)).size();
-		if(galleryCount > 1){
-			//gallery order
-			List<WebElement> elements = driver.findElements(page.getGalleryCountLocator(getEveryUserElement));
-			for (WebElement element : elements) {
+		if(galleryCount > 0){
+			// If galleries are present verify properly ordered according years
+			List<WebElement> galleryYears = driver.findElements(page.getGalleryCountLocator(getEveryUserElement));
+			for (WebElement element : galleryYears) {
 				int galleryEle = Integer.parseInt(element.getText());
 				if (galleryEle > year)
 				{
 					year = galleryEle;
-					properlyOrdered = true;
-//					String ako = String.valueOf(year);
-//					ReportExtender.logPass(ako);
 				}
-				else properlyOrdered = false;
+				else properlyOrderedGallery = false;
 			}
-		}
-		new Validation("Galery is properly ordered", properlyOrdered).isTrue();
-		ReportExtender.logScreen(driver);
-	}
-
-	@And("Verify properly ordered pictures in gallery")
-	public void verifyProperlyOrderedPicturesInGallery() {
-		sleep(1000);
-		boolean properlyOrdered = false;
-		LocalDateTime datumy;
-		String startInput = "01. 1. 2000 00:00";
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern( "dd. M. uuuu HH:mm" );
-		LocalDateTime stop = LocalDateTime.parse(startInput, dateFormat);
-		int galleryCount = driver.findElements(page.getGalleryCountLocator(getEveryUserElement)).size();
-		if(galleryCount > 0){
+			new Validation("Galleries are properly ordered", properlyOrderedGallery).isTrue();
+			ReportExtender.logScreen(driver);
 			for (int i = 1; i <= galleryCount; i++) {
+//				String year = driver.findElement(page.getGalleryCountLocator(i+getEveryUserElement)).getText();
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern( "[dd][d]. [MM][M]. uuuu HH:mm" );
+				String startInput = "01. 01. 2030 00:00";
+				LocalDateTime stop = LocalDateTime.parse(startInput, dateFormat);
 				clickElementUsingJavascript(driver, page.getGalleryCountElement(i+getEveryUserElement),"Unwrap galery");
-				sleep(5000);
+				sleep(1000);
 				int pictureCount = driver.findElements(page.getPictureCountLocator(getEveryUserElement)).size();
-				String number = String.valueOf(pictureCount);
-				ReportExtender.logInfo(number);
-				if(pictureCount > 1) {
+				if(pictureCount > 0) {
+					// If pictures are present verify properly ordered according dates
 					for (int j = 1; j <= pictureCount; j++) {
-						String ako = driver.findElement(page.getPictureCountLocator(j+getEveryUserElement)).getText();
-						ReportExtender.logInfo(ako);
-						LocalDateTime start = LocalDateTime.parse(ako, dateFormat);
-						if (stop.isBefore(start))
+						String addPictureDate = driver.findElement(page.getPictureCountLocator(j+getEveryUserElement)).getText();
+						LocalDateTime start = LocalDateTime.parse(addPictureDate, dateFormat);
+						if (stop.isAfter(start) || stop.equals(start))
 						{
 							stop = start;
-							properlyOrdered = true;
-							String mama = String.valueOf(start);
-							ReportExtender.logPass(mama);
 						}
+						else properlyOrderedPictures = false;
 					}
-
+				ReportExtender.logScreen(driver);
 				}
-				else properlyOrdered = false;
+				else {ReportExtender.logInfo("USER HAVE NO PICTURES IN GALLERY");
+				ReportExtender.logScreen(driver);}
 				clickElementUsingJavascript(driver, page.getDropdownElement("Galéria"),"Close galery" );
-				sleep(2000);
+				sleep(1000);
 			}
+			new Validation("Pictures are properly ordered", properlyOrderedPictures).isTrue();
 		}
-		new Validation("Galery is properly ordered", properlyOrdered).isTrue();
+		else { ReportExtender.logPass("USER HAVE NO GALLERIES");
+		ReportExtender.logScreen(driver);}
 	}
 
-	@And("In profil page select {string}")
-	public void inProfilPageSelect(String tab) {
+	@And("In profil page select tab {string}")
+	public void inProfilPageSelecttab(String tab) {
 		waitForElementClickable(driver, page.getProfilTabLocator(tab), "Wait for choice " + tab + " is visible", 10);
 		clickElementUsingJavascript(driver,page.getProfilTabElement(tab), "Click on choice " + tab);
+	}
+
+	@And("Verify tab {string} is selected")
+	public void verifyTabLekcieIsSelected(String tab) {
+		new Validation("Verify tab " + tab + " is selected", page.getProfilTabElement(tab).getAttribute("class"), "active").stringEquals();
+		ReportExtender.logScreen(driver);
 	}
 }

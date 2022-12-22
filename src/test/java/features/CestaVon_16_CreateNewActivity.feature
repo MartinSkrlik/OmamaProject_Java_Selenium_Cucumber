@@ -1,9 +1,9 @@
 @Martin
-@BrowseInProfil
-Feature: CestaVon - Browsing in profil
+@CreateNewActivityTest
+Feature: CestaVon - Create new activity
 
 
-  Scenario Outline: CestaVon - 14 - Browsing in profil
+  Scenario Outline: CestaVon - 16 - Create new activity
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -30,7 +30,7 @@ Feature: CestaVon - Browsing in profil
     Examples:
 
       | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME | SURNAME |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Anna | Fialová   |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Janka | Hrašková   |
 
 
 
