@@ -103,7 +103,7 @@ public class RandomData {
      * @return String
      */
     public static String generateStreetNumber(){
-        return faker.regexify("[0-9]{1,2}");
+        return faker.regexify("[0-9]{4}");
     }
 
     /**

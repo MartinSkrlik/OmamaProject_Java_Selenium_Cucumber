@@ -3,7 +3,7 @@
 Feature: CestaVon - Create new activity
 
 
-  Scenario Outline: CestaVon - 16 - Create new activity
+  Scenario Outline: CestaVon - 16 - Create new activity, verify and delete
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -11,26 +11,25 @@ Feature: CestaVon - Create new activity
     And     Login user with username SECURE "<USERNAME>" and password SECURE "<PASSWORD>"
     And     Input pin code "<PINCODE>"
     And     Click on button "Zaregistrovať zariadenie"
-    And     Select from menu tab "Klienti"
-    And     Verify "Klienti" tab is active
-    And     Input into "Meno" search bar username "<NAME>"
-    And     Input into "Priezvisko" search bar username "<SURNAME>"
-    And     Select user with name "<NAME>"
-    And     In profil page select tab "Lekcie"
-    And     Verify tab "Lekcie" is selected
-    And     In profil page select tab "Galéria"
-    And     Verify properly ordered gallery
-    And     In profil page select tab "Info"
-    And     Verify tab "Info" is selected
-    And     In profil page select tab "Skríningy"
-    And     Verify tab "Skríningy" is selected
+    And     Select from menu tab "Aktivity"
+    And     Verify "Aktivity" tab is active
+    Then    Click on button "Pridať"
+    And     Fill information about Activity
+    And     Save activity details
+    And     Click on button "Pridaj novú aktivitu"
+    And     Click ESC button
+    And     Select from menu tab "Aktivity"
+    And     Verify "Aktivity" tab is active
+    And     Click on button "Obnoviť"
+    And     Find activity
+    And     Verify activity details
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
     Examples:
 
-      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE | NAME | SURNAME |
-      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    | Janka | Hrašková   |
+      | BROWSER | PAGE     | USERNAME | PASSWORD      | PINCODE |
+      | Chrome  | Cestavon | admin    | Testcestavon1 | 1111    |
 
 
 

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import page.CestaVon_CommonPage;
 import page.CestaVon_UsersPage;
 import runner.TestRunner;
@@ -762,5 +763,69 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	public void verifyTabLekcieIsSelected(String tab) {
 		new Validation("Verify tab " + tab + " is selected", page.getProfilTabElement(tab).getAttribute("class"), "active").stringEquals();
 		ReportExtender.logScreen(driver);
+	}
+
+	@And("Fill information about Activity")
+	public void fillInformationAboutActivity() {
+		textparameters.put("childrenAidPhoto1","https://live.staticflickr.com/65535/50300582746_0da48987d3_z.jpg");
+		textparameters.put("childrenAidPhoto2","https://live.staticflickr.com/65535/50304048661_78b946ca28_z.jpg");
+		textparameters.put("childrenActivityPhoto1","https://live.staticflickr.com/65535/50300743352_1775b8e1db_z.jpg");
+		textparameters.put("childrenActivityPhoto2","https://live.staticflickr.com/65535/50300833902_72e8958afb_z.jpg");
+		textparameters.put("urlChildrenActivityLink","https://youtu.be/tOAI2th94z8");
+
+		setElementText(page.getInputElement("Názov aktivity"), RandomData.generateFirstName(), "Set activity name into textarea");
+		setElementText(page.getInputTextfieldElement("Číslo lekcie"), RandomData.generateStreetNumber(), "Set random activity number into textarea");
+		ReportExtender.logScreen(driver);
+		setElementText(page.getActivityInputElement("Ciel aktivity"), RandomData.generateFirstName(), "Set random text into activity textarea");
+		setElementText(page.getActivityInputElement("Pomôcky"), RandomData.generateFirstName(), "Set random text to Pomocky textarea");
+		setElementText(page.getActivityInputElement("Priebeh"), RandomData.generateFirstName(), "Set random text to Priebeh textarea");
+		setElementText(page.getInputTextfieldElement("Mesiac"), RandomData.generateRandomNumber(), "Set random number into Mesiac textarea");
+		setElementText(page.getInputTextfieldElement("Týždeň"), RandomData.generateRandomNumber(), "Set random number into Tyzden textarea");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 1), textparameters.get("childrenAidPhoto1"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(1),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 1), textparameters.get("childrenAidPhoto2"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(1),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 2), textparameters.get("childrenActivityPhoto1"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(2),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 2), textparameters.get("childrenActivityPhoto2"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(2),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url youtube videa", 1), textparameters.get("urlChildrenActivityLink"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(3),"Accept your select");
+	}
+
+	@And("Verify activity details")
+	public void verifyActivityDetails() {
+		waitForElementClickable(driver,page.getButtonLocator("Zmazať"),"Wait for zmazat button",10);
+		new Validation("Verify activity name and number", getElementText(ActivityName.getElement(driver), ActivityName.getDescription()), (textparameters.get("activityName") + " " + textparameters.get("activityNumber"))).contains();
+		new Validation("Verify activity gola", getElementText(page.getActivityTextElement(6),"Activity goal text"), textparameters.get("activityGoal")).stringEquals();
+		new Validation("Verify activity aids", getElementText(page.getActivityTextElement(7),"Activity aids text"), textparameters.get("activityAids")).stringEquals();
+		new Validation("Verify activity process", getElementText(page.getActivityTextElement(11),"Activity process text").trim(), textparameters.get("activityProcess")).contains();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Click ESC button")
+	public void clickESCButton() {
+		ReportExtender.logScreen(driver);
+		Actions action = new Actions(driver);
+		action.sendKeys(Keys.ESCAPE).perform();
+	}
+
+	@And("Save activity details")
+	public void saveActivityDetails() {
+		textparameters.put("activityName", getAttributeValue(page.getInputTextfieldElement("Názov aktivity"), "Save name activity into variable"));
+		textparameters.put("activityNumber", getAttributeValue(page.getInputTextfieldElement("Číslo lekcie"), "Save activity number into variable"));
+		textparameters.put("activityGoal", getElementText(page.getActivityInputElement("Ciel aktivity"), "Save activity goal into variable"));
+		textparameters.put("activityAids",getElementText(page.getActivityInputElement("Pomôcky"), "Save activity aids into variable"));
+		textparameters.put("activityProcess", getElementText(page.getActivityInputElement("Priebeh"),"Save activity process into variable" ));
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Find activity")
+	public void findActivity() {
+		waitForElementVisible(driver, page.getInputLocator("Názov aktivity"), "Wait for Nazov aktivity input is visible", 10);
+		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("username") + " into input");
+		waitForElementVisible(driver, page.getUserLocator(textparameters.get("activityName")), "Wait for activity visible", 10);
+		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver, page.getUserElement(textparameters.get("activityName")), "Click on desired user");
 	}
 }
