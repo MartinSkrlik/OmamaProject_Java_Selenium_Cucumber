@@ -10,22 +10,24 @@ public class CestaVon_CommonPage {
 
 	public enum MainPage {
 
-        MenuButton      (By.xpath("//div[@class='menu']"),
+        MenuButton          (By.xpath("//div[@class='menu']"),
                 "MENU BUTTON"),
-        LogOffButton  (By.xpath("//li[@id='sign_out_button']"),
+        LogOffButton        (By.xpath("//li[@id='sign_out_button']"),
                 "ODHLASIT BUTTON"),
-        SelectedTab     (By.xpath("//h1[contains(@class,'headline')]"),
+        SelectedTab         (By.xpath("//h1[contains(@class,'headline')]"),
                 "SELECTED TAB"),
-        FirstTableRow(By.xpath("//tbody/tr[1]"),
+        FirstTableRow       (By.xpath("//tbody/tr[1]"),
                 "First table row"),
-        TableColumns(By.xpath("//thead//th"),
+        TableColumns        (By.xpath("//thead//th"),
                 "Table rows"),
-        TableRows(By.xpath("//tbody//tr"),
+        TableRows           (By.xpath("//tbody//tr"),
                 "Table columns"),
         PaginationNextButton(By.xpath("//li[contains(@class, 'pagination-next')]"),
                 "Pagination next button"),
-        PaginationNumbers(By.xpath("//li[contains(@class, 'pagination-item')]"),
+        PaginationNumbers   (By.xpath("//li[contains(@class, 'pagination-item')]"),
                 "Pagination numbers"),
+        ActivityName        (By.xpath("(//div[@class='clientsBox']//h3)[1]"),
+                "Save activity name and number")
         ;
         private String description;
         private By findBy;
@@ -53,7 +55,7 @@ public class CestaVon_CommonPage {
     public By getErrorMessageLocator(String value) {return By.xpath("//p[text()='" + value + "']");}
 
     public WebElement getButtonElement(String value) {return driver.findElement(getButtonLocator(value));}
-    public By getButtonLocator(String value) {return By.xpath("//span[text()='" + value + "']/parent::button");}//pozriet xpath, *
+    public By getButtonLocator(String value) {return By.xpath("//span[text()='" + value + "']/parent::button");}
 
     public WebElement getTabElement(String value) {return driver.findElement(getTabLocator(value));}
     public By getTabLocator(String value) {return By.xpath("//li[text()='" + value + "']");}
@@ -127,6 +129,26 @@ public class CestaVon_CommonPage {
     public WebElement getTabIndexElement(String value,int index) {return driver.findElement(getTabIndexLocator(value,index));}
     public By getTabIndexLocator(String value, int index) {return By.xpath("(//li[text()='" + value + "'])[" + index + "]");}
 
+    public WebElement getGalleryCountElement(String value) {return driver.findElement(getGalleryCountLocator(value));}
+    public By getGalleryCountLocator(String value) {return By.xpath("(//div[contains(@class,'bottompanel')]//div[contains(@class,'galleryFolder')])[" + value + "]");}
+
+    public WebElement getPictureCountElement(String value) {return driver.findElement(getPictureCountLocator(value));}
+    public By getPictureCountLocator(String value) {return By.xpath("(//div[contains(@class,'bottompanel')]//div[contains(@class,'imageWrapper')])[" + value + "]");}
+
+    public WebElement getProfilTabElement(String value) {return driver.findElement(getProfilTabLocator(value));}
+    public By getProfilTabLocator(String value) {return By.xpath("//a[text()='" + value + "']");}
+
+    public WebElement getActivityInputElement(String value) {return driver.findElement(getActivityInputLocator(value));}
+    public By getActivityInputLocator(String value) {return By.xpath("//textarea[@placeholder='" + value + "']");}
+
+    public WebElement getPlusButtonElement(int index) {return driver.findElement(getPlusButtonLocator(index));}
+    public By getPlusButtonLocator(int index) {return By.xpath("(//i[contains(@class,'plus')])[" + index + "]");}
+
+    public WebElement getActivityTextElement(int index) {return driver.findElement(getActivityTextLocator(index));}
+    public By getActivityTextLocator(int index) {return By.xpath("(//div[@class='clientsBox']//div)[" + index + "]");}
+
+    public WebElement getActivityAttributeElement(int index) {return driver.findElement(getActivityAttributeLocator(index));}
+    public By getActivityAttributeLocator(int index) {return By.xpath("(//tr[contains(@class,'level')]//td)[" + index + "]");}
 
 }
 

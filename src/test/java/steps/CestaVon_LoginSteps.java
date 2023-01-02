@@ -7,11 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import page.CestaVon_CommonPage;
 import page.CestaVon_UsersPage;
 import runner.TestRunner;
 import utility.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -696,5 +699,173 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Verify USERNAME", getElementText(UsernameText.getElement(driver), UsernameText.getDescription()), textparameters.get("username") + " " + textparameters.get("surname")).stringEquals();
 		new Validation("Verify TOWN", getElementText(UserTownText.getElement(driver), UserTownText.getDescription()), textparameters.get("town")).stringEquals();
 		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify properly ordered gallery")
+	public void verifyProperlyOrderedGallery() {
+		sleep(1000);
+		boolean properlyOrderedGallery = true;
+		boolean properlyOrderedPictures = true;
+		int year = 2000;
+		int galleryCount = driver.findElements(page.getGalleryCountLocator(getEveryUserElement)).size();
+		if(galleryCount > 0){
+			// If galleries are present verify properly ordered according years
+			List<WebElement> galleryYears = driver.findElements(page.getGalleryCountLocator(getEveryUserElement));
+			for (WebElement element : galleryYears) {
+				int galleryEle = Integer.parseInt(element.getText());
+				if (galleryEle > year)
+				{
+					year = galleryEle;
+				}
+				else properlyOrderedGallery = false;
+			}
+			new Validation("Galleries are properly ordered", properlyOrderedGallery).isTrue();
+			ReportExtender.logScreen(driver);
+			for (int i = 1; i <= galleryCount; i++) {
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern( "[dd][d]. [MM][M]. uuuu HH:mm" );
+				String startInput = "01. 01. 2030 00:00";
+				LocalDateTime stop = LocalDateTime.parse(startInput, dateFormat);
+				clickElementUsingJavascript(driver, page.getGalleryCountElement(i+getEveryUserElement),"Unwrap galery");
+				sleep(1000);
+				int pictureCount = driver.findElements(page.getPictureCountLocator(getEveryUserElement)).size();
+				if(pictureCount > 0) {
+					// If pictures are present verify properly ordered according dates
+					for (int j = 1; j <= pictureCount; j++) {
+						String addPictureDate = driver.findElement(page.getPictureCountLocator(j+getEveryUserElement)).getText();
+						LocalDateTime start = LocalDateTime.parse(addPictureDate, dateFormat);
+						if (stop.isAfter(start) || stop.equals(start))
+						{
+							stop = start;
+						}
+						else properlyOrderedPictures = false;
+					}
+				ReportExtender.logScreen(driver);
+				}
+				else {ReportExtender.logInfo("USER HAVE NO PICTURES IN GALLERY");
+				ReportExtender.logScreen(driver);}
+				clickElementUsingJavascript(driver, page.getDropdownElement("Galéria"),"Close galery" );
+				sleep(1000);
+			}
+			new Validation("Pictures are properly ordered", properlyOrderedPictures).isTrue();
+		}
+		else { ReportExtender.logPass("USER HAVE NO GALLERIES");
+		ReportExtender.logScreen(driver);}
+	}
+
+	@And("In profil page select tab {string}")
+	public void inProfilPageSelecttab(String tab) {
+		waitForElementClickable(driver, page.getProfilTabLocator(tab), "Wait for choice " + tab + " is visible", 10);
+		clickElementUsingJavascript(driver,page.getProfilTabElement(tab), "Click on choice " + tab);
+	}
+
+	@And("Verify tab {string} is selected")
+	public void verifyTabLekcieIsSelected(String tab) {
+		new Validation("Verify tab " + tab + " is selected", page.getProfilTabElement(tab).getAttribute("class"), "active").stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Fill information about Activity")
+	public void fillInformationAboutActivity() {
+		textparameters.put("childrenAidPhoto1","https://live.staticflickr.com/65535/50300582746_0da48987d3_z.jpg");
+		textparameters.put("childrenAidPhoto2","https://live.staticflickr.com/65535/50304048661_78b946ca28_z.jpg");
+		textparameters.put("childrenActivityPhoto1","https://live.staticflickr.com/65535/50300743352_1775b8e1db_z.jpg");
+		textparameters.put("childrenActivityPhoto2","https://live.staticflickr.com/65535/50300833902_72e8958afb_z.jpg");
+		textparameters.put("urlChildrenActivityLink","https://youtu.be/tOAI2th94z8");
+
+		setElementText(page.getInputElement("Názov aktivity"), RandomData.generateFirstName(), "Set activity name into textarea");
+		setElementText(page.getInputTextfieldElement("Číslo lekcie"), RandomData.generateStreetNumber(), "Set random activity number into textarea");
+		ReportExtender.logScreen(driver);
+		setElementText(page.getActivityInputElement("Ciel aktivity"), RandomData.generateFirstName(), "Set random text into activity textarea");
+		setElementText(page.getActivityInputElement("Pomôcky"), RandomData.generateFirstName(), "Set random text to Pomocky textarea");
+		setElementText(page.getActivityInputElement("Priebeh"), RandomData.generateFirstName(), "Set random text to Priebeh textarea");
+		setElementText(page.getInputTextfieldElement("Mesiac"), RandomData.generateRandomNumber(), "Set random number into Mesiac textarea");
+		setElementText(page.getInputTextfieldElement("Týždeň"), RandomData.generateRandomNumber(), "Set random number into Tyzden textarea");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 1), textparameters.get("childrenAidPhoto1"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(1),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 1), textparameters.get("childrenAidPhoto2"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(1),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 2), textparameters.get("childrenActivityPhoto1"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(2),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url obrazku", 2), textparameters.get("childrenActivityPhoto2"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(2),"Accept your select");
+		setElementText(page.getTextfieldIndexElement("url youtube videa", 1), textparameters.get("urlChildrenActivityLink"), "Set image into textarea");
+		clickElementUsingJavascript(driver,page.getPlusButtonElement(3),"Accept your select");
+	}
+
+	@And("Verify activity details")
+	public void verifyActivityDetails() {
+		waitForElementClickable(driver,page.getButtonLocator("Zmazať"),"Wait for zmazat button is visible",10);
+		new Validation("Verify activity name and number", getElementText(ActivityName.getElement(driver), ActivityName.getDescription()), (textparameters.get("activityName") + " " + textparameters.get("activityNumber"))).contains();
+		new Validation("Verify activity goal", getElementText(page.getActivityTextElement(6),"Activity goal text"), textparameters.get("activityGoal")).stringEquals();
+		new Validation("Verify activity aids", getElementText(page.getActivityTextElement(7),"Activity aids text"), textparameters.get("activityAids")).stringEquals();
+		new Validation("Verify activity process", getElementText(page.getActivityTextElement(11),"Activity process text").trim(), textparameters.get("activityProcess")).contains();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Click ESC button")
+	public void clickESCButton() {
+		ReportExtender.logScreen(driver);
+		Actions action = new Actions(driver);
+		action.sendKeys(Keys.ESCAPE).perform();
+	}
+
+	@And("Save activity details")
+	public void saveActivityDetails() {
+		textparameters.put("activityName", getAttributeValue(page.getInputTextfieldElement("Názov aktivity"), "Save name activity into variable"));
+		textparameters.put("activityNumber", getAttributeValue(page.getInputTextfieldElement("Číslo lekcie"), "Save activity number into variable"));
+		textparameters.put("activityGoal", getElementText(page.getActivityInputElement("Ciel aktivity"), "Save activity goal into variable"));
+		textparameters.put("activityAids",getElementText(page.getActivityInputElement("Pomôcky"), "Save activity aids into variable"));
+		textparameters.put("activityProcess", getElementText(page.getActivityInputElement("Priebeh"),"Save activity process into variable" ));
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Find new created activity")
+	public void findNewCreatedActivity() {
+		waitForElementVisible(driver, page.getInputLocator("Názov aktivity"), "Wait for Nazov aktivity input is visible", 10);
+		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("username") + " into input");
+		waitForElementVisible(driver, page.getUserLocator(textparameters.get("activityName")), "Wait for activity visible", 10);
+		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver, page.getUserElement(textparameters.get("activityName")), "Click on activity");
+	}
+
+	@And("Save activity attributes")
+	public void saveActivityAttributes() {
+		waitForElementVisible(driver,page.getActivityAttributeLocator(1),"Wait for activity visible",10);
+		textparameters.put("activityName", getElementText(page.getActivityAttributeElement(1), "Save name activity into variable"));
+		textparameters.put("activityNumber", getElementText(page.getActivityAttributeElement(2), "Save activity number into variable"));
+		textparameters.put("activityMonth", getElementText(page.getActivityAttributeElement(3), "Save activity month into variable"));
+		textparameters.put("activityWeek",getElementText(page.getActivityAttributeElement(4), "Save activity week into variable"));
+	}
+
+	@And("Verify if name attribute filter desired activity")
+	public void verifyIfNameAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("activityName") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Názov aktivity").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if number attribute filter desired activity")
+	public void verifyIfNumberAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Číslo lekcie"), textparameters.get("activityNumber"), "Set " + textparameters.get("activityNumber") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Číslo lekcie").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if month attribute filter desired activity")
+	public void verifyIfMonthAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Mesiac"), textparameters.get("activityMonth"), "Set " + textparameters.get("activityMonth") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Mesiac").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if week attribute filter desired activity")
+	public void verifyIfWeekAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Týždeň"), textparameters.get("activityWeek"), "Set " + textparameters.get("activityWeek") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Týždeň").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 	}
 }
