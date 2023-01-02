@@ -722,7 +722,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			new Validation("Galleries are properly ordered", properlyOrderedGallery).isTrue();
 			ReportExtender.logScreen(driver);
 			for (int i = 1; i <= galleryCount; i++) {
-//				String year = driver.findElement(page.getGalleryCountLocator(i+getEveryUserElement)).getText();
 				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern( "[dd][d]. [MM][M]. uuuu HH:mm" );
 				String startInput = "01. 01. 2030 00:00";
 				LocalDateTime stop = LocalDateTime.parse(startInput, dateFormat);
@@ -795,9 +794,9 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify activity details")
 	public void verifyActivityDetails() {
-		waitForElementClickable(driver,page.getButtonLocator("Zmazať"),"Wait for zmazat button",10);
+		waitForElementClickable(driver,page.getButtonLocator("Zmazať"),"Wait for zmazat button is visible",10);
 		new Validation("Verify activity name and number", getElementText(ActivityName.getElement(driver), ActivityName.getDescription()), (textparameters.get("activityName") + " " + textparameters.get("activityNumber"))).contains();
-		new Validation("Verify activity gola", getElementText(page.getActivityTextElement(6),"Activity goal text"), textparameters.get("activityGoal")).stringEquals();
+		new Validation("Verify activity goal", getElementText(page.getActivityTextElement(6),"Activity goal text"), textparameters.get("activityGoal")).stringEquals();
 		new Validation("Verify activity aids", getElementText(page.getActivityTextElement(7),"Activity aids text"), textparameters.get("activityAids")).stringEquals();
 		new Validation("Verify activity process", getElementText(page.getActivityTextElement(11),"Activity process text").trim(), textparameters.get("activityProcess")).contains();
 		ReportExtender.logScreen(driver);
@@ -820,12 +819,53 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		ReportExtender.logScreen(driver);
 	}
 
-	@And("Find activity")
-	public void findActivity() {
+	@And("Find new created activity")
+	public void findNewCreatedActivity() {
 		waitForElementVisible(driver, page.getInputLocator("Názov aktivity"), "Wait for Nazov aktivity input is visible", 10);
 		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("username") + " into input");
 		waitForElementVisible(driver, page.getUserLocator(textparameters.get("activityName")), "Wait for activity visible", 10);
 		ReportExtender.logScreen(driver);
-		clickElementUsingJavascript(driver, page.getUserElement(textparameters.get("activityName")), "Click on desired user");
+		clickElementUsingJavascript(driver, page.getUserElement(textparameters.get("activityName")), "Click on activity");
+	}
+
+	@And("Save activity attributes")
+	public void saveActivityAttributes() {
+		waitForElementVisible(driver,page.getActivityAttributeLocator(1),"Wait for activity visible",10);
+		textparameters.put("activityName", getElementText(page.getActivityAttributeElement(1), "Save name activity into variable"));
+		textparameters.put("activityNumber", getElementText(page.getActivityAttributeElement(2), "Save activity number into variable"));
+		textparameters.put("activityMonth", getElementText(page.getActivityAttributeElement(3), "Save activity month into variable"));
+		textparameters.put("activityWeek",getElementText(page.getActivityAttributeElement(4), "Save activity week into variable"));
+	}
+
+	@And("Verify if name attribute filter desired activity")
+	public void verifyIfNameAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("activityName") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Názov aktivity").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if number attribute filter desired activity")
+	public void verifyIfNumberAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Číslo lekcie"), textparameters.get("activityNumber"), "Set " + textparameters.get("activityNumber") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Číslo lekcie").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if month attribute filter desired activity")
+	public void verifyIfMonthAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Mesiac"), textparameters.get("activityMonth"), "Set " + textparameters.get("activityMonth") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Mesiac").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if week attribute filter desired activity")
+	public void verifyIfWeekAttributeFilterDesiredActivity() {
+		setElementText(page.getInputElement("Týždeň"), textparameters.get("activityWeek"), "Set " + textparameters.get("activityWeek") + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement("Týždeň").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 	}
 }

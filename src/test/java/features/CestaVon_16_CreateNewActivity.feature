@@ -3,7 +3,7 @@
 Feature: CestaVon - Create new activity
 
 
-  Scenario Outline: CestaVon - 16 - Create new activity, verify and delete
+  Scenario Outline: CestaVon - 16 - Create new activity and verify
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -21,7 +21,7 @@ Feature: CestaVon - Create new activity
     And     Select from menu tab "Aktivity"
     And     Verify "Aktivity" tab is active
     And     Click on button "Obnoviť"
-    And     Find activity
+    And     Find new created activity
     And     Verify activity details
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present

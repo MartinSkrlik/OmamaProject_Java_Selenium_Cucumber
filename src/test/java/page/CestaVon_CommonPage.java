@@ -147,5 +147,8 @@ public class CestaVon_CommonPage {
     public WebElement getActivityTextElement(int index) {return driver.findElement(getActivityTextLocator(index));}
     public By getActivityTextLocator(int index) {return By.xpath("(//div[@class='clientsBox']//div)[" + index + "]");}
 
+    public WebElement getActivityAttributeElement(int index) {return driver.findElement(getActivityAttributeLocator(index));}
+    public By getActivityAttributeLocator(int index) {return By.xpath("(//tr[contains(@class,'level')]//td)[" + index + "]");}
+
 }
 

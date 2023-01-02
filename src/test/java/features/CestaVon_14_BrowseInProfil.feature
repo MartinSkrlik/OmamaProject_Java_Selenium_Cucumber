@@ -1,5 +1,5 @@
 @Martin
-@BrowseInProfil
+@BrowseInProfilTest
 Feature: CestaVon - Browsing in profil
 
 
