@@ -15,6 +15,8 @@ import utility.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -831,7 +833,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Save activity attributes")
 	public void saveActivityAttributes() {
 		waitForElementVisible(driver,page.getActivityAttributeLocator(1),"Wait for activity visible",10);
-		textparameters.put("activityName", getElementText(page.getActivityAttributeElement(1), "Save name activity into variable"));
+		textparameters.put("activityName", getElementText(page.getActivityAttributeElement(1), "Save activity name into variable"));
 		textparameters.put("activityNumber", getElementText(page.getActivityAttributeElement(2), "Save activity number into variable"));
 		textparameters.put("activityMonth", getElementText(page.getActivityAttributeElement(3), "Save activity month into variable"));
 		textparameters.put("activityWeek",getElementText(page.getActivityAttributeElement(4), "Save activity week into variable"));
@@ -867,5 +869,59 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
 		ReportExtender.logScreen(driver);
 		page.getInputElement("Týždeň").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Verify if tab Nazov properly sorting data")
+	public void verifyIfTabNazovProperlySortingData() {
+		clickElementUsingJavascript(driver,page.getAscOrderElement(1),"Set ascending order");
+		String[] arrayOrdered = new String[10];
+		String[] ascOrdered = new String[10];
+		int i = 0;
+		// Verify sorting in ascending order
+		List<WebElement> ASC = driver.findElements(ActivityList.getLocator());
+		for ( WebElement element : ASC ){
+			ascOrdered[i] = element.getText();
+			arrayOrdered[i] = element.getText();
+			i = i + 1;
+		}
+		Arrays.sort(ascOrdered, String.CASE_INSENSITIVE_ORDER);
+		for (int a = 0; a < arrayOrdered.length ; a++){
+//			ReportExtender.logInfo(ascOrdered[a]);
+//			ReportExtender.logInfo(arrayOrdered[a]);
+			if (!ascOrdered[a].equals(arrayOrdered[a])){
+				ReportExtender.logWarning("Data is not in ascending order");
+			}
+		}
+		ReportExtender.logScreen(driver);
+		// Verify sorting in descending order
+		clickElementUsingJavascript(driver,page.getDescOrderElement(1),"Set ascending order");
+		int j = 0;
+		List<WebElement> DESC = driver.findElements(ActivityList.getLocator());
+		for ( WebElement element : DESC ){
+			ascOrdered[j] = element.getText();
+			arrayOrdered[j] = element.getText();
+			j = j + 1;
+		}
+		Arrays.sort(ascOrdered, Collections.reverseOrder());
+		for (int a = 0; a < arrayOrdered.length ; a++){
+//			ReportExtender.logInfo(ascOrdered[a]);
+//			ReportExtender.logInfo(arrayOrdered[a]);
+			if (!ascOrdered[a].equals(arrayOrdered[a])){
+				ReportExtender.logWarning("Data is not in descending order");
+			}
+		}
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify if tabs Číslo lekcie, Mesiac and Týždeň properly sorting data")
+	public void verifyIfTabscisloLekcieMesiacAndTyzdenProperlySortingData() {
+		clickElementUsingJavascript(driver,page.getAscOrderElement(2),"Set ascending order");
+		String[] arrayOrdered = new String[10];
+		String[] ascOrdered = new String[10];
+
+
+
+
+
 	}
 }
