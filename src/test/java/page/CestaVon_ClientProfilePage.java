@@ -11,11 +11,25 @@ public class CestaVon_ClientProfilePage {
     public enum ClientProfilePage {
 
         ClientFullName    (By.xpath("//b[contains(@class, 'admin-client-name')]"),
-                "Cele meno"),
+                "Client Full Name"),
         NameInput(By.xpath("//input[contains(@name, 'firstName')]"),
-                "Meno input"),
+                "Name Input"),
         SurnameInput(By.xpath("//input[contains(@name, 'lastName')]"),
-                "Meno input"),
+                "Surname input"),
+        OmamaDropdown(By.xpath("(//div[contains(@class, 'omamaDropdown')]/div)[1]"),
+                "Omama dropdown"),
+        SaveButton(By.xpath("//div[contains(@class, 'registration_footer')]//span[text()='Uložiť']/parent::button"),
+                "Save Button"),
+        ActivationCalendarInput(By.xpath("(//span[contains(@class, 'ant-calendar-picker')])[3]"),
+                "Activation Calendar Input"),
+        CalendarTodayCell(By.xpath("//td[contains(@class, 'ant-calendar-today')]"),
+                "Calendar Today Cell"),
+        AssignedOmama(By.xpath("(//b[contains(@class, 'admin-client-date')])[2]"),
+                "Assigned Omama"),
+        ClientSubmenuTab(By.xpath("//li/a[contains(@class, 'active')]"),
+                "Client submenu tab"),
+        LessonDateInput(By.xpath("//h3[text()='Dátum']//following-sibling::input"),
+                "Lesson date input"),
         ;
         private String description;
         private By findBy;
