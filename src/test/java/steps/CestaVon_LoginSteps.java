@@ -18,8 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-import static page.CestaVon_ClientProfilePage.ClientProfilePage.NameInput;
-import static page.CestaVon_ClientProfilePage.ClientProfilePage.SurnameInput;
+import static page.CestaVon_ClientProfilePage.ClientProfilePage.*;
 import static page.CestaVon_CommonPage.MainPage.*;
 import static page.CestaVon_LoginPage.loginPageItems.*;
 import static page.CestaVon_SettingsPage.settingsPageItems.*;
@@ -89,6 +88,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Click on button {string}")
 	public void clickOnButton(String value) {
+		waitForFullPageLoad(driver, 10);
 		scrollElementIntoView(driver, page.getButtonElement(value));
 		waitForElementClickable(driver, page.getButtonLocator(value), "Wait for " + value + "button is visible", 10);
 		clickElementUsingJavascript(driver, page.getButtonElement(value), "Click on " + value + " button");
@@ -232,8 +232,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Set Input Field {string} to {string}")
 	public void setSearchFieldTo(String searchField, String searchText) {
 		waitForElementVisible(driver, page.getInputLocator(searchField), "Wait for search field visible", 15);
+		scrollElementIntoMiddleOfScreen(driver, page.getInputElement(searchField));
+		sleep(1000);
 		setElementText(page.getInputElement(searchField), searchText, "Setting element text");
-		sleep(3000);
+		ReportExtender.logScreen(driver);
 	}
 
 	@Then("Verify Meno {string} and Rola {string} in filtered table")
@@ -302,6 +304,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Input into {string} search bar username {string}")
 	public void searchForUsername(String textfield, String username) {
 		waitForElementVisible(driver, page.getInputLocator(textfield), "Wait for " + textfield + " input is visible", 10);
+		sleep(500);
 		setElementText(page.getInputElement(textfield), username, "Set " + username + " into input");
 		ReportExtender.logScreen(driver);
 	}
@@ -530,12 +533,14 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		clickElement(FirstTableRow.getElement(driver), FirstTableRow.getDescription());
 	}
 
-	String firstName;
-	String lastName;
-	@And("Save First and Last Name")
-	public void saveFirstAndLastName() {
-		firstName = getAttributeValue(NameInput.getElement(driver), NameInput.getDescription());
-		lastName = getAttributeValue(SurnameInput.getElement(driver), SurnameInput.getDescription());
+	@And("Save First and Last Name and Omama")
+	public void saveFirstAndLastNameAndOmama() {
+		waitForElementVisible(driver, NameInput.getLocator(), NameInput.getDescription(), 10);
+		textparameters.put("firstName", getAttributeValue(NameInput.getElement(driver), NameInput.getDescription()));
+		waitForElementVisible(driver, SurnameInput.getLocator(), SurnameInput.getDescription(), 10);
+		textparameters.put("lastName", getAttributeValue(SurnameInput.getElement(driver), SurnameInput.getDescription()));
+		waitForElementVisible(driver, OmamaDropdown.getLocator(), OmamaDropdown.getDescription(), 10);
+		textparameters.put("omama", OmamaDropdown.getElement(driver).getText());
 	}
 
 	@And("Fill information about Tehotenstvo a porod")
@@ -867,5 +872,129 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
 		ReportExtender.logScreen(driver);
 		page.getInputElement("Týždeň").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Set Omama to {string}")
+	public void setOmamaTo(String value) {
+		scrollElementIntoMiddleOfScreen(driver, OmamaDropdown.getElement(driver));
+		sleep(1000);
+		waitForElementClickable(driver, OmamaDropdown.getLocator(), OmamaDropdown.getDescription(), 10);
+		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver, OmamaDropdown.getElement(driver), OmamaDropdown.getDescription());
+		scrollElementIntoMiddleOfScreen(driver, page.getDropdownItemElement(value));
+		sleep(1000);
+		waitForElementClickable(driver, page.getDropdownItemLocator(value), "Waiting for dropdown item clickable", 10);
+		clickElementUsingJavascript(driver, page.getDropdownItemElement(value), "Clicking dropdown item");
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Save client profile edit")
+	public void saveClientProfileEdit() {
+		scrollElementIntoView(driver, SaveButton.getElement(driver));
+		waitForElementClickable(driver, SaveButton.getLocator(), "Wait for button to be clickable", 10);
+		clickElementUsingJavascript(driver, SaveButton.getElement(driver), "Click on save button");
+		sleep(2000);
+	}
+
+	@And("Fill calendar with today date")
+	public void FillCalendarWithTodayDate() {
+		waitForElementVisible(driver, ActivationCalendarInput.getLocator(), ActivationCalendarInput.getDescription(), 10);
+		clickElement(ActivationCalendarInput.getElement(driver), ActivationCalendarInput.getDescription());
+		sleep(1000);
+		waitForElementVisible(driver, CalendarTodayCell.getLocator(), CalendarTodayCell.getDescription(), 10);
+		ReportExtender.logScreen(driver);
+		clickElement(CalendarTodayCell.getElement(driver), CalendarTodayCell.getDescription());
+	}
+
+	@Then("Verify client name is {string} and {string}")
+	public void verifyClientNameIsAnd(String value1, String value2) {
+		waitForElementVisible(driver, ClientFullName.getLocator(), ClientFullName.getDescription(), 10);
+		String fullName = getElementText(ClientFullName.getElement(driver), "Get Client full name");
+		new Validation("First name properly changed", fullName, value1).contains();
+		new Validation("Surname properly changed", fullName, value2).contains();
+	}
+
+	@Then("Verify Omama is {string}")
+	public void verifyOmamaIs(String value) {
+		new Validation("Verify assigned Omama", getElementText(AssignedOmama.getElement(driver), AssignedOmama.getDescription()), value).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Set Omama to old Omama")
+	public void setOmamaToOldOmama() {
+		scrollElementIntoMiddleOfScreen(driver, OmamaDropdown.getElement(driver));
+		sleep(1000);
+		waitForElementClickable(driver, OmamaDropdown.getLocator(), OmamaDropdown.getDescription(), 10);
+		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver, OmamaDropdown.getElement(driver), OmamaDropdown.getDescription());
+		scrollElementIntoMiddleOfScreen(driver, page.getDropdownItemElement(textparameters.get("omama")));
+		sleep(1000);
+		waitForElementClickable(driver, page.getDropdownItemLocator(textparameters.get("omama")), "Waiting for dropdown item clickable", 10);
+		clickElementUsingJavascript(driver, page.getDropdownItemElement(textparameters.get("omama")), "Clicking dropdown item");
+		ReportExtender.logScreen(driver);
+	}
+
+	@Then("Verify Omama is old Omama")
+	public void verifyOmamaIsOldOmama() {
+		new Validation("Verify assigned Omama", getElementText(AssignedOmama.getElement(driver), AssignedOmama.getDescription()), textparameters.get("omama")).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@Then("Verify first client active status is {string}")
+	public void verifyFirstClientActiveStatusIs(String value) {
+		waitForElementVisible(driver, page.getTableColumnPredecessorsLocator("Stav"), "Waiting for table column predecessors locator visible", 10);
+		int stavIndex = 1 + driver.findElements(page.getTableColumnPredecessorsLocator("Stav")).size();
+		waitForElementVisible(driver, page.getTableValueLocator(1, stavIndex), "Waiting for Table value locator visible.", 10);
+		String stav = driver.findElement(page.getTableValueLocator(1, stavIndex)).getText();
+		new Validation("Verify client status", stav, value).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Refresh current page")
+	public void refreshCurrentPage() {
+		refreshPage(driver);
+	}
+
+	@Then("Verify subpage {string} is active in clients profile")
+	public void verifySubpageIsActiveInClientsProfile(String value) {
+		//new Validation("Verify active subpage text", getElementText(ClientSubmenuTab.getElement(driver), ClientSubmenuTab.getDescription()), value).stringEquals();
+	}
+
+	@Then("Remember number of rows")
+	public void rememberNumberOfRows() {
+		sleep(1000);
+		int numberOfRows = driver.findElements(TableRows.getLocator()).size();
+		String nRows = String.valueOf(numberOfRows);
+		textparameters.put("numberOfTableRows", nRows);
+		ReportExtender.logPass("Remembered " + nRows + " rows.");
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Set date to {string}")
+	public void setDateTo(String value) {
+		waitForElementVisible(driver, LessonDateInput.getLocator(), LessonDateInput.getDescription(), 10);
+		scrollElementIntoMiddleOfScreen(driver, LessonDateInput.getElement(driver));
+		clickElementUsingJavascript(driver, LessonDateInput.getElement(driver), LessonDateInput.getDescription());
+		setElementText(LessonDateInput.getElement(driver), value, LessonDateInput.getDescription());
+		sleep(1000);
+	}
+
+	@And("Verify number of rows is the same")
+	public void verifyNumberOfRowsIsTheSame() {
+		sleep(1000);
+		int actualRows = driver.findElements(TableRows.getLocator()).size();
+		String stringActualRows = String.valueOf(actualRows);
+		new Validation("Verify number of rows is the same", stringActualRows, textparameters.get("numberOfTableRows")).stringEquals();
+		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify number of rows is incremented")
+	public void verifyNumberOfRowsIsIncremented() {
+		sleep(1000);
+		int actualRows = driver.findElements(TableRows.getLocator()).size();
+		String stringActualRows = String.valueOf(actualRows);
+		String incrementedRememberedRows = String.valueOf(1 + Integer.parseInt(textparameters.get("numberOfTableRows")));
+		new Validation("Verify number of rows is incremented", stringActualRows, incrementedRememberedRows).stringEquals();
+		ReportExtender.logScreen(driver);
 	}
 }
