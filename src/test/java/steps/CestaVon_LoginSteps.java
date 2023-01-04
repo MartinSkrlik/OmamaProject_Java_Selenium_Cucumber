@@ -954,7 +954,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			ReportExtender.logScreen(driver);
 		}
 	}
-
 	@And("Change activity details")
 	public void changeActivityDetails() {
 		setElementText(page.getInputElement("Názov aktivity"), RandomData.generateFirstName(), "Set activity name into textarea");
