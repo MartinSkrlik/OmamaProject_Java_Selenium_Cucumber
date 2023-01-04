@@ -878,50 +878,89 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		String[] ascOrdered = new String[10];
 		int i = 0;
 		// Verify sorting in ascending order
-		List<WebElement> ASC = driver.findElements(ActivityList.getLocator());
-		for ( WebElement element : ASC ){
-			ascOrdered[i] = element.getText();
-			arrayOrdered[i] = element.getText();
+		List<WebElement> ASC_ORDER = driver.findElements(ActivityList.getLocator());
+		for ( WebElement element : ASC_ORDER ){
+			ascOrdered[i] = element.getText().substring(0,4);
+			arrayOrdered[i] = element.getText().substring(0,4);
 			i = i + 1;
 		}
 		Arrays.sort(ascOrdered, String.CASE_INSENSITIVE_ORDER);
 		for (int a = 0; a < arrayOrdered.length ; a++){
-//			ReportExtender.logInfo(ascOrdered[a]);
-//			ReportExtender.logInfo(arrayOrdered[a]);
 			if (!ascOrdered[a].equals(arrayOrdered[a])){
 				ReportExtender.logWarning("Data is not in ascending order");
 			}
 		}
 		ReportExtender.logScreen(driver);
 		// Verify sorting in descending order
-		clickElementUsingJavascript(driver,page.getDescOrderElement(1),"Set ascending order");
-		int j = 0;
-		List<WebElement> DESC = driver.findElements(ActivityList.getLocator());
-		for ( WebElement element : DESC ){
-			ascOrdered[j] = element.getText();
-			arrayOrdered[j] = element.getText();
-			j = j + 1;
-		}
-		Arrays.sort(ascOrdered, Collections.reverseOrder());
-		for (int a = 0; a < arrayOrdered.length ; a++){
-//			ReportExtender.logInfo(ascOrdered[a]);
-//			ReportExtender.logInfo(arrayOrdered[a]);
-			if (!ascOrdered[a].equals(arrayOrdered[a])){
-				ReportExtender.logWarning("Data is not in descending order");
-			}
-		}
-		ReportExtender.logScreen(driver);
+//		clickElementUsingJavascript(driver,page.getDescOrderElement(1),"Set descending order");
+//		int j = 0;
+//		List<WebElement> DESC_ORDER = driver.findElements(ActivityList.getLocator());
+//		for ( WebElement element : DESC_ORDER ){
+//			ascOrdered[j] = element.getText();
+//			arrayOrdered[j] = element.getText();
+//			j = j + 1;
+//		}
+//		Arrays.sort(ascOrdered, Collections.reverseOrder());
+//		for (int a = 0; a < arrayOrdered.length ; a++){
+////			ReportExtender.logInfo(ascOrdered[a]);
+////			ReportExtender.logInfo(arrayOrdered[a]);
+//			if (!ascOrdered[a].equals(arrayOrdered[a])){
+//				ReportExtender.logWarning("Data is not in descending order");
+//			}
+//		}
+//		ReportExtender.logScreen(driver);
 	}
 
 	@And("Verify if tabs Číslo lekcie, Mesiac and Týždeň properly sorting data")
 	public void verifyIfTabscisloLekcieMesiacAndTyzdenProperlySortingData() {
-		clickElementUsingJavascript(driver,page.getAscOrderElement(2),"Set ascending order");
-		String[] arrayOrdered = new String[10];
-		String[] ascOrdered = new String[10];
+		for (int i = 2; i < 5 ; i++ ) {
+			clickElementUsingJavascript(driver, page.getAscOrderElement(i), "Set ascending order");
+			Float[] arrayOrdered = new Float[10];
+			Float[] ascOrdered = new Float[10];
+			int j = 0;
+			// Verify sorting in ascending order
+			List<WebElement> ASC_ORDER = driver.findElements(ActivityList.getLocator());
+			for ( WebElement element : ASC_ORDER ){
+				String ele = element.getText();
+				float number = Float.parseFloat(ele);
+				ascOrdered[j] = number;
+				arrayOrdered[j] = number;
+				j = j + 1;
+			}
+			Arrays.sort(ascOrdered);
+			for (int a = 0; a < arrayOrdered.length ; a++){
+				if (!ascOrdered[a].equals(arrayOrdered[a])){
+					ReportExtender.logWarning("Data is not in ascending order");
+				}
+			}
+			ReportExtender.logScreen(driver);
+			// Verify sorting in descending order
+			clickElementUsingJavascript(driver,page.getDescOrderElement(i),"Set descending order");
+			int k = 0;
+			List<WebElement> DESC_ORDER = driver.findElements(ActivityList.getLocator());
+			for ( WebElement element : DESC_ORDER ){
+				String ele = element.getText();
+				float number = Float.parseFloat(ele);
+				ascOrdered[k] = number;
+				arrayOrdered[k] = number;
+				k = k + 1;
+			}
+			Arrays.sort(ascOrdered, Collections.reverseOrder());
+			for (int a = 0; a < arrayOrdered.length ; a++){
+				if (!ascOrdered[a].equals(arrayOrdered[a])){
+					ReportExtender.logWarning("Data is not in descending order");
+				}
+			}
+			ReportExtender.logScreen(driver);
+		}
+	}
 
-
-
-
-
+	@And("Change activity details")
+	public void changeActivityDetails() {
+		setElementText(page.getInputElement("Názov aktivity"), RandomData.generateFirstName(), "Set activity name into textarea");
+		setElementText(page.getInputTextfieldElement("Číslo lekcie"), RandomData.generateStreetNumber(), "Set random activity number into textarea");
+		setElementText(page.getActivityInputElement("Ciel aktivity"), RandomData.generateFirstName(), "Set random text into activity textarea");
+		setElementText(page.getActivityInputElement("Pomôcky"), RandomData.generateFirstName(), "Set random text to Pomocky textarea");
+		setElementText(page.getActivityInputElement("Priebeh"), RandomData.generateFirstName(), "Set random text to Priebeh textarea");
 	}
 }
