@@ -776,10 +776,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 		setElementText(page.getInputElement("Názov aktivity"), RandomData.generateFirstName(), "Set activity name into textarea");
 		setElementText(page.getInputTextfieldElement("Číslo lekcie"), RandomData.generateStreetNumber(), "Set random activity number into textarea");
-		ReportExtender.logScreen(driver);
 		setElementText(page.getActivityInputElement("Ciel aktivity"), RandomData.generateFirstName(), "Set random text into activity textarea");
 		setElementText(page.getActivityInputElement("Pomôcky"), RandomData.generateFirstName(), "Set random text to Pomocky textarea");
 		setElementText(page.getActivityInputElement("Priebeh"), RandomData.generateFirstName(), "Set random text to Priebeh textarea");
+		ReportExtender.logScreen(driver);
 		setElementText(page.getInputTextfieldElement("Mesiac"), RandomData.generateRandomNumber(), "Set random number into Mesiac textarea");
 		setElementText(page.getInputTextfieldElement("Týždeň"), RandomData.generateRandomNumber(), "Set random number into Tyzden textarea");
 		setElementText(page.getTextfieldIndexElement("url obrazku", 1), textparameters.get("childrenAidPhoto1"), "Set image into textarea");
@@ -866,9 +866,11 @@ public class CestaVon_LoginSteps extends TestStepActions {
 	@And("Verify if week attribute filter desired activity")
 	public void verifyIfWeekAttributeFilterDesiredActivity() {
 		setElementText(page.getInputElement("Týždeň"), textparameters.get("activityWeek"), "Set " + textparameters.get("activityWeek") + " into input");
+		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("activityName") + " into input");
 		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
 		ReportExtender.logScreen(driver);
 		page.getInputElement("Týždeň").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+		page.getInputElement("Názov aktivity").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 	}
 
 	@And("Verify if tab Nazov properly sorting data")
@@ -921,10 +923,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			// Verify sorting in ascending order
 			List<WebElement> ASC_ORDER = driver.findElements(ActivityList.getLocator());
 			for ( WebElement element : ASC_ORDER ){
-				String ele = element.getText();
-				float number = Float.parseFloat(ele);
-				ascOrdered[j] = number;
-				arrayOrdered[j] = number;
+				String element_text = element.getText();
+				float activity_number = Float.parseFloat(element_text);
+				ascOrdered[j] = activity_number;
+				arrayOrdered[j] = activity_number;
 				j = j + 1;
 			}
 			Arrays.sort(ascOrdered);
@@ -939,10 +941,10 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			int k = 0;
 			List<WebElement> DESC_ORDER = driver.findElements(ActivityList.getLocator());
 			for ( WebElement element : DESC_ORDER ){
-				String ele = element.getText();
-				float number = Float.parseFloat(ele);
-				ascOrdered[k] = number;
-				arrayOrdered[k] = number;
+				String element_text = element.getText();
+				float activity_number = Float.parseFloat(element_text);
+				ascOrdered[k] = activity_number;
+				arrayOrdered[k] = activity_number;
 				k = k + 1;
 			}
 			Arrays.sort(ascOrdered, Collections.reverseOrder());
@@ -961,5 +963,22 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		setElementText(page.getActivityInputElement("Ciel aktivity"), RandomData.generateFirstName(), "Set random text into activity textarea");
 		setElementText(page.getActivityInputElement("Pomôcky"), RandomData.generateFirstName(), "Set random text to Pomocky textarea");
 		setElementText(page.getActivityInputElement("Priebeh"), RandomData.generateFirstName(), "Set random text to Priebeh textarea");
+	}
+
+	@And("Confirm Zmazat button")
+	public void confirmZmazatButton() {
+		waitForElementVisible(driver, DeleteActivityButton.getLocator(), DeleteActivityButton.getDescription(),10);
+		clickElementUsingJavascript(driver, DeleteActivityButton.getElement(driver), DeleteActivityButton.getDescription());
+	}
+
+	@And("Verify activity was deleted")
+	public void verifyActivityWasDeleted() {
+		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("activityName") + " into input");
+		sleep(1000);
+		if(!verifyElementIsPresent(driver, page.getUserLocator(textparameters.get("activityName")), "Find if activity was deleted"))
+			{ReportExtender.logPass("Username " + (textparameters.get("activityName") + " was deleted"));}
+		else
+			ReportExtender.logWarning("Username " + (textparameters.get("activityName") + " was not deleted"));
+		ReportExtender.logScreen(driver);
 	}
 }

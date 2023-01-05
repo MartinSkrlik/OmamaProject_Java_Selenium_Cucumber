@@ -29,7 +29,9 @@ public class CestaVon_CommonPage {
         ActivityName        (By.xpath("(//div[@class='clientsBox']//h3)[1]"),
                 "Save activity name and number"),
         ActivityList        (By.xpath("//td[contains(@class,'column-sort')]"),
-                "List of activities")
+                "List of activities"),
+        DeleteActivityButton(By.xpath("(//span[text()='Zmazať']/parent::button)[5]"),
+                "Confirm activity deletion with button Zmazat")
         ;
         private String description;
         private By findBy;

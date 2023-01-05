@@ -1,9 +1,9 @@
 @Martin
 @AlterAndDeleteActivityTest
-Feature: CestaVon - find activity, alter data and delete
+Feature: CestaVon - create activity, alter data and delete
 
 
-  Scenario Outline: CestaVon - 18 - find activity, alter data and delete
+  Scenario Outline: CestaVon - 18 - create activity, alter data and delete
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
@@ -32,6 +32,10 @@ Feature: CestaVon - find activity, alter data and delete
     And     Click on button "Obnoviť"
     And     Find new created activity
     And     Verify activity details
+    And     Click on button "Zmazať"
+    And     Confirm Zmazat button
+    And     Click on button "Obnoviť"
+    And     Verify activity was deleted
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
