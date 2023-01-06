@@ -11,7 +11,7 @@ Omama app - test automation project based on [Gurkensalat framework](https://inn
 - JDK11 [e.g. OpenJDK](https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot)
 - [Maven](https://maven.apache.org/download.cgi)
 
-##Test execution
+## Test execution
 
 Execute commands below in terminal from Project root directory (location of [pom.xml](pom.xml))
 
