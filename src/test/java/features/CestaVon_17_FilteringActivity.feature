@@ -20,6 +20,8 @@ Feature: CestaVon - filter activity with activity attribute
     And     Verify if number attribute filter desired activity
     And     Verify if month attribute filter desired activity
     And     Verify if week attribute filter desired activity
+    And     Verify if tab Nazov properly sorting data
+    And     Verify if tabs Číslo lekcie, Mesiac and Týždeň properly sorting data
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 
