@@ -157,11 +157,7 @@ public class CestaVon_CommonPage {
     public WebElement getActivityAttributeElement(int index) {return driver.findElement(getActivityAttributeLocator(index));}
     public By getActivityAttributeLocator(int index) {return By.xpath("(//tr[contains(@class,'level')]//td)[" + index + "]");}
 
-    public WebElement getAscOrderElement(int index) {return driver.findElement(getAscOrderLocator(index));}
-    public By getAscOrderLocator(int index) {return By.xpath("(//div[@title='Zoradiť'])[" + index + "]/i[contains(@class,'up')]");}
-
-    public WebElement getDescOrderElement(int index) {return driver.findElement(getDescOrderLocator(index));}
-    public By getDescOrderLocator(int index) {return By.xpath("(//div[@title='Zoradiť'])[" + index + "]/i[contains(@class,'down')]");}
-
+    public WebElement getAscDescOrderElement(int index) {return driver.findElement(getAscDescOrderLocator(index));}
+    public By getAscDescOrderLocator(int index) {return By.xpath("(//div[@title='Zoradiť'])[" + index + "]");}
 }
 

@@ -844,30 +844,6 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		textparameters.put("activityWeek",getElementText(page.getActivityAttributeElement(4), "Save activity week into variable"));
 	}
 
-	@And("Verify if name attribute filter desired activity")
-	public void verifyIfNameAttributeFilterDesiredActivity() {
-		setElementText(page.getInputElement("Názov aktivity"), textparameters.get("activityName"), "Set " + textparameters.get("activityName") + " into input");
-		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
-		ReportExtender.logScreen(driver);
-		page.getInputElement("Názov aktivity").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-	}
-
-	@And("Verify if number attribute filter desired activity")
-	public void verifyIfNumberAttributeFilterDesiredActivity() {
-		setElementText(page.getInputElement("Číslo lekcie"), textparameters.get("activityNumber"), "Set " + textparameters.get("activityNumber") + " into input");
-		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
-		ReportExtender.logScreen(driver);
-		page.getInputElement("Číslo lekcie").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-	}
-
-	@And("Verify if month attribute filter desired activity")
-	public void verifyIfMonthAttributeFilterDesiredActivity() {
-		setElementText(page.getInputElement("Mesiac"), textparameters.get("activityMonth"), "Set " + textparameters.get("activityMonth") + " into input");
-		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
-		ReportExtender.logScreen(driver);
-		page.getInputElement("Mesiac").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-	}
-
 	@And("Verify if week attribute filter desired activity")
 	public void verifyIfWeekAttributeFilterDesiredActivity() {
 		setElementText(page.getInputElement("Týždeň"), textparameters.get("activityWeek"), "Set " + textparameters.get("activityWeek") + " into input");
@@ -880,7 +856,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 
 	@And("Verify if tab Nazov properly sorting data")
 	public void verifyIfTabNazovProperlySortingData() {
-		clickElementUsingJavascript(driver,page.getAscOrderElement(1),"Set ascending order");
+		clickElementUsingJavascript(driver,page.getAscDescOrderElement(1),"Set ascending order");
 		String[] arrayOrdered = new String[10];
 		String[] ascOrdered = new String[10];
 		int i = 0;
@@ -899,29 +875,29 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		}
 		ReportExtender.logScreen(driver);
 		// Verify sorting in descending order
-//		clickElementUsingJavascript(driver,page.getDescOrderElement(1),"Set descending order");
-//		int j = 0;
-//		List<WebElement> DESC_ORDER = driver.findElements(ActivityList.getLocator());
-//		for ( WebElement element : DESC_ORDER ){
-//			ascOrdered[j] = element.getText();
-//			arrayOrdered[j] = element.getText();
-//			j = j + 1;
-//		}
-//		Arrays.sort(ascOrdered, Collections.reverseOrder());
-//		for (int a = 0; a < arrayOrdered.length ; a++){
-////			ReportExtender.logInfo(ascOrdered[a]);
-////			ReportExtender.logInfo(arrayOrdered[a]);
-//			if (!ascOrdered[a].equals(arrayOrdered[a])){
-//				ReportExtender.logWarning("Data is not in descending order");
-//			}
-//		}
-//		ReportExtender.logScreen(driver);
+		clickElementUsingJavascript(driver,page.getAscDescOrderElement(1),"Set descending order");
+		int j = 0;
+		List<WebElement> DESC_ORDER = driver.findElements(ActivityList.getLocator());
+		for ( WebElement element : DESC_ORDER ){
+			ascOrdered[j] = element.getText();
+			arrayOrdered[j] = element.getText();
+			j = j + 1;
+		}
+		Arrays.sort(ascOrdered, Collections.reverseOrder());
+		for (int a = 0; a < arrayOrdered.length ; a++){
+//			ReportExtender.logInfo(ascOrdered[a]);
+//			ReportExtender.logInfo(arrayOrdered[a]);
+			if (!ascOrdered[a].equals(arrayOrdered[a])){
+				ReportExtender.logWarning("Data is not in descending order");
+			}
+		}
+		ReportExtender.logScreen(driver);
 	}
 
 	@And("Verify if tabs Číslo lekcie, Mesiac and Týždeň properly sorting data")
 	public void verifyIfTabscisloLekcieMesiacAndTyzdenProperlySortingData() {
 		for (int i = 2; i < 5 ; i++ ) {
-			clickElementUsingJavascript(driver, page.getAscOrderElement(i), "Set ascending order");
+			clickElementUsingJavascript(driver, page.getAscDescOrderElement(i), "Set ascending order");
 			Float[] arrayOrdered = new Float[10];
 			Float[] ascOrdered = new Float[10];
 			int j = 0;
@@ -942,7 +918,7 @@ public class CestaVon_LoginSteps extends TestStepActions {
 			}
 			ReportExtender.logScreen(driver);
 			// Verify sorting in descending order
-			clickElementUsingJavascript(driver,page.getDescOrderElement(i),"Set descending order");
+			clickElementUsingJavascript(driver,page.getAscDescOrderElement(i),"Set descending order");
 			int k = 0;
 			List<WebElement> DESC_ORDER = driver.findElements(ActivityList.getLocator());
 			for ( WebElement element : DESC_ORDER ){
@@ -1109,5 +1085,26 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		String incrementedRememberedRows = String.valueOf(1 + Integer.parseInt(textparameters.get("numberOfTableRows")));
 		new Validation("Verify number of rows is incremented", stringActualRows, incrementedRememberedRows).stringEquals();
 		ReportExtender.logScreen(driver);
+	}
+
+	@And("Verify if input {string} properly filter {string}")
+	public void verifyIfInputProperlyFilter(String filter_name, String attribute_name) {
+		setElementText(page.getInputElement(filter_name), textparameters.get(attribute_name), "Set " + textparameters.get(attribute_name) + " into input");
+		new Validation("Verify activity name", getElementText(page.getActivityAttributeElement(1),"Get activity name"), (textparameters.get("activityName"))).stringEquals();
+		ReportExtender.logScreen(driver);
+		page.getInputElement(filter_name).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+	}
+
+	@And("Save Omama list")
+	public void saveOmamaList() {
+		clickElementUsingJavascript(driver,page.getAscDescOrderElement(5),"Set ascending order");
+		String omama_list = "";
+//		for (String omama : list)
+
+
+
+
+
+
 	}
 }

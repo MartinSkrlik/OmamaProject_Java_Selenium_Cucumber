@@ -16,9 +16,9 @@ Feature: CestaVon - filter activity with activity attribute
     And     Input into "Názov aktivity" search bar username "<ACTIVITY_NAME>"
     And     Save activity attributes
     And     Clear input "Názov aktivity"
-    And     Verify if name attribute filter desired activity
-    And     Verify if number attribute filter desired activity
-    And     Verify if month attribute filter desired activity
+    And     Verify if input "Názov aktivity" properly filter "activityName"
+    And     Verify if input "Číslo lekcie" properly filter "activityNumber"
+    And     Verify if input "Mesiac" properly filter "activityMonth"
     And     Verify if week attribute filter desired activity
     And     Verify if tab Nazov properly sorting data
     And     Verify if tabs Číslo lekcie, Mesiac and Týždeň properly sorting data
