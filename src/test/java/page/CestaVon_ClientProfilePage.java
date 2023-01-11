@@ -10,7 +10,7 @@ public class CestaVon_ClientProfilePage {
 
     public enum ClientProfilePage {
 
-        ClientFullName    (By.xpath("//b[contains(@class, 'admin-client-name')]"),
+        ClientFullName(By.xpath("//b[contains(@class, 'admin-client-name')]"),
                 "Client Full Name"),
         NameInput(By.xpath("//input[contains(@name, 'firstName')]"),
                 "Name Input"),
@@ -30,6 +30,24 @@ public class CestaVon_ClientProfilePage {
                 "Client submenu tab"),
         LessonDateInput(By.xpath("//h3[text()='Dátum']//following-sibling::input"),
                 "Lesson date input"),
+        FinishedLessonRow(By.xpath("//td[text()='Zrealizovaná']/parent::tr"),
+                "Finished Lesson Row"),
+        LessonDetailDateTime(By.xpath("(//div[@class='ActionDetailAdmin-main']/div/div)[1]"),
+                "Lesson Detail Date Time"),
+        LessonDetailNameAndAge(By.xpath("(//div[@class='ActionDetailAdmin-main']/div/div/div)[1]"),
+                "Lesson Detail Name And Age"),
+        LessonDetailActivityHeader(By.xpath("(//div[contains(@class, 'clientProfileAction-headline')])[1]"),
+                "Lesson Detail Activity Header"),
+        LessonDetailRatingHeader(By.xpath("(//div[contains(@class, 'clientProfileAction-headline')])[2]"),
+                "Lesson Detail Rating Header"),
+        LessonDetailPhotographiesHeader(By.xpath("(//div[contains(@class, 'clientProfileAction-headline')])[3]"),
+                "Lesson Detail Photographies Header"),
+        LessonDetailCommentHeader(By.xpath("(//div[contains(@class, 'clientProfileAction-headline')])[4]"),
+                "Lesson Detail Comment Header"),
+        LessonDetailRatingQuestions(By.xpath("//div[@class='clientend-question']"),
+                "Lesson Detail Rating Questions"),
+        LessonDetailRatingSelectedAnswers(By.xpath("//div[@class='clientend-question__buttons']/div[@class='selected']"),
+                "Lesson Detail Rating Selected Answers"),
         ;
         private String description;
         private By findBy;
@@ -39,11 +57,11 @@ public class CestaVon_ClientProfilePage {
             this.findBy = findBy;
         }
 
-        public String getDescription(){
+        public String getDescription() {
             return description;
         }
 
-        public By getLocator(){
+        public By getLocator() {
             return findBy;
         }
 
