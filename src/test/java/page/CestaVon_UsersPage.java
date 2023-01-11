@@ -14,6 +14,8 @@ public class CestaVon_UsersPage {
                 "ROLA BUTTON"),
         RoleOption(null,
                 "ROLA OPTION"),
+        NextPageButton(By.xpath("//li[contains(@title,'Nasledujúca')]"),
+                "Click on next page button")
         ;
         private String description;
         private By findBy;
