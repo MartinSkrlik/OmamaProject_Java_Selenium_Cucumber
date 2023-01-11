@@ -1095,16 +1095,4 @@ public class CestaVon_LoginSteps extends TestStepActions {
 		page.getInputElement(filter_name).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 	}
 
-	@And("Save Omama list")
-	public void saveOmamaList() {
-		clickElementUsingJavascript(driver,page.getAscDescOrderElement(5),"Set ascending order");
-		String omama_list = "";
-//		for (String omama : list)
-
-
-
-
-
-
-	}
 }

@@ -15,7 +15,6 @@ Feature: CestaVon - check properly ordered statistics
     And     Verify "Používatelia" tab is active
     And     Unwrap dropdown "Všetko"
     Then    Select from menu tab "Omama"
-    And     Save Omama list
 
 
 
