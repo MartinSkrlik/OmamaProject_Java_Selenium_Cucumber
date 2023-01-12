@@ -31,7 +31,11 @@ public class CestaVon_CommonPage {
         ActivityList        (By.xpath("//td[contains(@class,'column-sort')]"),
                 "List of activities"),
         DeleteActivityButton(By.xpath("(//span[text()='Zmazať']/parent::button)[5]"),
-                "Confirm activity deletion with button Zmazat")
+                "Confirm activity deletion with button Zmazat"),
+        SaveUserListFromStatistics  (By.xpath("//div[contains(@class,'confirm-content')]/div/div"),
+                "Save user list from statistics"),
+        SaveUsersListFromUsersTab   (By.xpath("//td[2]/div"),
+                "Save user list from users tab")
         ;
         private String description;
         private By findBy;
@@ -160,8 +164,8 @@ public class CestaVon_CommonPage {
     public WebElement getAscDescOrderElement(int index) {return driver.findElement(getAscDescOrderLocator(index));}
     public By getAscDescOrderLocator(int index) {return By.xpath("(//div[@title='Zoradiť'])[" + index + "]");}
 
-    public WebElement getListActiveInactiveUserElement(String value) {return driver.findElement(getListActiveInactiveUserLocator(value));}
-    public By getListActiveInactiveUserLocator(String value) {return By.xpath("//td[text()='" + value + "']/parent::tr/td[2]/div");}
+    public WebElement getListActiveInactiveUserElement(String value1,String value2) {return driver.findElement(getListActiveInactiveUserLocator(value1,value2));}
+    public By getListActiveInactiveUserLocator(String value1,String value2) {return By.xpath("//td[text()='" + value1 + "' or text()='" + value2 + "']/parent::tr/td[2]/div");}
 
     public WebElement getActiveInactiveStatisticsElement(String value1, String value2) {return driver.findElement(getActiveInactiveStatisticsLocator(value1,value2));}
     public By getActiveInactiveStatisticsLocator(String value1, String value2) {return By.xpath("//div[text()='" + value1 + "']/parent::div[@class='userCounter']//div[text()='" + value2 + "']");}
