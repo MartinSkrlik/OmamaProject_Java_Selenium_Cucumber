@@ -14,12 +14,12 @@ Feature: CestaVon - check properly ordered statistics
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
     And     Save list of Omamas, Mentors and Supervizors
-    And     Select from menu tab "Klienti"
-    And     Verify "Klienti" tab is active
-    And     Save list of Clients
+#    And     Select from menu tab "Klienti"
+#    And     Verify "Klienti" tab is active
+#    And     Save list of Clients
     And     Select from menu tab "Štatistiky"
     And     Verify "Štatistiky" tab is active
-#    And     Open "Omamy" statistics and verify details
+    And     Verify details about Omamas, Mentors and Supervizors
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 

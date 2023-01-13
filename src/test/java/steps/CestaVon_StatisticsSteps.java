@@ -11,8 +11,9 @@ import utility.Validation;
 import java.util.HashMap;
 import java.util.List;
 
-import static page.CestaVon_CommonPage.MainPage.*;
-import static page.CestaVon_UsersPage.usersPageItems.*;
+import static page.CestaVon_CommonPage.MainPage.FirstPageButton;
+import static page.CestaVon_CommonPage.MainPage.SaveUserListFromStatistics;
+import static page.CestaVon_UsersPage.usersPageItems.NextPageButton;
 public class CestaVon_StatisticsSteps extends TestStepActions {
 
     static TestRunner TestRunner = new TestRunner();
@@ -21,11 +22,13 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
     CestaVon_CommonPage page = new CestaVon_CommonPage(driver);
     HashMap<String, String> textparameters = new HashMap<>();
     HashMap<Integer,String> indexparameters = new HashMap<>();
+    HashMap<Integer,Integer> integerparameters = new HashMap<>();
 
     @And("Save list of Omamas, Mentors and Supervizors")
     public void saveListOfOmamaMenorAndSupervizor() {
         int allUsersDysplayedOnOnePage = 10;
         int list_index = 10;
+        int count_users = 1;
         indexparameters.put(1,"Všetko"); indexparameters.put(5,"aktívna"); indexparameters.put(9,"neaktívna");
         indexparameters.put(2,"Omama"); indexparameters.put(6,"aktívna");
         indexparameters.put(3,"Mentor"); indexparameters.put(7,"neaktívna");
@@ -38,17 +41,19 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
             clickElementUsingJavascript(driver,page.getTabElement(indexparameters.get(i+1)), "Click on choice " + indexparameters.get(i+1));
             boolean isEnabled = driver.findElement(NextPageButton.getLocator()).isEnabled();
             for (int j = 0; j < 3 ; j++) {
+                int count = 0;
                 String allUsersList = "";
                 clickElementUsingJavascript(driver, page.getAscDescOrderElement(5), "Sort users");
                 sleep(1000);
                 int users_count = driver.findElements(page.getListActiveInactiveUserLocator(indexparameters.get(7+j),indexparameters.get(7-j))).size();
-                ReportExtender.logInfo(Integer.toString(users_count));
                 if (users_count > 0) {
                     while (users_count > 0) {
                         List<WebElement> users_list = driver.findElements(page.getListActiveInactiveUserLocator(indexparameters.get(7+j),indexparameters.get(7-j)));
                         for (WebElement user : users_list) {
                             allUsersList += user.getText() + " ";
                             indexparameters.put(list_index, allUsersList);
+                            count += 1;
+                            integerparameters.put(count_users,count);
                         }
                         if (users_count == allUsersDysplayedOnOnePage && isEnabled) {
                             clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
@@ -56,43 +61,62 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
                             users_count = driver.findElements(page.getListActiveInactiveUserLocator(indexparameters.get(7+j),indexparameters.get(7-j))).size();
                         } else break;
                     }
-                } else {indexparameters.put(list_index, "Zoznam je prázdny");}
-            ReportExtender.logPass(indexparameters.get(list_index));
+                } else {indexparameters.put(list_index, "Zoznam je prázdny");
+                        integerparameters.put(count_users, 0);}
             clickElementUsingJavascript(driver, FirstPageButton.getElement(driver), FirstPageButton.getDescription());
-            list_index++;
+            list_index++; count_users++;
             }
-        }
-    }
-
-    @And("Save list of Clients")
-    public void saveListOfClients() {
-
-    }
-
-    @And("Open {string} statistics and verify details")
-    public void openStatisticsAndVerifyDetails(String user) {
-        String inactive_list = "", active_list = "";
-        waitForElementVisible(driver, page.getActiveInactiveStatisticsLocator(user, "neaktívne"), "Wait for " + user + "statistic visible ", 10);
-        clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(user, "neaktívne"), "Unwrap active user list");
-        sleep(1000);
-        String userList = driver.findElement(SaveUserListFromStatistics.getLocator()).getText();
-        ReportExtender.logInfo(userList);
-        // If users list is empty, check if it is also empty in users tab
-        if (userList.equals("Zoznam je prázdny")) {
-            new Validation("Verify if user list is empty", userList, textparameters.get("inactive_users_list")).stringEquals();
-        }
-        // If users list is not empty, check with users list from users tab
-        else {
-            List<WebElement> omama_list = driver.findElements(SaveUserListFromStatistics.getLocator());
-            for (WebElement omama : omama_list) {
-                inactive_list += omama.getText() + " ";
-                textparameters.put("inactive_omama_list_to_compare", inactive_list);
-            }
-            new Validation("Compare users list", textparameters.get("inactive_users_list"),textparameters.get("inactive_omama_list_to_compare")).stringEquals();
-        }
         ReportExtender.logScreen(driver);
+        }
     }
 
+    @And("Verify details about Omamas, Mentors and Supervizors")
+    public void veirfyDetailsAboutOmamasMentorsAndSupervizors() {
+        indexparameters.put(20, "Omamy");integerparameters.put(10, 4);
+        indexparameters.put(21, "Mentorky");integerparameters.put(11, 2);
+        indexparameters.put(22, "Supervízori");integerparameters.put(12, 3);
+        String list = "";
+        int count = 1, user_index = 25, index_parameters = 10;
+        String users_count = "";
+        for (int k = 20; k < 23; k++) {
+            for (int j = 10; j < 13; j++, count++, user_index++, index_parameters++) {
+                String users_list = "";
+                users_count = driver.findElement(page.getActiveInactiveStatisticsLocator(indexparameters.get(k), integerparameters.get(j))).getText();
+                String userNumber = Integer.toString(integerparameters.get(count));
+                if (!users_count.equals(userNumber)) {
+                    ReportExtender.logWarning("User lists have no the same count");
+                }
+                clickElementUsingJavascript(driver,page.getActiveInactiveStatisticsElement(indexparameters.get(k), integerparameters.get(j)),"Open list of users");
+                sleep(1000);
+                list = driver.findElement(SaveUserListFromStatistics.getLocator()).getText();
+                // If users list is empty, check if it is also empty in users tab
+                if (list.equals("Zoznam je prázdny")) {
+                    new Validation("Verify if user list is empty", list, indexparameters.get(index_parameters)).stringEquals();
+                }
+                // If users list is not empty, check with users list from users tab
+                else {
+                    List<WebElement> uList = driver.findElements(SaveUserListFromStatistics.getLocator());
+                    for (WebElement omama : uList) {
+                        users_list += omama.getText() + " ";
+                        indexparameters.put(user_index, users_list);
+                    }
+                    new Validation("Compare " + indexparameters.get(k) + " users list", indexparameters.get(index_parameters), indexparameters.get(user_index)).stringEquals();
+                }
+                ReportExtender.logScreen(driver);
+                clickElementUsingJavascript(driver, page.getButtonElement("OK"), "Click on OK button");
+            }
 
+        }
+
+    }
 
 }
+
+
+
+
+
+
+
+
+
