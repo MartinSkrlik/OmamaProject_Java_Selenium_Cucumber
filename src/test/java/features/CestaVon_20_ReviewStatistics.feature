@@ -13,12 +13,12 @@ Feature: CestaVon - check properly ordered statistics
     And     Click on button "Zaregistrovať zariadenie"
     And     Select from menu tab "Používatelia"
     And     Verify "Používatelia" tab is active
-#    And     Unwrap dropdown "Všetko"
-#    Then    Select from menu tab "Omama"
-#    And     Save users list
-    And     Save users list in loop
-#    And     Select from menu tab "Štatistiky"
-#    And     Verify "Štatistiky" tab is active
+    And     Save list of Omamas, Mentors and Supervizors
+    And     Select from menu tab "Klienti"
+    And     Verify "Klienti" tab is active
+    And     Save list of Clients
+    And     Select from menu tab "Štatistiky"
+    And     Verify "Štatistiky" tab is active
 #    And     Open "Omamy" statistics and verify details
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present

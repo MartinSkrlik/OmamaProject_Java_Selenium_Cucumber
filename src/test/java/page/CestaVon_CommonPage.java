@@ -35,7 +35,9 @@ public class CestaVon_CommonPage {
         SaveUserListFromStatistics  (By.xpath("//div[contains(@class,'confirm-content')]/div/div"),
                 "Save user list from statistics"),
         SaveUsersListFromUsersTab   (By.xpath("//td[2]/div"),
-                "Save user list from users tab")
+                "Save user list from users tab"),
+        FirstPageButton     (By.xpath("//li[@title=1]"),
+                "Click on first page button in users tab")
         ;
         private String description;
         private By findBy;
