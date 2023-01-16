@@ -172,5 +172,8 @@ public class CestaVon_CommonPage {
     public WebElement getActiveInactiveStatisticsElement(String value, int index) {return driver.findElement(getActiveInactiveStatisticsLocator(value,index));}
     public By getActiveInactiveStatisticsLocator(String value, int index) {return By.xpath("(//div[text()='" + value + "']/parent::div[@class='userCounter']//div[contains(@class,'pointer')])[" + index + "]");}
 
+    public WebElement getListActiveInactiveClientsElement(String value1,String value2,int index1,String value3) {return driver.findElement(getListActiveInactiveClientsLocator(value1,value2,index1,value3));}
+    public By getListActiveInactiveClientsLocator(String value1,String value2,int index1, String value3) {return By.xpath("(//td[text()='" + value1 + "' or text()='" + value2 + "']/parent::tr/td[" + index1 + "])[" + value3 + "]");}
+
 }
 
