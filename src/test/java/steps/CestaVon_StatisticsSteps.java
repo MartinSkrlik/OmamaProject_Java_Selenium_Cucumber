@@ -86,23 +86,22 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
         integerparameters.put(14, 2);
         indexparameters.put(42, "Supervízori");
         integerparameters.put(15, 3);
-        String list = "";
         int count = 1, user_index = 25, index_parameters = 10;
-        String users_count = "";
         for (int k = 40; k < 43; k++) {
             // Verify number of users from users tab
             for (int j = 13; j < 16; j++, count++, user_index++, index_parameters++) {
                 String users_list = "";
-                users_count = driver.findElement(page.getActiveInactiveStatisticsLocator(indexparameters.get(k), integerparameters.get(j))).getText();
+                String users_count = driver.findElement(page.getActiveInactiveStatisticsLocator(indexparameters.get(k), integerparameters.get(j))).getText();
                 String userNumber = Integer.toString(integerparameters.get(count));
                 if (!users_count.equals(userNumber)) {
                     ReportExtender.logWarning("User lists have no the same count");
                 }
                 clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(indexparameters.get(k), integerparameters.get(j)), "Open list of users");
                 sleep(1000);
-                list = driver.findElement(SaveUserListFromStatistics.getLocator()).getText();
+                String list = driver.findElement(SaveUserListFromStatistics.getLocator()).getText();
                 // If users list is empty, check if it is also empty in users tab
                 if (list.equals("Zoznam je prázdny")) {
+                    indexparameters.put(user_index, "Zoznam je prázdny");
                     if (!list.equals(indexparameters.get(index_parameters))) {
                         ReportExtender.logWarning("Users lists " + list + " and " + indexparameters.get(index_parameters) + " are not the same!");
                     }
@@ -126,87 +125,60 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
 
     @And("Save list of Clients")
     public void saveListOfClients() {
-        indexparameters.put(44, "aktívny");
-        indexparameters.put(45, "neaktívny");
         int list_index = 19;
-        int inactive_count = 0, active_count = 0, all_count = 0;
         int count_users = 10;
-        String NextPageEnabled = "false";
-        String inactiveUsersList = "", activeUserList = "", allUserList = "";
-        while (NextPageEnabled.equals("false")) {
-            NextPageEnabled = driver.findElement(NextPageButton.getLocator()).getAttribute("aria-disabled");
-            int inactive_users_count = driver.findElements(page.getListActiveInactiveClientsLocator(indexparameters.get(45), indexparameters.get(45), 3, ".")).size();
-            // Creating inactive user list
-            if (inactive_users_count > 0) {
-                for (int i = 1; i < inactive_users_count + 1; i++) {
-                    String surname = driver.findElement(page.getListActiveInactiveClientsLocator(indexparameters.get(45), indexparameters.get(45), 3, i + ".")).getText();
-                    inactiveUsersList += surname + " ";
-                    indexparameters.put(list_index, inactiveUsersList);
-                    String firstName = driver.findElement(page.getListActiveInactiveClientsLocator(indexparameters.get(45), indexparameters.get(45), 2, i + ".")).getText();
-                    inactiveUsersList += firstName + " ";
-                    indexparameters.put(list_index, inactiveUsersList);
-                    inactive_count += 1;
-                    integerparameters.put(count_users, inactive_count);
+        indexparameters.put(44, "Všetci"); indexparameters.put(46, "Aktívni");
+        indexparameters.put(45, "Neaktívni"); indexparameters.put(47, "Všetci");
+        for (int j = 44; j < 47; j++, count_users++, list_index++ ) {
+            String usersList = "";
+            int users_count = 0;
+            // Save active, inactive and all users from users tab
+            waitForElementClickable(driver, page.getDropdownLocator(indexparameters.get(j)), "Wait for dropdown " + indexparameters.get(j) + " is clickable", 10);
+            clickElementUsingJavascript(driver, page.getDropdownElement(indexparameters.get(j)), "Unwrap dropdown " + indexparameters.get(j));
+            waitForElementClickable(driver, page.getTabLocator(indexparameters.get(j + 1)), "Wait for choice " + indexparameters.get(j + 1) + " is visible", 10);
+            clickElementUsingJavascript(driver, page.getTabElement(indexparameters.get(j + 1)), "Click on choice " + indexparameters.get(j + 1));
+            String NextPageEnabled = "false";
+            while (NextPageEnabled.equals("false")) {
+                NextPageEnabled = driver.findElement(NextPageButton.getLocator()).getAttribute("aria-disabled");
+                int users_visible_on_page = driver.findElements(page.getClientFirstNameLocator(".")).size();
+                if (users_visible_on_page > 0) {
+                    for (int i = 1; i < users_visible_on_page + 1; i++) {
+                        String surname = driver.findElement(page.getClientSecondNameLocator(i+".")).getText();
+                        usersList += surname + " ";
+                        indexparameters.put(list_index, usersList);
+                        String firstName = driver.findElement(page.getClientFirstNameLocator(i+".")).getText();
+                        usersList += firstName + " ";
+                        indexparameters.put(list_index, usersList);
+                        users_count += 1;
+                        integerparameters.put(count_users, users_count);
+                    }
                 }
-            }
-            // Creating active user list
-            int active_users_count = driver.findElements(page.getListActiveInactiveClientsLocator(indexparameters.get(44), indexparameters.get(44), 3, ".")).size();
-            if (active_users_count > 0) {
-                for (int i = 1; i < active_users_count + 1; i++) {
-                    String surname = driver.findElement(page.getListActiveInactiveClientsLocator(indexparameters.get(44), indexparameters.get(44), 3, i + ".")).getText();
-                    activeUserList += surname + " ";
-                    indexparameters.put(list_index + 1, activeUserList);
-                    String firstName = driver.findElement(page.getListActiveInactiveClientsLocator(indexparameters.get(44), indexparameters.get(44), 2, i + ".")).getText();
-                    activeUserList += firstName + " ";
-                    indexparameters.put(list_index + 1, activeUserList);
-                    active_count += 1;
-                    integerparameters.put(count_users + 1, active_count);
+                else {
+                    indexparameters.put(list_index, "Zoznam je prázdny");
+                    integerparameters.put(count_users, 0);
                 }
+                clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
+                sleep(1000);
             }
-            // Creating all user list
-            int all_users_count = driver.findElements(page.getListActiveInactiveClientsLocator(indexparameters.get(44), indexparameters.get(45), 3, ".")).size();
-            if (all_users_count > 0) {
-                for (int i = 1; i < all_users_count + 1; i++) {
-                    String surname = driver.findElement(page.getListActiveInactiveClientsLocator(indexparameters.get(44), indexparameters.get(45), 3, i + ".")).getText();
-                    allUserList += surname + " ";
-                    indexparameters.put(list_index + 2, allUserList);
-                    String firstName = driver.findElement(page.getListActiveInactiveClientsLocator(indexparameters.get(44), indexparameters.get(45), 2, i + ".")).getText();
-                    allUserList += firstName + " ";
-                    indexparameters.put(list_index + 2, allUserList);
-                    all_count += 1;
-                    integerparameters.put(count_users + 2, all_count);
-                }
-            }
-            clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
-            sleep(1000);
+        ReportExtender.logScreen(driver);
+        refreshPage(driver);
         }
-        for (int j = 0; j < 3; j++) {
-            if (indexparameters.get(list_index + j).isEmpty()) {
-                indexparameters.put(list_index, "Zoznam je prázdny");
-            }
-            if (integerparameters.get(count_users + j).toString().isEmpty()) {
-                integerparameters.put(count_users, 0);
-            }
-        }
-    ReportExtender.logScreen(driver);
     }
 
     @And("Verify details about Clients")
     public void verifyDetailsAboutClients() {
         indexparameters.put(43, "Klienti");
-        int count = 10, index_parameters = 19, user_index = 35;
-        String users_count = "";
-        String list = "";
+        int count = 10, index_parameters = 19, user_index = 34;
         for (int j = 13; j < 16; j++, count++, user_index++, index_parameters++) {
             String users_list = "";
-            users_count = driver.findElement(page.getActiveInactiveStatisticsLocator(indexparameters.get(43), integerparameters.get(j))).getText();
+            String users_count = driver.findElement(page.getActiveInactiveStatisticsLocator(indexparameters.get(43), integerparameters.get(j))).getText();
             String userNumber = Integer.toString(integerparameters.get(count));
             if (!users_count.equals(userNumber)) {
                 ReportExtender.logWarning("User lists have no the same count");
             }
             clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(indexparameters.get(43), integerparameters.get(j)), "Open list of users");
             sleep(1000);
-            list = driver.findElement(SaveUserListFromStatistics.getLocator()).getText();
+            String list = driver.findElement(SaveUserListFromStatistics.getLocator()).getText();
             // If users list is empty, check if it is also empty in users tab
             if (list.equals("Zoznam je prázdny")) {
                 if (!list.equals(indexparameters.get(index_parameters))) {
@@ -233,7 +205,6 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
             }
         }
     }
-
 }
 
 

@@ -34,8 +34,6 @@ public class CestaVon_CommonPage {
                 "Confirm activity deletion with button Zmazat"),
         SaveUserListFromStatistics  (By.xpath("//div[contains(@class,'confirm-content')]/div/div"),
                 "Save user list from statistics"),
-        SaveUsersListFromUsersTab   (By.xpath("//td[2]/div"),
-                "Save user list from users tab"),
         FirstPageButton     (By.xpath("//li[@title=1]"),
                 "Click on first page button in users tab")
         ;
@@ -174,6 +172,12 @@ public class CestaVon_CommonPage {
 
     public WebElement getListActiveInactiveClientsElement(String value1,String value2,int index1,String value3) {return driver.findElement(getListActiveInactiveClientsLocator(value1,value2,index1,value3));}
     public By getListActiveInactiveClientsLocator(String value1,String value2,int index1, String value3) {return By.xpath("(//td[text()='" + value1 + "' or text()='" + value2 + "']/parent::tr/td[" + index1 + "])[" + value3 + "]");}
+
+    public WebElement getClientFirstNameElement(String value) {return driver.findElement(getClientFirstNameLocator(value));}
+    public By getClientFirstNameLocator(String value) {return By.xpath("(//td[2])[" + value + "]");}
+
+    public WebElement getClientSecondNameElement(String value) {return driver.findElement(getClientSecondNameLocator(value));}
+    public By getClientSecondNameLocator(String value) {return By.xpath("(//td[3])[" + value + "]");}
 
 }
 
