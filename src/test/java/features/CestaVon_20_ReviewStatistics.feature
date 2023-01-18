@@ -21,6 +21,7 @@ Feature: CestaVon - check properly ordered statistics
     And     Verify "Štatistiky" tab is active
     And     Verify details about Omamas, Mentors and Supervizors
     And     Verify details about Clients
+    And     Verify details about Actions
     And     Select from menu tab "Odhlásiť"
     Then    Verify Login page is present
 

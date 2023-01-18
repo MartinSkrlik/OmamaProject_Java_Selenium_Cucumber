@@ -32,8 +32,6 @@ public class CestaVon_CommonPage {
                 "List of activities"),
         DeleteActivityButton(By.xpath("(//span[text()='Zmazať']/parent::button)[5]"),
                 "Confirm activity deletion with button Zmazat"),
-        SaveUserListFromStatistics  (By.xpath("//div[contains(@class,'confirm-content')]/div/div"),
-                "Save user list from statistics"),
         FirstPageButton     (By.xpath("//li[@title=1]"),
                 "Click on first page button in users tab")
         ;
@@ -168,7 +166,7 @@ public class CestaVon_CommonPage {
     public By getListActiveInactiveUserLocator(String value1,String value2) {return By.xpath("//td[text()='" + value1 + "' or text()='" + value2 + "']/parent::tr/td[2]/div");}
 
     public WebElement getActiveInactiveStatisticsElement(String value, int index) {return driver.findElement(getActiveInactiveStatisticsLocator(value,index));}
-    public By getActiveInactiveStatisticsLocator(String value, int index) {return By.xpath("(//div[text()='" + value + "']/parent::div[@class='userCounter']//div[contains(@class,'pointer')])[" + index + "]");}
+    public By getActiveInactiveStatisticsLocator(String value, int index) {return By.xpath("(//div[text()='" + value + "']/parent::div[@class='userCounter']//div[contains(@class,'Number')])[" + index + "]");}
 
     public WebElement getListActiveInactiveClientsElement(String value1,String value2,int index1,String value3) {return driver.findElement(getListActiveInactiveClientsLocator(value1,value2,index1,value3));}
     public By getListActiveInactiveClientsLocator(String value1,String value2,int index1, String value3) {return By.xpath("(//td[text()='" + value1 + "' or text()='" + value2 + "']/parent::tr/td[" + index1 + "])[" + value3 + "]");}
@@ -179,5 +177,7 @@ public class CestaVon_CommonPage {
     public WebElement getClientSecondNameElement(String value) {return driver.findElement(getClientSecondNameLocator(value));}
     public By getClientSecondNameLocator(String value) {return By.xpath("(//td[3])[" + value + "]");}
 
+    public WebElement getStatsTabInStatisticsElement(String value) {return driver.findElement(getStatsTabInStatisticsLocator(value));}
+    public By getStatsTabInStatisticsLocator(String value) {return By.xpath("//div[text()='" + value + "']/parent::div[@class='statsTab']");}
 }
 

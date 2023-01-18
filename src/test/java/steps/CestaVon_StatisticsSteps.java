@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static page.CestaVon_CommonPage.MainPage.FirstPageButton;
-import static page.CestaVon_CommonPage.MainPage.SaveUserListFromStatistics;
+import static page.CestaVon_StatisticsPage.StatisticsPage.*;
 import static page.CestaVon_UsersPage.usersPageItems.NextPageButton;
 public class CestaVon_StatisticsSteps extends TestStepActions {
 
@@ -81,11 +81,11 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
     @And("Verify details about Omamas, Mentors and Supervizors")
     public void veirfyDetailsAboutOmamasMentorsAndSupervizors() {
         indexparameters.put(40, "Omamy");
-        integerparameters.put(13, 4);
+        integerparameters.put(13, 3);
         indexparameters.put(41, "Mentorky");
-        integerparameters.put(14, 2);
+        integerparameters.put(14, 1);
         indexparameters.put(42, "Supervízori");
-        integerparameters.put(15, 3);
+        integerparameters.put(15, 2);
         int count = 1, user_index = 25, index_parameters = 10;
         for (int k = 40; k < 43; k++) {
             // Verify number of users from users tab
@@ -95,6 +95,7 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
                 String userNumber = Integer.toString(integerparameters.get(count));
                 if (!users_count.equals(userNumber)) {
                     ReportExtender.logWarning("User lists have no the same count");
+                    ReportExtender.logWarning(users_count); ReportExtender.logWarning(userNumber);
                 }
                 clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(indexparameters.get(k), integerparameters.get(j)), "Open list of users");
                 sleep(1000);
@@ -175,6 +176,7 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
             String userNumber = Integer.toString(integerparameters.get(count));
             if (!users_count.equals(userNumber)) {
                 ReportExtender.logWarning("User lists have no the same count");
+                ReportExtender.logWarning(users_count);ReportExtender.logWarning(userNumber);
             }
             clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(indexparameters.get(43), integerparameters.get(j)), "Open list of users");
             sleep(1000);
@@ -204,6 +206,50 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
                 clickElementUsingJavascript(driver, page.getButtonElement("OK"), "Click on OK button");
             }
         }
+    }
+
+    @And("Verify details about Actions")
+    public void verifyDetailsAboutActions() {
+        String convertToIngeger; int actionCount = 0, preSchoolClubCount = 0, parentClubCount = 0;
+        waitForElementVisible(driver,page.getStatsTabInStatisticsLocator("Omamy"),"Wait for Omama tab in statistics",10);
+        clickElementUsingJavascript(driver,page.getStatsTabInStatisticsElement("Omamy"), "Select Omama tab");
+        sleep(1000);
+        // Save actions count for verification
+        List<WebElement> actionList = driver.findElements(NonCanceledActionCount.getLocator());
+        for (WebElement actions : actionList) {
+            convertToIngeger = actions.getText();
+            actionCount += Integer.parseInt(convertToIngeger);
+            integerparameters.put(2, actionCount);
+        }
+        // Save preschool club count for verification
+        List<WebElement> preSchoolList = driver.findElements(PreSchoolClubCount.getLocator());
+        for (WebElement actions : preSchoolList) {
+            convertToIngeger = actions.getText();
+            preSchoolClubCount += Integer.parseInt(convertToIngeger);
+            integerparameters.put(3, preSchoolClubCount);
+        }
+        // Save parent club count for verification
+        List<WebElement> parentList = driver.findElements(ParentClubCount.getLocator());
+        for (WebElement actions : parentList) {
+            convertToIngeger = actions.getText();
+            parentClubCount += Integer.parseInt(convertToIngeger);
+            integerparameters.put(4, parentClubCount);
+        }
+        // Verify actions count visible in statistics tab
+        for (int i = 4; i > 1; i--) {
+            String actions_count = driver.findElement(page.getActiveInactiveStatisticsLocator("Akcie", i)).getText();
+            if (!actions_count.equals(String.valueOf(integerparameters.get(i))))
+                {ReportExtender.logWarning("Numbers in action tab are not the same like in Omama-statistics");
+                ReportExtender.logWarning(actions_count); ReportExtender.logWarning(String.valueOf(integerparameters.get(i)));
+                ReportExtender.logScreen(driver);}
+        }
+        String actions_count = driver.findElement(page.getActiveInactiveStatisticsLocator("Akcie", 1)).getText();
+        int allActions = integerparameters.get(2) + integerparameters.get(3) + integerparameters.get(4);
+        if (!actions_count.equals(String.valueOf(allActions)))
+            {ReportExtender.logWarning("Numbers in action tab are not the same like in Omama-statistics");
+                ReportExtender.logWarning(actions_count); ReportExtender.logWarning(String.valueOf(allActions));
+                ReportExtender.logScreen(driver);}
+        ReportExtender.logScreen(driver);
     }
 }
 
