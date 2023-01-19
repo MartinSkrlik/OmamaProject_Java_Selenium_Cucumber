@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import page.CestaVon_CommonPage;
 import runner.TestRunner;
 import utility.ReportExtender;
+import utility.Validation;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -95,7 +96,8 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
                 String userNumber = Integer.toString(integerparameters.get(count));
                 if (!users_count.equals(userNumber)) {
                     ReportExtender.logWarning("User lists have no the same count");
-                    ReportExtender.logWarning(users_count); ReportExtender.logWarning(userNumber);
+                    ReportExtender.logWarning(users_count);
+                    ReportExtender.logWarning(userNumber);
                 }
                 clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(indexparameters.get(k), integerparameters.get(j)), "Open list of users");
                 sleep(1000);
@@ -116,8 +118,9 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
                     }
                     if (!indexparameters.get(index_parameters).equals(indexparameters.get(user_index))) {
                         ReportExtender.logWarning("Users lists " + indexparameters.get(index_parameters) + " and " +
-                                indexparameters.get(user_index) + " are not the same!");}
+                                indexparameters.get(user_index) + " are not the same!");
                     }
+                }
                 ReportExtender.logScreen(driver);
                 clickElementUsingJavascript(driver, page.getButtonElement("OK"), "Click on OK button");
             }
@@ -128,9 +131,11 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
     public void saveListOfClients() {
         int list_index = 19;
         int count_users = 10;
-        indexparameters.put(44, "Všetci"); indexparameters.put(46, "Aktívni");
-        indexparameters.put(45, "Neaktívni"); indexparameters.put(47, "Všetci");
-        for (int j = 44; j < 47; j++, count_users++, list_index++ ) {
+        indexparameters.put(44, "Všetci");
+        indexparameters.put(46, "Aktívni");
+        indexparameters.put(45, "Neaktívni");
+        indexparameters.put(47, "Všetci");
+        for (int j = 44; j < 47; j++, count_users++, list_index++) {
             String usersList = "";
             int users_count = 0;
             // Save active, inactive and all users from users tab
@@ -141,28 +146,27 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
             String NextPageEnabled = "false";
             while (NextPageEnabled.equals("false")) {
                 NextPageEnabled = driver.findElement(NextPageButton.getLocator()).getAttribute("aria-disabled");
-                int users_visible_on_page = driver.findElements(page.getClientFirstNameLocator(".")).size();
+                int users_visible_on_page = driver.findElements(page.getClientAttributeLocator(3, ".")).size();
                 if (users_visible_on_page > 0) {
                     for (int i = 1; i < users_visible_on_page + 1; i++) {
-                        String surname = driver.findElement(page.getClientSecondNameLocator(i+".")).getText();
+                        String surname = driver.findElement(page.getClientAttributeLocator(3, i + ".")).getText();
                         usersList += surname + " ";
                         indexparameters.put(list_index, usersList);
-                        String firstName = driver.findElement(page.getClientFirstNameLocator(i+".")).getText();
+                        String firstName = driver.findElement(page.getClientAttributeLocator(2, i + ".")).getText();
                         usersList += firstName + " ";
                         indexparameters.put(list_index, usersList);
                         users_count += 1;
                         integerparameters.put(count_users, users_count);
                     }
-                }
-                else {
+                } else {
                     indexparameters.put(list_index, "Zoznam je prázdny");
                     integerparameters.put(count_users, 0);
                 }
                 clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
                 sleep(1000);
             }
-        ReportExtender.logScreen(driver);
-        refreshPage(driver);
+            ReportExtender.logScreen(driver);
+            refreshPage(driver);
         }
     }
 
@@ -176,7 +180,8 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
             String userNumber = Integer.toString(integerparameters.get(count));
             if (!users_count.equals(userNumber)) {
                 ReportExtender.logWarning("User lists have no the same count");
-                ReportExtender.logWarning(users_count);ReportExtender.logWarning(userNumber);
+                ReportExtender.logWarning(users_count);
+                ReportExtender.logWarning(userNumber);
             }
             clickElementUsingJavascript(driver, page.getActiveInactiveStatisticsElement(indexparameters.get(43), integerparameters.get(j)), "Open list of users");
             sleep(1000);
@@ -185,7 +190,8 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
             if (list.equals("Zoznam je prázdny")) {
                 if (!list.equals(indexparameters.get(index_parameters))) {
                     ReportExtender.logWarning("Users lists " + list + " and " + indexparameters.get(index_parameters) + " are not the same!");
-                    ReportExtender.logScreen(driver);}
+                    ReportExtender.logScreen(driver);
+                }
             }
             // If users list is not empty, check with users list from users tab
             else {
@@ -196,11 +202,10 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
                 }
                 String[] statistics_list_sorted = indexparameters.get(user_index).split(" ");
                 String[] users_list_sorted = indexparameters.get(index_parameters).split(" ");
-                Arrays.sort(statistics_list_sorted); Arrays.sort(users_list_sorted);
-                String compare_statistics_list = Arrays.toString(statistics_list_sorted);
-                String compare_user_list = Arrays.toString(users_list_sorted);
-                if (!compare_statistics_list.equals(compare_user_list)) {
-                    ReportExtender.logWarning("Users lists " + compare_statistics_list + " and " + compare_user_list + " are not the same!");
+                Arrays.sort(statistics_list_sorted);
+                Arrays.sort(users_list_sorted);
+                if (!Arrays.toString(statistics_list_sorted).equals(Arrays.toString(users_list_sorted))) {
+                    ReportExtender.logWarning("Users lists " + Arrays.toString(statistics_list_sorted) + " and " + Arrays.toString(users_list_sorted) + " are not the same!");
                 }
                 ReportExtender.logScreen(driver);
                 clickElementUsingJavascript(driver, page.getButtonElement("OK"), "Click on OK button");
@@ -210,9 +215,10 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
 
     @And("Verify details about Actions")
     public void verifyDetailsAboutActions() {
-        String convertToIngeger; int actionCount = 0, preSchoolClubCount = 0, parentClubCount = 0;
-        waitForElementVisible(driver,page.getStatsTabInStatisticsLocator("Omamy"),"Wait for Omama tab in statistics",10);
-        clickElementUsingJavascript(driver,page.getStatsTabInStatisticsElement("Omamy"), "Select Omama tab");
+        String convertToIngeger;
+        int actionCount = 0, preSchoolClubCount = 0, parentClubCount = 0;
+        waitForElementVisible(driver, page.getStatsTabInStatisticsLocator("Omamy"), "Wait for Omama tab in statistics", 10);
+        clickElementUsingJavascript(driver, page.getStatsTabInStatisticsElement("Omamy"), "Select Omama tab");
         sleep(1000);
         // Save actions count for verification
         List<WebElement> actionList = driver.findElements(NonCanceledActionCount.getLocator());
@@ -238,24 +244,66 @@ public class CestaVon_StatisticsSteps extends TestStepActions {
         // Verify actions count visible in statistics tab
         for (int i = 4; i > 1; i--) {
             String actions_count = driver.findElement(page.getActiveInactiveStatisticsLocator("Akcie", i)).getText();
-            if (!actions_count.equals(String.valueOf(integerparameters.get(i))))
-                {ReportExtender.logWarning("Numbers in action tab are not the same like in Omama-statistics");
-                ReportExtender.logWarning(actions_count); ReportExtender.logWarning(String.valueOf(integerparameters.get(i)));
-                ReportExtender.logScreen(driver);}
+            if (!actions_count.equals(String.valueOf(integerparameters.get(i)))) {
+                ReportExtender.logWarning("Numbers in action tab are not the same like in Omama-statistics");
+                ReportExtender.logWarning(actions_count);
+                ReportExtender.logWarning(String.valueOf(integerparameters.get(i)));
+                ReportExtender.logScreen(driver);
+            }
         }
         String actions_count = driver.findElement(page.getActiveInactiveStatisticsLocator("Akcie", 1)).getText();
         int allActions = integerparameters.get(2) + integerparameters.get(3) + integerparameters.get(4);
-        if (!actions_count.equals(String.valueOf(allActions)))
-            {ReportExtender.logWarning("Numbers in action tab are not the same like in Omama-statistics");
-                ReportExtender.logWarning(actions_count); ReportExtender.logWarning(String.valueOf(allActions));
-                ReportExtender.logScreen(driver);}
+        if (!actions_count.equals(String.valueOf(allActions))) {
+            ReportExtender.logWarning("Numbers in action tab are not the same like in Omama-statistics");
+            ReportExtender.logWarning(actions_count);
+            ReportExtender.logWarning(String.valueOf(allActions));
+            ReportExtender.logScreen(driver);
+        }
         ReportExtender.logScreen(driver);
     }
+
+    @And("Save clients town")
+    public void saveClientsTown() {
+        String communityList = "";
+        int i = 1;
+        String[] community = new String[100];
+        waitForElementVisible(driver, page.getAscDescOrderLocator(5), "Wait for town column", 10);
+        doubleClickElement(driver, page.getAscDescOrderElement(5), "Sort users town");
+        String NextPageEnabled = "false";
+        while (NextPageEnabled.equals("false")) {
+            NextPageEnabled = driver.findElement(NextPageButton.getLocator()).getAttribute("aria-disabled");
+            List<WebElement> communityTitleList = driver.findElements(page.getClientAttributeLocator(8, "."));
+            for (WebElement comm : communityTitleList) {
+                communityList += comm.getText();
+                indexparameters.put(i, communityList);
+                community[i] = comm.getText();
+                if (community[i].equals(community[i - 1])) {
+                    continue;
+                }
+                i += 1;
+            }
+            clickElementUsingJavascript(driver, NextPageButton.getElement(driver), NextPageButton.getDescription());
+            sleep(1000);
+        }
+        String list = Arrays.toString(community);
+        String List = list.replaceAll("null", "").replaceAll(",", "").replaceAll(" ", "");
+        textparameters.put("townList", List);
+    }
+
+    @And("Verify community details")
+    public void verifyCommunityDetails() {
+        String communityList = "";
+        waitForElementVisible(driver, page.getStatsTabInStatisticsLocator("Komunity"), "Wait for Komunity tab in statistics", 10);
+        clickElementUsingJavascript(driver, page.getStatsTabInStatisticsElement("Komunity"), "Select Komunity tab");
+        sleep(1000);
+        List<WebElement> communityTitleList = driver.findElements(SaveCommunityList.getLocator());
+        for (WebElement comm : communityTitleList) {
+            communityList += comm.getText() + ";";
+        }
+        String[] List = communityList.split(";");
+        Arrays.sort(List);
+        String allClientTowns = Arrays.toString(List);
+        allClientTowns = allClientTowns.replaceAll(";","").replaceAll(" ","").replaceAll(",","");
+        new Validation("Verify list of user towns", textparameters.get("townList"), allClientTowns).stringEquals();
+    }
 }
-
-
-
-
-
-
-

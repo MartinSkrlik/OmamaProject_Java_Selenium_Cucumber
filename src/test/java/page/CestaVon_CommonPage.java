@@ -171,11 +171,8 @@ public class CestaVon_CommonPage {
     public WebElement getListActiveInactiveClientsElement(String value1,String value2,int index1,String value3) {return driver.findElement(getListActiveInactiveClientsLocator(value1,value2,index1,value3));}
     public By getListActiveInactiveClientsLocator(String value1,String value2,int index1, String value3) {return By.xpath("(//td[text()='" + value1 + "' or text()='" + value2 + "']/parent::tr/td[" + index1 + "])[" + value3 + "]");}
 
-    public WebElement getClientFirstNameElement(String value) {return driver.findElement(getClientFirstNameLocator(value));}
-    public By getClientFirstNameLocator(String value) {return By.xpath("(//td[2])[" + value + "]");}
-
-    public WebElement getClientSecondNameElement(String value) {return driver.findElement(getClientSecondNameLocator(value));}
-    public By getClientSecondNameLocator(String value) {return By.xpath("(//td[3])[" + value + "]");}
+    public WebElement getClientAttributeElement(int index, String value) {return driver.findElement(getClientAttributeLocator(index,value));}
+    public By getClientAttributeLocator(int index, String value) {return By.xpath("(//td[" + index + "])[" + value + "]");}
 
     public WebElement getStatsTabInStatisticsElement(String value) {return driver.findElement(getStatsTabInStatisticsLocator(value));}
     public By getStatsTabInStatisticsLocator(String value) {return By.xpath("//div[text()='" + value + "']/parent::div[@class='statsTab']");}

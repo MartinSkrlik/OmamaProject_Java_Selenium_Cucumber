@@ -17,7 +17,9 @@ public class CestaVon_StatisticsPage {
         PreSchoolClubCount          (By.xpath("(//tbody)[2]//td[7]"),
                 "Save count of pre-school club from statistics tab"),
         ParentClubCount             (By.xpath("(//tbody)[2]//td[8]"),
-                "Save count of pre-parent club from statistics tab")
+                "Save count of pre-parent club from statistics tab"),
+        SaveCommunityList           (By.xpath("//div[contains(@class,'Community')]"),
+                "Save all client towns")
         ;
         private String description;
         private By findBy;

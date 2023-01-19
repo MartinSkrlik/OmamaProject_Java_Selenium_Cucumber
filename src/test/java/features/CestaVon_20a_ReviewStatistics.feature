@@ -1,9 +1,9 @@
 @Martin
-@ReviewStatisticsTest
+@ReviewStatisticsFirstTest
 Feature: CestaVon - check properly ordered statistics
 
 
-  Scenario Outline: CestaVon - 20 - check properly ordered statistics
+  Scenario Outline: CestaVon - 20a - check properly ordered statistics
 
     Given   Open browser "<BROWSER>"
     When    Maximalize window
